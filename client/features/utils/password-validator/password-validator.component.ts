@@ -7,8 +7,8 @@ import { PasswordValidatorService } from '../services/password-validator.service
     templateUrl: `password-validator.component.html`
 })
 export class PasswordValidatorComponent implements OnChanges {
-    @Input() passwordToCheck: string;
-    @Output() GetPasswordValidation = new EventEmitter<any>();
+    @Input() public passwordToCheck: string;
+    @Output() public GetPasswordValidation = new EventEmitter<any>();
 
     public requirementsColor: string;
     public requirementsProgress: string;

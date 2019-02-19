@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 
 import { environment } from '../../environments/environment';
 
-export class MenuConfig { menus: [{ label: string; route: string; permission: string[]; visible: boolean; }]; }
+export class MenuConfig { label: string; route: string; permission: string[]; visible: boolean; }
 
 @Component({
   moduleId: module.id,

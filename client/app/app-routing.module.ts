@@ -11,6 +11,8 @@ import { ResetPasswordRoutes } from '../features/users/password/reset/reset-pass
 import { SignUpRoutes } from '../features/users/sign-up/sign-up.routes';
 import { HomeRoutes } from '../features/home/home.routes';
 
+import { CMSRoutes } from '../features/cms/cms.module';
+
 export const AppRoutes: Routes = [
   {
     path: '',
@@ -22,6 +24,7 @@ export const AppRoutes: Routes = [
   ...ResetPasswordRoutes,
   ...SignUpRoutes,
   ...HomeRoutes,
+  ...CMSRoutes,
   {
     path: '**',
     component: PageNotFoundComponent,

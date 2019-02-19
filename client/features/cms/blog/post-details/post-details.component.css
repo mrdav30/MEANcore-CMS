@@ -1,0 +1,21 @@
+.post-author a {
+    color: #b70e0c
+}
+
+.title-avatar {
+    width: 50px !important;
+    height: 50px !important;
+}
+
+.bio-avatar {
+    width: 100px !important;
+    height: 100px !important;
+}
+
+/* figure.image {
+    text-align: center;
+}
+
+figure.image-style-side img {
+    float: right !important;
+} */

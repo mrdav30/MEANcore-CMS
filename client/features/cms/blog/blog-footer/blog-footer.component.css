@@ -1,0 +1,53 @@
+.blog-footer h3 {
+    text-transform: uppercase
+}
+
+.blog-footer a {
+    color: #9b9b9b
+}
+
+.blog-footer a:hover,
+.blog-footer h3,
+.blog-footer p {
+    color: #fff
+}
+
+.blog-footer li,
+.blog-footer ul {
+    margin: 0;
+    padding: 0
+}
+
+.blog-footer {
+    background-color: #2f2f2f
+}
+
+.blog-footer h3 {
+    padding-bottom: 20px
+}
+
+.blog-footer li {
+    list-style: none
+}
+
+.blog-footer ul ul {
+    padding-left: 20px
+}
+
+.month-list,
+.tag-list {
+    color: #fff;
+
+}
+
+.year {
+    cursor: pointer;
+}
+
+.tag {
+    float: left;
+}
+
+hr {
+    background-color: #fff;
+}

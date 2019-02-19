@@ -1,0 +1,85 @@
+<div [hidden]="!this.isLoaded && !this.isDomFormatted" class="container">
+    <div class="card form-group">
+        <div class="card-body">
+            <h2 class="post-title card-title">{{vm.post.title}}</h2>
+            <div class="row">
+                <div class="col-sm-1 text-center">
+                    <img ngxGravatar [(email)]="vm.post.author.authorEmail" [(src)]="vm.post.author.authorAvatar" class="title-avatar">
+                </div>
+                <div class="col-sm-11">
+                    <div class="post-author">
+                        <i class="fas fa-user mr-2"></i>
+                        <a [routerLink]="'/blog/posts/author/' + vm.post.author_id">
+                            {{vm.post.author.authorName}}
+                        </a>
+                    </div>
+                    <div>
+                        <span class="post-date mr-2"><i class="far fa-clock mr-2"></i>{{vm.post.publishDate | date}}</span>
+                        <span [hidden]="!vm.post.views" class="post-views">
+                            <i class="far fa-eye mr-2"></i>{{vm.post.views}} VIEWS
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="post-image form-group text-center">
+            <img width="700" height="400" class="post-image img-fluid" [src]="vm.post.thumbnailUrl">
+        </div>
+        <div [hidden]="!vm.post.summary" class="post-summary">
+            <strong>Summary : </strong>{{vm.post.summary}}
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="post-body ck ck-content" [innerHtml]="vm.post.body"></div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="vm" class="post-footer">
+        <div class="form-group">
+            <div class="card form-group">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-2 text-center">
+                            <img ngxGravatar [(email)]="vm.post.author.authorEmail" [(src)]="vm.post.author.authorAvatar"
+                                class="bio-avatar">
+                        </div>
+                        <div class="col-sm-10">
+                            <h5>Author : {{vm.post.author.authorName}}</h5>
+                            <div [innerHtml]="vm.post.author.authorAbout"></div>
+                            <div>
+                                <a [routerLink]="'/blog/posts/author/' + vm.post.author_id">
+                                    View all posts by {{vm.post.author.authorName}}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div [hidden]="vm.post.slugTags && !vm.post.slugTags.length" class="post-tags form-group">
+                Tags:
+                <a *ngFor="let tag of vm.post.slugTags" [routerLink]="'/blog/posts/tag/' + tag.slug" class="comma mr-2">{{tag.text}}</a>
+            </div>
+            <div class="social-share-buttons form-group text-center">
+                <div class="social-icons spinned">
+                    <a class="item facebook" [href]="'http://facebook.com/sharer.php?u=' + vm.post.perma_link" target="_blank"
+                        placement="bottom" ngbTooltip="Share on Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a class="item twitter" [href]="'http://twitter.com/intent/tweet?url=' + vm.post.perma_link + '&text=' + vm.metaTitle"
+                        target="_blank" placement="bottom" ngbTooltip="Tweet this!"><i class="fab fa-twitter"></i></a>
+                    <!-- RIP google plus: April 2019-->
+                    <!-- <a class="item google" [href]="'https://plus.google.com/share?url=' + vm.post.perma_link"
+                        target="_blank" placement="bottom" ngbTooltip="Share on Google+"><i class="fab fa-google-plus-g"></i></a> -->
+                    <a class="item linkedin" [href]="'https://www.linkedin.com/shareArticle?mini=true&url=' + vm.post.perma_link + '&title=' + vm.metaTitle + '&summary=' + vm.metaDescription + '&source=' + disqusShortname"
+                        target="_blank" placement="bottom" ngbTooltip="Share on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a class="item email" [href]="'https://api.addthis.com/oexchange/0.8/forward/email/offer?url='+ vm.post.perma_link + '&title=' + vm.metaTitle + 'ct=1'"
+                        target="_blank" placement="bottom" ngbTooltip="Share via email"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+        </div>
+        <app-disqus-thread [shortname]="disqusShortname" [identifier]="vm.metaTitle"></app-disqus-thread>
+    </div>
+</div>

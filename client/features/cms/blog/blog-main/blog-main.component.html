@@ -1,0 +1,66 @@
+<div [hidden]="!this.isLoaded && !this.isDomFormatted" class="container form-group">
+    <div *ngIf="vm.author" class="card form-group">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-2 text-center">
+                    <img ngxGravatar [(email)]="vm.author.authorEmail" [(src)]="vm.author.authorAvatar" class="bio-avatar">
+                </div>
+                <div class="col-sm-10">
+                    <h5>{{vm.author.authorName}}</h5>
+                    <div [innerHtml]="vm.author.authorAbout"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="vm.metaDescription" class="card form-group">
+        <div class="view-title card-body">
+            {{vm.metaDescription}}
+        </div>
+    </div>
+    <div class="row mx-auto">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+            <div *ngFor="let post of vm.posts" class="card post mx-auto mb-4">
+                <div class="card-img-top">
+                    <a class="card-link" routerLink="{{post.url}}">
+                        <img width="700" height="400" class="post-image img-fluid" [src]="post.thumbnailUrl">
+                    </a>
+                </div>
+                <div class="card-body post-body">
+                    <a class="post-title" routerLink="{{post.url}}">{{post.title}}</a>
+                    <div class="d-flex flex-row meta">
+                        <span class="post-date mr-2"><i class="far fa-clock mr-2"></i>{{post.publishDate | date}}</span>
+                        <span class="post-author mr-2">
+                            <i class="fas fa-user mr-2"></i>
+                            <a [routerLink]="'/blog/posts/author/' + post.author_id" placement="top" ngbTooltip="Posts by {{post.authorName}}">
+                                {{post.authorName}}
+                            </a>
+                        </span>
+                        <span [hidden]="!post.views" class="post-views">
+                            <i class="far fa-eye mr-2"></i>{{post.views}} VIEWS</span>
+                    </div>
+                    <hr />
+                    <div class="post-middle">
+                        <a *ngFor="let tag of post.slugTags" [routerLink]="'/blog/posts/tag/' + tag.slug" class="btn btn-light btn-sm mr-2">{{tag.text}}</a>
+                        <div class="float-right">
+                            <a routerLink="{{post.url}}" class="view-btn btn btn-light btn-outline-dark" placement="top"
+                                ngbTooltip="Read more">
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="post-summary block-with-text">
+                        {{post.summary}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+    <div *ngIf="vm.pagination" class="mx-auto w-100">
+        <ngb-pagination class="d-flex justify-content-center" [(page)]="vm.pagination.page_number" [pageSize]="vm.pagination.page_size"
+            [collectionSize]="vm.pagination.collectionSize" [boundaryLinks]="true" (pageChange)="changePage($event)">
+        </ngb-pagination>
+    </div>
+</div>

@@ -6,8 +6,9 @@ interface Scripts {
     async?: boolean;
 }
 
+// src can be either local or hosted
 export const ScriptStore: Scripts[] = [
-    // src can be either local or hosted
-    // { name: 'embedly', src: '//cdn.embedly.com/widgets/platform.js' }
+    // embedly required to render oembed content
+    { name: 'embedly', src: 'https://cdn.embedly.com/widgets/platform.js', async: true },
     { name: 'gtag', src: 'https://www.googletagmanager.com/gtag/js?id=' + environment.googleAnalyticsID, async: true }
 ];

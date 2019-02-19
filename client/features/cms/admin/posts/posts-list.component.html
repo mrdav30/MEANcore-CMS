@@ -1,0 +1,13 @@
+<div class="container">
+    <div>
+        <h3 class="header-inline">Posts</h3>
+        <a routerLink="posts/add" class="btn btn-primary float-right">
+            <i class="fas fa-plus mr-2"></i>New Post
+        </a>
+    </div>
+    <div class="ag-grid-container">
+        <ag-grid-angular class="ag-theme-material" [rowHeight]="45" [rowData]="posts" [columnDefs]="postsColumnDef"
+            [frameworkComponents]="frameworkComponents" [context]="context" (gridReady)="onGridReady($event)">
+        </ag-grid-angular>
+    </div>
+</div>

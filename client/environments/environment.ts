@@ -5,17 +5,30 @@
 import { VERSION } from './version';
 
 // Define menu config as:
-// MENU_CONFIG { menus: [{ label: string; route: string; permission: string[]; visible: boolean; }]; }
+// MENU_CONFIG: [{ label: string; route: string; permission: string[]; visible: boolean; }];
 
 export const environment = {
   production: false,
   version: VERSION.version + '-dev',
   appLogo: 'assets/images/logo.png',
   appDefaultRoute: 'home',
-  appName: 'MEANcore',
+  appName: 'MEANcore-CMS',
   appBase: '/',
   appEndPoint: 'api',
-  MENU_CONFIG: [],
+  MENU_CONFIG:  [{
+    label: 'Blog',
+    route: '/blog',
+    roles: ['user', 'admin'],
+    permission: null,
+    visible: true
+  },
+  {
+    label: 'Admin',
+    route: '/admin',
+    roles: ['admin'],
+    permission: null,
+    visible: true
+  }],
   googleAnalyticsID: 'UA-XXXX-Y',
   recaptchaSiteKey: '',
   owasp: {
@@ -25,11 +38,12 @@ export const environment = {
     minPhraseLength: 20,
     minOptionalTestsToPass: 4
   },
-  showLoginNav: true,
+  showLoginNav: false,
   showSearchNav: true,
-  imageUploadApi: '',
-  siteSearchRoute: '/',
-  twitterHandle: ''
+  imageUploadApi: 'api/admin/upload',
+  siteSearchRoute: '/blog/posts/search/',
+  twitterHandle: '',
+  disqusShortname: 'meancore-cms'
 };
 
 /*

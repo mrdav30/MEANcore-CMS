@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "meancore": {
+    "meancore-cms": {
       "root": "",
       "sourceRoot": "client",
       "projectType": "application",
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/meancore",
+            "outputPath": "dist/meancore-cms",
             "index": "client/index.html",
             "main": "client/main.ts",
             "polyfills": "client/polyfills.ts",
@@ -65,11 +65,11 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "meancore:build"
+            "browserTarget": "meancore-cms:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "meancore:build:production"
+              "browserTarget": "meancore-cms:build:production"
             },
             "test": {
               "browserTarget": "ng-configuration:build:test"
@@ -79,7 +79,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "meancore:build"
+            "browserTarget": "meancore-cms:build"
           }
         },
         "test": {
@@ -113,7 +113,7 @@
         }
       }
     },
-    "meancore-e2e": {
+    "meancore-cms-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -122,11 +122,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "meancore:serve"
+            "devServerTarget": "meancore-cms:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "meancore:serve:production"
+              "devServerTarget": "meancore-cms:serve:production"
             }
           }
         },
@@ -142,5 +142,5 @@
       }
     }
   },
-  "defaultProject": "meancore"
+  "defaultProject": "meancore-cms"
 }

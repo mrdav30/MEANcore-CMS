@@ -1,0 +1,55 @@
+.post-title {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.post-title,
+.post-author a {
+    color: #b70e0c
+}
+
+.post-title:hover,
+.post-author a:hover {
+    color: #7b7b7b
+}
+
+.post:hover .card-img-top .post-image {
+    opacity: 0.5;
+}
+
+.post-body .meta {
+    font-size: .75em;
+    font-weight: 600;
+    text-transform: uppercase;
+    line-height: 1.4;
+}
+
+.row>div[class*='col-'] {
+    display: flex;
+    flex: 1 0 auto;
+}
+
+.view-btn-container {
+    z-index: 9999;
+    position: relative;
+}
+
+.view-btn {
+    position: absolute;
+    right: .5em;
+    top: -1.75em;
+    visibility: hidden;
+    border-radius: 50%;
+    font-size: 90%;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.post .view-btn-container .view-btn {
+    opacity: 0;
+    transition: visibility 0s, opacity 1s ease-out;
+}
+
+.post:hover .view-btn-container .view-btn {
+    visibility: visible;
+    opacity: 1;
+}

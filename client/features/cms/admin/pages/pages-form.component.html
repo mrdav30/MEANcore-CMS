@@ -1,0 +1,58 @@
+<div class="container">
+    <h1>Page Details</h1>
+    <hr />
+    <form name="pageForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+        <div class="form-group row">
+            <label for="title" class="col-sm-2 col-form-label">Title</label>
+            <div class="col-sm-10">
+                <input type="text" id="title" name="title" class="form-control" [(ngModel)]="page.title" #title="ngModel"
+                    required />
+                <div *ngIf="f.submitted && title.invalid" class="alert alert-danger">
+                    <div *ngIf="title.errors.required"><i class="fas fa-exclamation mr-2"></i>Title is required</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="slug" class="col-sm-2 col-form-label">Slug</label>
+            <div class="col-sm-10">
+                <input type="text" id="slug" name="slug" class="form-control" [(ngModel)]="page.slug" />
+                <button type="button" class="btn btn-link" (click)="slugifyTitle()">Generate from title</button>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="description" class="col-sm-2 col-form-label">Description</label>
+            <div class="col-sm-10">
+                <textarea id="description" name="description" class="form-control" rows="4" [(ngModel)]="page.description"></textarea>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="body" class="col-sm-2 col-form-label">Body</label>
+            <div class="col-sm-10">
+                <ckeditor id="body" name="body" [config]="editorOptions" [editor]="editor" [(ngModel)]="page.body"></ckeditor>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-10">
+                <div class="checkbox">
+                    <label class="switch" for="publish">
+                        <input type="checkbox" [(ngModel)]="page.publish" id="publish" name="publish">
+                        <div class="slider round"></div>
+                    </label>
+                    <span class="checkbox-label ml-2">Publish</span>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="form-group">
+            <div *ngIf="f.submitted && f.form.invalid" class="alert alert-danger">
+                Please correct any errors trying to save.
+            </div>
+            <div class="btn-group">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a class="btn btn-secondary" [routerLink]="['/admin']">Cancel</a>
+                <button type="button" class="btn btn-danger" (click)="deletePage()" *ngIf="page._id">Delete</button>
+            </div>
+        </div>
+    </form>
+</div>
