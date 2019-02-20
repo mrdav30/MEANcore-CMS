@@ -1,6 +1,7 @@
 'use strict';
 
 var path = require('path'),
+  _ = require('lodash'),
   userValidation = require(path.resolve('./server/users/users.validation.server')),
   mongoose = require('mongoose'),
   User = mongoose.model('User');
