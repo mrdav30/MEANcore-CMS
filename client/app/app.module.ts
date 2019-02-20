@@ -10,7 +10,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from '../features/page-not-found/page-not-found.component';
 
-import { HomeModule } from '../features/home/home.module';
 import { AppMenuModule } from '../features/app-menu/app-menu.module';
 import { UtilsModule } from '../features/utils';
 import { SignInModule } from '../features/users/sign-in/sign-in.module';
@@ -45,7 +44,6 @@ import { SeoService } from '../features/utils';
     ResetPasswordModule,
     SignUpModule,
     AppMenuModule,
-    HomeModule,
     CMSModule
   ],
   providers: [
