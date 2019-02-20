@@ -4,7 +4,7 @@ import { ICellRendererAngularComp } from "ag-grid-angular";
 @Component({
     moduleId: module.id,
     selector: 'action-button',
-    template: `<button (click)="takeAction()" class="btn btn-secondary btn-sm align-super"><i class="fas fa-pen"></i></button>`,
+    template: `<button (click)="takeAction()" class="btn btn-secondary btn-sm align-super"><i class="fas fa-edit"></i></button>`,
 })
 
 export class ActionButtonComponent implements ICellRendererAngularComp {
