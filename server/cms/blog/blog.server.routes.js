@@ -9,7 +9,7 @@ var oneWeekMilliseconds = oneWeekSeconds * 1000;
 
 module.exports = function (app) {
   var blog = require('./blog.server.controller'),
-    pagination = require(path.resolve('./app/middleware/pagination'));
+    pagination = require(path.resolve('./server/middleware/pagination'));
 
   app.use('/api/blog/content*', express.static(path.resolve(config.blogContentRepository), {
     maxAge: oneWeekMilliseconds,

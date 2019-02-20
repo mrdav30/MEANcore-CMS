@@ -18,7 +18,7 @@ export class BlogFooter {
 @Injectable()
 export class BlogFooterService {
     public blogFooter$ = new BehaviorSubject<any>({});
-    public isReady: boolean = false;
+    public isReady = false;
     private blogFooter: BlogFooter = new BlogFooter();
 
     constructor(
@@ -35,7 +35,7 @@ export class BlogFooterService {
     }
 
     public refresh() {
-        this.cachedDataService.getData(environment.appBase + '/api/blog/sharedData')
+        this.cachedDataService.getData(environment.appBase + environment.appEndPoint + '/blog/sharedData')
             .pipe(
                 catchError(this.handleErrorService.handleError<any>('BlogFooterRefresh'))
             )

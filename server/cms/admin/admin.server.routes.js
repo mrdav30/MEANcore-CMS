@@ -3,7 +3,7 @@
 var express = require('express'),
   path = require('path'),
   config = require(path.resolve('./config/config')),
-  userAuth = require(path.resolve('./app/users/users.authorization.server.controller'));
+  userAuth = require(path.resolve('./server/users/users.authorization.server.controller'));
 
 var oneWeekSeconds = 60 * 60 * 24 * 7;
 var oneWeekMilliseconds = oneWeekSeconds * 1000; // 1 week in milliseconds,

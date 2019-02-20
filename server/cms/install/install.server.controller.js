@@ -3,10 +3,10 @@
 var fs = require("fs"),
     path = require('path'),
     config = require(path.resolve('./config/config')),
-    errorHandler = require(path.resolve('app/errors.server.controller')),
+    errorHandler = require(path.resolve('server/errors.server.controller')),
     mongoose = require('mongoose'),
     User = mongoose.model('User'),
-    userValidation = require(path.resolve('app/users/users.validation.server'));
+    userValidation = require(path.resolve('server/users/users.validation.server'));
 
 exports.createAdministrator = function (req, res) {
     try {
