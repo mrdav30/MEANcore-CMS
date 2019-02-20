@@ -1,6 +1,6 @@
 {
-  "name": "meancore",
-  "description": "Full-Stack JavaScript  with MongoDB, Express, AngularJS, and Node.js.",
+  "name": "meancore-cms",
+  "description": "CMS with MongoDB, Express, Angular2+, and Node.js.",
   "version": "0.5.0-beta",
   "meancore-version": "0.5.0-beta",
   "private": false,
@@ -8,7 +8,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/meancore/meancore.git"
+    "url": "https://github.com/mrdav30/MEANcore-CMS"
   },
   "engines": {
     "node": ">=5",
