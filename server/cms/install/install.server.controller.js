@@ -10,7 +10,7 @@ var fs = require("fs"),
 
 exports.createAdministrator = function (req, res) {
   try {
-    config.installed = JSON.parse(fs.readFileSync(path.resolve(config.staticFiles + 'assets/install.json')));
+    config.installed = JSON.parse(fs.readFileSync(path.resolve('./_content/meancore-cms/install.json')));
   } catch (e) {
     config.installed = false;
   }
@@ -57,7 +57,7 @@ exports.createAdministrator = function (req, res) {
 
           // save installed flag in config file
           config.installed = true;
-          fs.writeFileSync(path.resolve(config.staticFiles + 'assets/install.json'), JSON.stringify(true));
+          fs.writeFileSync(path.resolve('./_content/meancore-cms/install.json'), JSON.stringify(true));
 
           // Remove sensitive data before login
           user.password = undefined;
