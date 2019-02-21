@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 
 @Component({
     moduleId: module.id,
-    selector: 'home-admin-selector',
+    selector: 'app-admin-selector',
     templateUrl: `./admin-home.component.html`
 })
 
@@ -13,6 +13,6 @@ export class AdminHomeComponent implements OnInit {
     ) { }
     // tslint:disable-next-line
     ngOnInit() {
-        this.titleService.setTitle('Admin | The MEANcore Blog')
+        this.titleService.setTitle('Admin | The MEANcore Blog');
     }
 }

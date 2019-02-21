@@ -6,7 +6,7 @@ import { SeoService } from '../../../utils';
 
 @Component({
     moduleId: module.id,
-    selector: 'subscribe-selector',
+    selector: 'app-subscribe-selector',
     templateUrl: `./subscribe.component.html`
 })
 

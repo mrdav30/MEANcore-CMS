@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { fromEvent, Observable, Subscription } from "rxjs";
+import { fromEvent, Observable, Subscription } from 'rxjs';
 
 import { RedirectsService } from '../services/redirects.service';
 import { Redirect } from './redirect';
@@ -9,7 +9,7 @@ import { ActionButtonComponent } from '../grid-utils/action-button.component';
 
 @Component({
     moduleId: module.id,
-    selector: 'redirects-list-selector',
+    selector: 'app-redirects-list-selector',
     templateUrl: `./redirects-list.component.html`,
     styleUrls: [`../grid-utils/grid-utils.css`],
     encapsulation: ViewEncapsulation.None // required to style innerHtml
@@ -36,13 +36,13 @@ export class RedirectsListComponent implements OnInit, OnDestroy {
 
     constructor(
         private router: Router,
-        private _redirectService: RedirectsService
+        private redirectService: RedirectsService
     ) {
         this.context = { componentParent: this };
     }
 
     ngOnInit(): void {
-        this._redirectService.GetAll()
+        this.redirectService.GetAll()
             .subscribe((data: any) => {
                 this.redirects = data.redirects ? data.redirects as Redirect[] : [];
             });
@@ -58,15 +58,15 @@ export class RedirectsListComponent implements OnInit, OnDestroy {
 
         this.gridApi.sizeColumnsToFit();
 
-        this.resizeObservable$ = fromEvent(window, 'resize')
+        this.resizeObservable$ = fromEvent(window, 'resize');
         this.resizeSubscription$ = this.resizeObservable$.subscribe(evt => {
-            setTimeout(function () {
+            setTimeout(() => {
                 params.api.sizeColumnsToFit();
-            })
-        })
+            });
+        });
     }
 
     ngOnDestroy() {
-        this.resizeSubscription$.unsubscribe()
+        this.resizeSubscription$.unsubscribe();
     }
 }

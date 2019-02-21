@@ -9,7 +9,7 @@ import { Account } from './account';
 
 @Component({
     moduleId: module.id,
-    selector: 'account-form-selector',
+    selector: 'app-account-form-selector',
     templateUrl: `./account-form.component.html`,
     styleUrls: [`./account-form.component.css`]
 })
@@ -20,14 +20,14 @@ export class AccountFormComponent implements OnInit {
     public editor = CustomEditor;
     public editorOptions: any;
     public account: Account;
-    public possibleUsername: String;
-    public passwordTooltip: String;
-    public passwordErrors: String[];
+    public possibleUsername: string;
+    public passwordTooltip: string;
+    public passwordErrors: string[];
 
     constructor(
         private router: Router,
         private cdr: ChangeDetectorRef,
-        private _accountService: AccountService
+        private accountService: AccountService
     ) {
         // set options for ckeditor
         this.editorOptions = {
@@ -39,7 +39,7 @@ export class AccountFormComponent implements OnInit {
 
     ngOnInit(): void {
         this.account = new Account();
-        this._accountService.GetCurrent()
+        this.accountService.GetCurrent()
             .subscribe((data: any) => {
                 if (data && data.account) {
                     this.account = _.merge(new Account(), data.account) as Account;
@@ -55,7 +55,7 @@ export class AccountFormComponent implements OnInit {
         this.passwordErrors = passwordValidation.errorMessages;
         if (this.password && !this.password.control.pristine) {
             if (passwordValidation.status) {
-                this.password.control.setErrors({ 'incorrect': true });
+                this.password.control.setErrors({ incorrect: true });
             } else {
                 this.password.control.setErrors(null);
             }
@@ -64,10 +64,10 @@ export class AccountFormComponent implements OnInit {
     }
 
     onSubmit(): void {
-        this._accountService.Update(this.account).subscribe((data: any) => {
+        this.accountService.Update(this.account).subscribe((data: any) => {
             if (data && data.userExists) {
                 this.possibleUsername = data.possibleUsername;
-                this.username.control.setErrors({ 'alreadyused': true });
+                this.username.control.setErrors({ alreadyused: true });
             } else {
                 this.account.password = '';
             }

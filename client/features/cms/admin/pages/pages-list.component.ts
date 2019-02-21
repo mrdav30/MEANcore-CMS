@@ -10,7 +10,7 @@ import { PublishRendererComponent } from '../grid-utils/publish-render.component
 
 @Component({
     moduleId: module.id,
-    selector: 'pages-list-selector',
+    selector: 'app-pages-list-selector',
     templateUrl: `./pages-list.component.html`,
     styleUrls: [`../grid-utils/grid-utils.css`],
     encapsulation: ViewEncapsulation.None // required to style innerHtml
@@ -40,14 +40,14 @@ export class PagesListComponent implements OnInit, OnDestroy {
     private resizeSubscription$: Subscription;
 
     constructor(
-        private router: Router
-        , private _pageService: PagesService
+        private router: Router,
+        private pageService: PagesService
     ) {
         this.context = { componentParent: this };
     }
 
     ngOnInit(): void {
-        this._pageService.GetAll()
+        this.pageService.GetAll()
             .subscribe((data: any) => {
                 this.pages = data.pages ? data.pages as Page[] : [];
             });
@@ -65,7 +65,7 @@ export class PagesListComponent implements OnInit, OnDestroy {
 
         this.resizeObservable$ = fromEvent(window, 'resize');
         this.resizeSubscription$ = this.resizeObservable$.subscribe(evt => {
-            setTimeout(function () {
+            setTimeout(() => {
                 params.api.sizeColumnsToFit();
             });
         });

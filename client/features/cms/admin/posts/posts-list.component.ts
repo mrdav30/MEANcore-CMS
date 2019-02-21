@@ -10,7 +10,7 @@ import { PublishRendererComponent } from '../grid-utils/publish-render.component
 
 @Component({
     moduleId: module.id,
-    selector: 'posts-list-selector',
+    selector: 'app-posts-list-selector',
     templateUrl: `./posts-list.component.html`,
     styleUrls: [`./posts-list.component.css`, `../grid-utils/grid-utils.css`],
     encapsulation: ViewEncapsulation.None // required to style innerHtml
@@ -42,14 +42,14 @@ export class PostsListComponent implements OnInit, OnDestroy {
     private resizeSubscription$: Subscription;
 
     constructor(
-        private router: Router
-        , private _postsService: PostsService
+        private router: Router,
+        private postsService: PostsService
     ) {
         this.context = { componentParent: this };
     }
 
     ngOnInit(): void {
-        this._postsService.GetAll()
+        this.postsService.GetAll()
             .subscribe((data: any) => {
                 if (data) {
                     this.posts = data.posts ? data.posts as Post[] : [];
@@ -69,7 +69,7 @@ export class PostsListComponent implements OnInit, OnDestroy {
 
         this.resizeObservable$ = fromEvent(window, 'resize');
         this.resizeSubscription$ = this.resizeObservable$.subscribe(evt => {
-            setTimeout(function () {
+            setTimeout(() => {
                 params.api.sizeColumnsToFit();
             });
         });
