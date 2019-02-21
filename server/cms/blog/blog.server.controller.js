@@ -243,7 +243,9 @@ exports.retrievePostsByDate = function (req, res, next) {
 
 exports.retrievePostsByAuthor = function (req, res, next) {
 
-  User.findById(req.params.authorId).exec(function (err, account) {
+  User.findOne({
+    _id: req.params.authorId
+  }).exec(function (err, account) {
     if (err) {
       return res.status(400).send({
         message: err
@@ -262,8 +264,8 @@ exports.retrievePostsByAuthor = function (req, res, next) {
         authorId: req.params.authorId
       },
       vm = {
-        metaTitle: 'Posts by ' + vm.author.authorName + metaTitleSuffix,
-        metaDescription: 'Posts by ' + vm.author.authorName + ' :',
+        metaTitle: 'Posts by ' + account.get('displayName') + metaTitleSuffix,
+        metaDescription: 'Posts by ' + account.get('displayName') + ' :',
         pagination: req.pagination ? req.pagination : null,
         author: {
           authorName: account.get('displayName'),
