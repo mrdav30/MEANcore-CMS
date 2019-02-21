@@ -1,0 +1,7 @@
+.ck-media__wrapper {
+  width: 50%
+}
+
+.ck.ck-dropdown .ck-button.ck-dropdown__button .ck-button__label {
+  width: 8em;
+}

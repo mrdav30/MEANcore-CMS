@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import * as CustomEditor from '../_content/ckeditor-custom/ckeditor';
@@ -15,9 +15,10 @@ import { SlugifyPipe } from '../../../utils';
 
 @Component({
     moduleId: module.id,
-    selector: 'posts-form-selector',
+    selector: 'app-posts-form-selector',
     templateUrl: `./posts-form.component.html`,
-    styleUrls: [`./posts-form.component.css`]
+    styleUrls: [`./posts-form.component.css`],
+    encapsulation: ViewEncapsulation.None // required to style innerHtml
 })
 
 export class PostsFormComponent implements OnInit {
