@@ -17,8 +17,8 @@ exports.checkInstall = function (req, res, next) {
         fs.writeFileSync(path.resolve('./_content/meancore-cms/install.json'), JSON.stringify(false));
     }
 
-    if (!config.installed && req.path !== '/sign-up/install') {
-        return res.redirect('sign-up/install');
+    if (!config.installed && req.path !== '/sign-up-admin/install') {
+        return res.redirect('sign-up-admin/install');
     }
 
     next();
