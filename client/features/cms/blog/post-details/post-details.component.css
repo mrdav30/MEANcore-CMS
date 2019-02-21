@@ -1,15 +1,29 @@
-.post-author a {
-    color: #b70e0c
+.post-author {
+  color: #b70e0c
+}
+
+.post-author:hover {
+  color: #7b7b7b;
+  text-decoration: none;
+  font-weight: 900;
 }
 
 .title-avatar {
-    width: 50px !important;
-    height: 50px !important;
+  width: 50px !important;
+  height: 50px !important;
 }
 
 .bio-avatar {
-    width: 100px !important;
-    height: 100px !important;
+  width: 100px !important;
+  height: 100px !important;
+}
+
+.author-social-links{
+    font-size: 2em;
+}
+
+.author-personal-info {
+  border-left: 1px solid #000000
 }
 
 /* figure.image {

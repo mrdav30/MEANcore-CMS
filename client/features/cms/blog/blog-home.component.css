@@ -4,13 +4,15 @@
 }
 
 .post-title,
-.post-author a {
+.post-author {
     color: #b70e0c
 }
 
 .post-title:hover,
-.post-author a:hover {
-    color: #7b7b7b
+.post-author:hover {
+    color: #7b7b7b;
+    text-decoration: none;
+    font-weight: 900;
 }
 
 .post:hover .card-img-top .post-image {

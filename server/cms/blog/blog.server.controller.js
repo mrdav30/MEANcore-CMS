@@ -268,10 +268,19 @@ exports.retrievePostsByAuthor = function (req, res, next) {
         metaDescription: 'Posts by ' + account.get('displayName') + ' :',
         pagination: req.pagination ? req.pagination : null,
         author: {
-          authorName: account.get('displayName'),
-          authorAbout: account.get('about'),
-          authorEmail: account.get('email'),
-          authorAvatar: account.get('avatarUrl')
+          name: account.get('displayName'),
+          about: account.get('about'),
+          email: account.get('email'),
+          avatar: account.get('avatarUrl'),
+          workplace: account.get('workplace'),
+          location: account.get('location'),
+          education: account.get('education'),
+          created: account.get('created'),
+          twitterUrl: account.get('twitterUrl'),
+          facebookUrl: account.get('facebookUrl'),
+          githubUrl: account.get('githubUrl'),
+          linkedinUrl: account.get('linkedinUrl'),
+          personalUrl: account.get('personalUrl')
         }
       };
 
@@ -363,6 +372,8 @@ function retrieveViewModel(vm, query, callback) {
         User.findById(post.authorId).exec(function (err, account) {
           if (err) {
             return cb(err);
+          } else if (!account) {
+            return cb(null);
           }
 
           // add author's information to posts
@@ -491,10 +502,19 @@ exports.retrievePostByDetails = function (req, res) {
 
         // add author's information to posts
         post.set('author', {
-          authorName: account.get('displayName'),
-          authorAbout: account.get('about'),
-          authorEmail: account.get('email'),
-          authorAvatar: account.get('avatarUrl')
+          name: account.get('displayName'),
+          about: account.get('about'),
+          email: account.get('email'),
+          avatar: account.get('avatarUrl'),
+          workplace: account.get('workplace'),
+          location: account.get('location'),
+          education: account.get('education'),
+          created: account.get('created'),
+          twitterUrl: account.get('twitterUrl'),
+          facebookUrl: account.get('facebookUrl'),
+          githubUrl: account.get('githubUrl'),
+          linkedinUrl: account.get('linkedinUrl'),
+          personalUrl: account.get('personalUrl')
         }, {
           strict: false
         });

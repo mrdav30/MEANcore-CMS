@@ -4,18 +4,36 @@
       <h2 class="post-title card-title">{{vm.post.title}}</h2>
       <div class="row">
         <div class="col-sm-1 text-center">
-          <img ngxGravatar [(email)]="vm.post.author.authorEmail" [(src)]="vm.post.author.authorAvatar" class="title-avatar">
+          <img ngxGravatar [(email)]="vm.post.author.email" [(src)]="vm.post.author.avatar" class="title-avatar">
         </div>
         <div class="col-sm-11">
-          <div class="post-author">
+          <div>
             <i class="fas fa-user mr-2"></i>
-            <a [routerLink]="'/blog/posts/author/' + vm.post.authorId">{{vm.post.author.authorName}}</a>
+            <a class="post-author mr-2" [routerLink]="'/blog/posts/author/' + vm.post.authorId">{{vm.post.author.name}}</a>
+            <span class="post-date"><i class="far fa-clock mr-2"></i>{{vm.post.publishDate | date}}</span>
+            <span [hidden]="!vm.post.views" class="post-views"><i class="far fa-eye mr-2"></i>{{vm.post.views}} VIEWS</span>
           </div>
           <div>
-            <span class="post-date mr-2"><i class="far fa-clock mr-2"></i>{{vm.post.publishDate | date}}</span>
-            <span [hidden]="!vm.post.views" class="post-views">
-              <i class="far fa-eye mr-2"></i>{{vm.post.views}} VIEWS
-            </span>
+            <a [hidden]="!vm.post.author.twitterUrl" class="mr-2" [href]="vm.post.author.twitterUrl" target="_blank"
+              placement="top" ngbTooltip="Find me on Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a [hidden]="!vm.post.author.facebookUrl" class="mr-2" [href]="vm.post.author.facebookUrl" target="_blank"
+              placement="top" ngbTooltip="Find me on Facebook">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a [hidden]="!vm.post.author.githubUrl" class="mr-2" [href]="vm.post.author.githubUrl" target="_blank"
+              placement="top" ngbTooltip="Find me on Github">
+              <i class="fab fa-github"></i>
+            </a>
+            <a [hidden]="!vm.post.author.linkedinUrl" class="mr-2" [href]="vm.post.author.linkedinUrl" target="_blank"
+              placement="top" ngbTooltip="Find me on LinkedIn">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a [hidden]="!vm.post.author.personalUrl" [href]="vm.post.author.personalUrl" target="_blank" placement="top"
+              ngbTooltip="My personal site">
+              <i class="fas fa-external-link-alt"></i>
+            </a>
           </div>
         </div>
       </div>
@@ -43,23 +61,63 @@
         <div class="card-body">
           <div class="row">
             <div class="col-sm-2 text-center">
-              <img ngxGravatar [(email)]="vm.post.author.authorEmail" [(src)]="vm.post.author.authorAvatar" class="bio-avatar">
+              <img ngxGravatar [(email)]="vm.post.author.email" [(src)]="vm.post.author.avatar" class="bio-avatar">
             </div>
-            <div class="col-sm-10">
-              <h5>Author : {{vm.post.author.authorName}}</h5>
-              <div [innerHtml]="vm.post.author.authorAbout"></div>
+            <div class="col-sm-6">
+              <h5>Author : {{vm.post.author.name}}</h5>
+              <div [innerHtml]="vm.post.author.about"></div>
+              <div class="author-social-links d-flex flex-row">
+                <a [hidden]="!vm.post.author.twitterUrl" class="mr-2" [href]="vm.post.author.twitterUrl" target="_blank"
+                  placement="top" ngbTooltip="Find me on Twitter">
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a [hidden]="!vm.post.author.facebookUrl" class="mr-2" [href]="vm.post.author.facebookUrl" target="_blank"
+                  placement="top" ngbTooltip="Find me on Facebook">
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+                <a [hidden]="!vm.post.author.githubUrl" class="mr-2" [href]="vm.post.author.githubUrl" target="_blank"
+                  placement="top" ngbTooltip="Find me on Github">
+                  <i class="fab fa-github"></i>
+                </a>
+                <a [hidden]="!vm.post.author.linkedinUrl" class="mr-2" [href]="vm.post.author.linkedinUrl" target="_blank"
+                  placement="top" ngbTooltip="Find me on LinkedIn">
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a [hidden]="!vm.post.author.personalUrl" [href]="vm.post.author.personalUrl" target="_blank" placement="top"
+                  ngbTooltip="My personal site">
+                  <i class="fas fa-external-link-alt"></i>
+                </a>
+              </div>
               <div>
                 <a [routerLink]="'/blog/posts/author/' + vm.post.authorId">
-                  View all posts by {{vm.post.author.authorName}}
+                  View all posts by {{vm.post.author.name}}
                 </a>
+              </div>
+            </div>
+            <div class="col-sm-4 author-personal-info">
+              <div [hidden]="!vm.post.author.workplace">
+                <label class="mr-2"><strong>Workplace -</strong></label>
+                <span>{{vm.post.author.workplace}}</span>
+              </div>
+              <div [hidden]="!vm.post.author.location">
+                <label class="mr-2"><strong>Location -</strong></label>
+                <span>{{vm.post.author.location}}</span>
+              </div>
+              <div [hidden]="!vm.post.author.education">
+                <label class="mr-2"><strong>Education -</strong></label>
+                <span>{{vm.post.author.education}}</span>
+              </div>
+              <div [hidden]="!vm.post.author.created">
+                <label class="mr-2"><strong>Joined -</strong></label>
+                <span>{{vm.post.author.created | date}}</span>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div [hidden]="vm.post.slugTags && !vm.post.slugTags.length" class="post-tags form-group">
-        Tags:
-        <a *ngFor="let tag of vm.post.slugTags" [routerLink]="'/blog/posts/tag/' + tag.slug" class="comma mr-2">{{tag.text}}</a>
+        <strong class="mr-2">Tags :</strong>
+        <a *ngFor="let tag of vm.post.slugTags" [routerLink]="'/blog/posts/tag/' + tag.slug" class="comma mr-2">#{{tag.text}}</a>
       </div>
       <div class="social-share-buttons form-group text-center">
         <div class="social-icons spinned">

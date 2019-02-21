@@ -1,62 +1,60 @@
 <div [hidden]="!this.isLoaded && !this.isDomFormatted" class="container form-group">
 
-    <div class="card form-group">
-        <div class="card-body">
-            <h3 class="card-title">Welcome to MEANcore-CMS</h3>
-            <p>A blogging platform built with the MEAN Stack.</p>
-        </div>
-        <div class="card-footer">
-            <a routerLink="/subscribe" class="btn btn-secondary mr-2">Get started</a>
-            <a routerLink="/about" class="btn btn-secondary">Learn more</a>
-        </div>
+  <div class="card form-group">
+    <div class="card-body">
+      <h3 class="card-title">Welcome to MEANcore-CMS</h3>
+      <p>A blogging platform built with the MEAN Stack.</p>
     </div>
+    <div class="card-footer">
+      <a routerLink="/subscribe" class="btn btn-secondary mr-2">Get started</a>
+      <a routerLink="/about" class="btn btn-secondary">Learn more</a>
+    </div>
+  </div>
 
-    <div class="card form-group">
-        <div class="card-body">
-            <span class="card-text">LATEST ARTICLES</span>
-        </div>
+  <div class="card form-group">
+    <div class="card-body">
+      <span class="card-text">LATEST ARTICLES</span>
     </div>
+  </div>
 
-    <div class="row post-list">
-        <div *ngFor="let post of vm.posts" class="col-sm-6 mb-4">
-            <div class="card post mx-auto w-75">
-                <div class="card-img-top">
-                    <a class="card-link" routerLink="{{post.url}}">
-                        <img class="post-image img-fluid" [src]="post.thumbnailUrl">
-                    </a>
-                </div>
-                <div class="view-btn-container">
-                    <a routerLink="{{post.url}}" class="view-btn btn btn-light btn-outline-dark" placement="top" ngbTooltip="View">
-                        <i class="fas fa-chevron-right"></i>
-                    </a>
-                </div>
-                <div class="card-body post-body">
-                    <div class="post-tag form-group">
-                        <a *ngFor="let tag of post.slugTags" [routerLink]="'/blog/posts/tag/' + tag.slug" class="btn btn-light btn-sm mr-2">{{tag.text}}</a>
-                    </div>
-                    <div class="text-nowrap meta">
-                        <span class="post-date mr-2"><i class="far fa-clock mr-2"></i>{{post.publishDate | date}}</span>
-                        <span class="post-author mr-2">
-                            <i class="fas fa-user mr-2"></i>
-                            <a [routerLink]="'/blog/posts/author/' + post.authorId" placement="top" ngbTooltip="Posts by {{post.authorName}}">
-                                {{post.authorName}}
-                            </a>
-                        </span>
-                        <span [hidden]="!post.views" class="post-views">
-                            <i class="far fa-eye mr-2"></i>{{post.views}} VIEWS
-                        </span>
-                    </div>
-                    <a class="post-title" routerLink="{{post.url}}">{{post.title}}</a>
-                </div>
-            </div>
+  <div class="row post-list">
+    <div *ngFor="let post of vm.posts" class="col-sm-6 mb-4">
+      <div class="card post mx-auto w-75">
+        <div class="card-img-top">
+          <a class="card-link" routerLink="{{post.url}}">
+            <img class="post-image img-fluid" [src]="post.thumbnailUrl">
+          </a>
         </div>
+        <div class="view-btn-container">
+          <a routerLink="{{post.url}}" class="view-btn btn btn-light btn-outline-dark" placement="top" ngbTooltip="View">
+            <i class="fas fa-chevron-right"></i>
+          </a>
+        </div>
+        <div class="card-body post-body">
+          <div class="post-tag form-group">
+            <a *ngFor="let tag of post.slugTags" [routerLink]="'/blog/posts/tag/' + tag.slug" class="btn btn-light btn-sm mr-2">#{{tag.text}}</a>
+          </div>
+          <div class="text-nowrap meta">
+            <span class="post-date mr-2"><i class="far fa-clock mr-2"></i>{{post.publishDate | date}}</span>
+            <span class="mr-2">
+              <i class="fas fa-user mr-2"></i>
+              <a class="post-author" [routerLink]="'/blog/posts/author/' + post.authorId" placement="top" ngbTooltip="Posts by {{post.authorName}}">{{post.authorName}}</a>
+            </span>
+            <span [hidden]="!post.views" class="post-views">
+              <i class="far fa-eye mr-2"></i>{{post.views}} VIEWS
+            </span>
+          </div>
+          <a class="post-title" routerLink="{{post.url}}">{{post.title}}</a>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <div class="row">
-        <div class="col-sm-4"></div>
-        <div class="col-sm-4 d-block text-center">
-            <a routerLink="/blog" class="btn btn-outline-primary">View All Posts<i class="fas fa-chevron-right ml-1"></i></a>
-        </div>
-        <div class="col-sm-4"></div>
+  <div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4 d-block text-center">
+      <a routerLink="/blog" class="btn btn-outline-primary">View All Posts<i class="fas fa-chevron-right ml-1"></i></a>
     </div>
+    <div class="col-sm-4"></div>
+  </div>
 </div>

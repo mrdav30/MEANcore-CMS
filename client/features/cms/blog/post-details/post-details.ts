@@ -21,15 +21,15 @@ export class PostDetails {
 }
 
 export class Author {
-    public authorName: string;
-    public authorAbout: string;
-    public authorEmail: string;
-    public authorAvatar: string;
+    public name: string;
+    public about: string;
+    public email: string;
+    public avatar: string;
 
     constructor() {
-        this.authorName = '';
-        this.authorAbout = '';
-        this.authorEmail = '';
-        this.authorAvatar = '';
+        this.name = '';
+        this.about = '';
+        this.email = '';
+        this.avatar = '';
     }
 }

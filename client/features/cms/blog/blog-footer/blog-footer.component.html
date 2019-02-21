@@ -36,7 +36,7 @@
                 <h3>Tags</h3>
                 <ul class="tag-list">
                     <li *ngFor="let tag of tags" class="tag comma mr-2">
-                        <a [routerLink]="'/blog/posts/tag/' + tag.slug">{{tag.text}}</a>
+                        <a [routerLink]="'/blog/posts/tag/' + tag.slug">#{{tag.text}}</a>
                     </li>
                 </ul>
             </div>

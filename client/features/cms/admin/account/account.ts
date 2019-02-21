@@ -7,8 +7,16 @@ export class Account {
     public password: string;
     public created: string;
     public displayName: string;
+    public workplace: string;
+    public location: string;
+    public education: string;
     public about: string;
     public avatarUrl: string;
+    public twitterUrl: string;
+    public facebookUrl: string;
+    public githubUrl: string;
+    public linkedinUrl: string;
+    public personalUrl: string;
 
     constructor() {
         this.password = '';

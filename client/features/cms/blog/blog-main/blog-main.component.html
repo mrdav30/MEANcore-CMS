@@ -1,66 +1,103 @@
 <div [hidden]="!this.isLoaded && !this.isDomFormatted" class="container form-group">
-    <div *ngIf="vm.author" class="card form-group">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-sm-2 text-center">
-                    <img ngxGravatar [(email)]="vm.author.authorEmail" [(src)]="vm.author.authorAvatar" class="bio-avatar">
-                </div>
-                <div class="col-sm-10">
-                    <h5>{{vm.author.authorName}}</h5>
-                    <div [innerHtml]="vm.author.authorAbout"></div>
-                </div>
+  <div *ngIf="vm.author" class="card form-group">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-2 text-center">
+          <img ngxGravatar [(email)]="vm.author.email" [(src)]="vm.author.avatar" class="bio-avatar">
+        </div>
+        <div class="col-sm-6 form-group">
+          <h5>{{vm.author.name}}</h5>
+          <div [innerHtml]="vm.author.about"></div>
+          <div class="author-social-links d-flex flex-row">
+            <a [hidden]="!vm.author.twitterUrl" class="mr-2" [href]="vm.author.twitterUrl" target="_blank" placement="top"
+              ngbTooltip="Find me on Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a [hidden]="!vm.author.facebookUrl" class="mr-2" [href]="vm.author.facebookUrl" target="_blank" placement="top"
+              ngbTooltip="Find me on Facebook">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a [hidden]="!vm.author.githubUrl" class="mr-2" [href]="vm.author.githubUrl" target="_blank" placement="top"
+              ngbTooltip="Find me on Github">
+              <i class="fab fa-github"></i>
+            </a>
+            <a [hidden]="!vm.author.linkedinUrl" class="mr-2" [href]="vm.author.linkedinUrl" target="_blank" placement="top"
+              ngbTooltip="Find me on LinkedIn">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a [hidden]="!vm.author.personalUrl" [href]="vm.author.personalUrl" target="_blank" placement="top"
+              ngbTooltip="My personal site">
+              <i class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+        </div>
+        <div class="col-sm-4 author-personal-info">
+          <div [hidden]="!vm.author.workplace">
+            <label class="mr-2"><strong>Workplace -</strong></label>
+            <span>{{vm.author.workplace}}</span>
+          </div>
+          <div [hidden]="!vm.author.location">
+            <label class="mr-2"><strong>Location -</strong></label>
+            <span>{{vm.author.location}}</span>
+          </div>
+          <div [hidden]="!vm.author.education">
+            <label class="mr-2"><strong>Education -</strong></label>
+            <span>{{vm.author.education}}</span>
+          </div>
+          <div [hidden]="!vm.author.created">
+            <label class="mr-2"><strong>Joined -</strong></label>
+            <span>{{vm.author.created | date}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="vm.metaDescription" class="card form-group">
+    <div class="view-title card-body">
+      {{vm.metaDescription}}
+    </div>
+  </div>
+  <div class="row mx-auto">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+      <div *ngFor="let post of vm.posts" class="card post mx-auto mb-4">
+        <div class="card-img-top">
+          <a class="card-link" routerLink="{{post.url}}">
+            <img width="700" height="400" class="post-image img-fluid" [src]="post.thumbnailUrl">
+          </a>
+        </div>
+        <div class="card-body post-body">
+          <a class="post-title" routerLink="{{post.url}}">{{post.title}}</a>
+          <div class="d-flex flex-row meta">
+            <span class="post-date mr-2"><i class="far fa-clock mr-2"></i>{{post.publishDate | date}}</span>
+            <span class="mr-2">
+              <i class="fas fa-user mr-2"></i>
+              <a class="post-author" [routerLink]="'/blog/posts/author/' + post.authorId" placement="top" ngbTooltip="Posts by {{post.authorName}}">{{post.authorName}}</a>
+            </span>
+            <span [hidden]="!post.views" class="post-views">
+              <i class="far fa-eye mr-2"></i>{{post.views}} VIEWS</span>
+          </div>
+          <hr />
+          <div class="post-middle">
+            <a *ngFor="let tag of post.slugTags" [routerLink]="'/blog/posts/tag/' + tag.slug" class="btn btn-light btn-sm mr-2">#{{tag.text}}</a>
+            <div class="float-right">
+              <a routerLink="{{post.url}}" class="view-btn btn btn-light btn-outline-dark" placement="top" ngbTooltip="Read more">
+                <i class="fas fa-chevron-right"></i>
+              </a>
             </div>
+          </div>
+          <hr />
+          <div class="post-summary block-with-text">
+            {{post.summary}}
+          </div>
         </div>
+      </div>
     </div>
-    <div *ngIf="vm.metaDescription" class="card form-group">
-        <div class="view-title card-body">
-            {{vm.metaDescription}}
-        </div>
-    </div>
-    <div class="row mx-auto">
-        <div class="col-sm-3"></div>
-        <div class="col-sm-6">
-            <div *ngFor="let post of vm.posts" class="card post mx-auto mb-4">
-                <div class="card-img-top">
-                    <a class="card-link" routerLink="{{post.url}}">
-                        <img width="700" height="400" class="post-image img-fluid" [src]="post.thumbnailUrl">
-                    </a>
-                </div>
-                <div class="card-body post-body">
-                    <a class="post-title" routerLink="{{post.url}}">{{post.title}}</a>
-                    <div class="d-flex flex-row meta">
-                        <span class="post-date mr-2"><i class="far fa-clock mr-2"></i>{{post.publishDate | date}}</span>
-                        <span class="post-author mr-2">
-                            <i class="fas fa-user mr-2"></i>
-                            <a [routerLink]="'/blog/posts/author/' + post.authorId" placement="top" ngbTooltip="Posts by {{post.authorName}}">
-                                {{post.authorName}}
-                            </a>
-                        </span>
-                        <span [hidden]="!post.views" class="post-views">
-                            <i class="far fa-eye mr-2"></i>{{post.views}} VIEWS</span>
-                    </div>
-                    <hr />
-                    <div class="post-middle">
-                        <a *ngFor="let tag of post.slugTags" [routerLink]="'/blog/posts/tag/' + tag.slug" class="btn btn-light btn-sm mr-2">{{tag.text}}</a>
-                        <div class="float-right">
-                            <a routerLink="{{post.url}}" class="view-btn btn btn-light btn-outline-dark" placement="top"
-                                ngbTooltip="Read more">
-                                <i class="fas fa-chevron-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <hr />
-                    <div class="post-summary block-with-text">
-                        {{post.summary}}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3"></div>
-    </div>
-    <div *ngIf="vm.pagination" class="mx-auto w-100">
-        <ngb-pagination class="d-flex justify-content-center" [(page)]="vm.pagination.page_number" [pageSize]="vm.pagination.page_size"
-            [collectionSize]="vm.pagination.collectionSize" [boundaryLinks]="true" (pageChange)="changePage($event)">
-        </ngb-pagination>
-    </div>
+    <div class="col-sm-3"></div>
+  </div>
+  <div *ngIf="vm.pagination" class="mx-auto w-100">
+    <ngb-pagination class="d-flex justify-content-center" [(page)]="vm.pagination.page_number" [pageSize]="vm.pagination.page_size"
+      [collectionSize]="vm.pagination.collectionSize" [boundaryLinks]="true" (pageChange)="changePage($event)">
+    </ngb-pagination>
+  </div>
 </div>
