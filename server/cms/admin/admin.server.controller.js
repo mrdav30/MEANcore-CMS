@@ -25,10 +25,11 @@ exports.checkInstall = function (req, res, next) {
 }
 
 exports.upload = function (req, res, next) {
+    var hostDomain = req.protocol + '://' + req.get('host');
     // respond with image url
     res.status(200).send({
         "uploaded": true,
-        "url": './api/admin/image-uploads/' + req.file.filename
+        "url": hostDomain + '/api/admin/image-uploads/' + req.file.filename
     });
 }
 
