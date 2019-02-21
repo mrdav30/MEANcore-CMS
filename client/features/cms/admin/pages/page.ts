@@ -7,7 +7,7 @@ export class Page {
     public description: string;
     public body: string;
     public publish: boolean;
-    public author_id: string;
+    public authorId: string;
 
     constructor() {
         this.body = null;

@@ -25,7 +25,7 @@ import { PagesService } from '../services/pages.service';
         AdminGridModule,
         UtilsModule
     ],
-    exports:[
+    exports: [
         PagesListComponent
     ],
     declarations: [

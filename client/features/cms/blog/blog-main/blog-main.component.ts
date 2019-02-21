@@ -7,17 +7,17 @@ import { SeoService } from '../../../utils';
 
 @Component({
     moduleId: module.id,
-    selector: 'main-blog-selector',
+    selector: 'app-main-blog-selector',
     templateUrl: `./blog-main.component.html`,
     styleUrls: [`./blog-main.component.css`]
 })
 
 export class BlogMainComponent implements OnInit {
     public postParams: any;
-    public pageNumber: number = 1;
+    public pageNumber = 1;
     public vm: any = {};
-    public isLoaded: boolean = false;
-    public isDomFormatted: boolean = false;
+    public isLoaded = false;
+    public isDomFormatted = false;
 
     constructor(
         private seoService: SeoService,
@@ -34,11 +34,11 @@ export class BlogMainComponent implements OnInit {
                 } else {
                     // query based on param
                     this.postParams = {
-                        tag: params['tag'] ? params['tag'] : null,
-                        year: params['year'] ? params['year'] : null,
-                        month: params['month'] ? params['month'] : null,
-                        author_id: params['author_id'] ? params['author_id'] : null,
-                        searchQuery: params['searchQuery'] ? params['searchQuery'] : null
+                        tag: params.tag ? params.tag : null,
+                        year: params.year ? params.year : null,
+                        month: params.month ? params.month : null,
+                        authorId: params.authorId ? params.authorId : null,
+                        searchQuery: params.searchQuery ? params.searchQuery : null
                     };
                 }
                 this.retrievePosts();
@@ -68,8 +68,8 @@ export class BlogMainComponent implements OnInit {
                     alert('Error loading posts');
                     this.router.navigate(['/blog']);
                 });
-        } else if (this.postParams.author_id) {
-            this.blogService.GetByAuthor(this.postParams.author_id, this.pageNumber)
+        } else if (this.postParams.authorId) {
+            this.blogService.GetByAuthor(this.postParams.authorId, this.pageNumber)
                 .subscribe((data: any) => {
                     this.processPostResults(data);
                 }, (error) => {

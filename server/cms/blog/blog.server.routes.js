@@ -32,7 +32,7 @@ module.exports = function (app) {
   app.route('/api/blog/posts/date/:year/:month')
     .get(pagination, blog.retrievePostsByDate, blog.sendViewModel);
   // posts for author route
-  app.route('/api/blog/posts/author/:author_id')
+  app.route('/api/blog/posts/author/:authorId')
     .get(pagination, blog.retrievePostsByAuthor, blog.sendViewModel);
 
   // post by id route (permalink used by disqus comments plugin)

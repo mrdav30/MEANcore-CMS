@@ -24,11 +24,11 @@ export class RedirectsFormComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.titleService.setTitle('Redirects | The MEANcore Blog')
+        this.titleService.setTitle('Redirects | The MEANcore Blog');
         this.redirect = new Redirect();
         this.route.params
             .subscribe(params => {
-                this.redirectID = params['id'];
+                this.redirectID = params.id;
 
                 if (this.redirectID) {
                     this.redirectsService.GetById(this.redirectID)

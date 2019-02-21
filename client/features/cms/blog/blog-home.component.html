@@ -38,7 +38,7 @@
                         <span class="post-date mr-2"><i class="far fa-clock mr-2"></i>{{post.publishDate | date}}</span>
                         <span class="post-author mr-2">
                             <i class="fas fa-user mr-2"></i>
-                            <a [routerLink]="'/blog/posts/author/' + post.author_id" placement="top" ngbTooltip="Posts by {{post.authorName}}">
+                            <a [routerLink]="'/blog/posts/author/' + post.authorId" placement="top" ngbTooltip="Posts by {{post.authorName}}">
                                 {{post.authorName}}
                             </a>
                         </span>

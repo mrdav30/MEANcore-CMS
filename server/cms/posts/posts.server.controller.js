@@ -34,7 +34,7 @@ exports.getById = function (req, res) {
 
 exports.create = function (req, res) {
     // set author as current user
-    req.body.author_id = req.user.get('_id');
+    req.body.authorId = req.user.get('_id');
     postsModel.create(req.body, function (err) {
         if (err) {
             return res.status(400).send({

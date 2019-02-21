@@ -9,7 +9,7 @@
         <div class="col-sm-11">
           <div class="post-author">
             <i class="fas fa-user mr-2"></i>
-            <a [routerLink]="'/blog/posts/author/' + vm.post.author_id">{{vm.post.author.authorName}}</a>
+            <a [routerLink]="'/blog/posts/author/' + vm.post.authorId">{{vm.post.author.authorName}}</a>
           </div>
           <div>
             <span class="post-date mr-2"><i class="far fa-clock mr-2"></i>{{vm.post.publishDate | date}}</span>
@@ -49,7 +49,7 @@
               <h5>Author : {{vm.post.author.authorName}}</h5>
               <div [innerHtml]="vm.post.author.authorAbout"></div>
               <div>
-                <a [routerLink]="'/blog/posts/author/' + vm.post.author_id">
+                <a [routerLink]="'/blog/posts/author/' + vm.post.authorId">
                   View all posts by {{vm.post.author.authorName}}
                 </a>
               </div>

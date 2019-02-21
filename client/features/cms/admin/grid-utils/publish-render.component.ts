@@ -1,9 +1,9 @@
-import { Component } from "@angular/core";
-import { ICellRendererAngularComp } from "ag-grid-angular";
+import { Component } from '@angular/core';
+import { ICellRendererAngularComp } from 'ag-grid-angular';
 
 @Component({
     moduleId: module.id,
-    selector: 'publish-renderer',
+    selector: 'app-publish-renderer',
     template: `<i *ngIf="model.publish" class="fas fa-check align-super"></i>`,
 })
 

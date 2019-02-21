@@ -6,17 +6,17 @@ import { SeoService } from '../../../utils';
 
 @Component({
     moduleId: module.id,
-    selector: 'contact-selector',
+    selector: 'app-contact-selector',
     templateUrl: `./contact.component.html`
 })
 
 export class ContactComponent implements OnInit {
     public contactDetails: ContactDetails;
-    public isMessageSent: boolean = false;
+    public isMessageSent = false;
 
     constructor(
-        private seoService: SeoService
-        , private contactService: ContactService
+        private seoService: SeoService,
+        private contactService: ContactService
     ) { }
 
     ngOnInit(): void {

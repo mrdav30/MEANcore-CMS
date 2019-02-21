@@ -13,8 +13,8 @@ import { SeoService, AuthService } from '../../utils';
 
 export class BlogHomeComponent implements OnInit {
     public vm: any = {};
-    public isLoaded: boolean = false;
-    public isDomFormatted: boolean = false;
+    public isLoaded = false;
+    public isDomFormatted = false;
 
     constructor(
         private seoService: SeoService,

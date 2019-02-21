@@ -243,7 +243,7 @@ exports.retrievePostsByDate = function (req, res, next) {
 
 exports.retrievePostsByAuthor = function (req, res, next) {
 
-  User.findById(req.params.author_id).exec(function (err, account) {
+  User.findById(req.params.authorId).exec(function (err, account) {
     if (err) {
       return res.status(400).send({
         message: err
@@ -259,7 +259,7 @@ exports.retrievePostsByAuthor = function (req, res, next) {
     //query by date
     var query = {
         publish: true,
-        author_id: req.params.author_id
+        authorId: req.params.authorId
       },
       vm = {
         metaTitle: 'Posts by ' + vm.author.authorName + metaTitleSuffix,
@@ -358,7 +358,7 @@ function retrieveViewModel(vm, query, callback) {
           strict: false
         });
 
-        User.findById(post.author_id).exec(function (err, account) {
+        User.findById(post.authorId).exec(function (err, account) {
           if (err) {
             return cb(err);
           }
@@ -482,7 +482,7 @@ exports.retrievePostByDetails = function (req, res) {
     },
     function (post, callback) {
       //retireve author's information
-      User.findById(post.author_id).exec(function (err, account) {
+      User.findById(post.authorId).exec(function (err, account) {
         if (err) {
           return callback(err);
         }

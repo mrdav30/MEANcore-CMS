@@ -22,7 +22,7 @@ export const BlogMainRoutes: Route[] = [
                 component: BlogMainComponent
             },
             {
-                path: 'author/:author_id',
+                path: 'author/:authorId',
                 component: BlogMainComponent
             },
             {

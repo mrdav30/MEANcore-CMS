@@ -37,7 +37,7 @@ export class UploadAdapterService {
         xhr.withCredentials = true;
         xhr.open('POST', url, true);
         if (headers !== null) {
-            for (let key in headers) {
+            for (const key in headers) {
                 if (typeof (headers[key]) === 'function') {
                     xhr.setRequestHeader(key, headers[key]());
                 } else {

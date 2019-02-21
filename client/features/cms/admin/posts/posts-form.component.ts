@@ -44,11 +44,11 @@ export class PostsFormComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.titleService.setTitle('Posts | The MEANcore Blog')
+        this.titleService.setTitle('Posts | The MEANcore Blog');
         this.post = new Post();
         this.route.params
             .subscribe(params => {
-                this.postID = params['id'] ? params['id'] : null;
+                this.postID = params.id ? params.id : null;
 
                 if (this.postID) {
                     this.postsService.GetById(this.postID)
@@ -80,9 +80,9 @@ export class PostsFormComponent implements OnInit {
         };
     }
 
-    //format date for ngb datepicker
+    // format date for ngb datepicker
     setDate(): void {
-        let savedDate = moment(this.post.publishDate);
+        const savedDate = moment(this.post.publishDate);
 
         this.currentDateObj = {
             day: savedDate.date(),
@@ -97,7 +97,7 @@ export class PostsFormComponent implements OnInit {
     }
 
     slugifyTitle(): void {
-        let slugifyPipe = new SlugifyPipe();
+        const slugifyPipe = new SlugifyPipe();
         this.post.slug = slugifyPipe.transform(this.post.title);
     }
 

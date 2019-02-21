@@ -43,7 +43,7 @@ var postsSchema = new Schema({
   publish: {
     type: Boolean
   },
-  author_id: {
+  authorId: {
     type: String
   }
 }, {

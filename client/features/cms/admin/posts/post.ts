@@ -11,7 +11,7 @@ export class Post {
     public thumbnailUrl: string;
     public url: string;
     public publish: boolean;
-    public author_id: string;
+    public authorId: string;
 
     constructor() {
         this.thumbnailUrl = '';

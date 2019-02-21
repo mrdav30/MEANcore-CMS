@@ -14,7 +14,7 @@ import { SlugifyPipe } from '../../../utils';
 
 @Component({
     moduleId: module.id,
-    selector: 'pages-form-selector',
+    selector: 'app-pages-form-selector',
     templateUrl: `./pages-form.component.html`
 })
 
@@ -25,10 +25,10 @@ export class PagesFormComponent implements OnInit {
     public page: Page;
 
     constructor(
-        private route: ActivatedRoute
-        , private router: Router
-        , private titleService: Title
-        , private pagesService: PagesService
+        private route: ActivatedRoute,
+        private router: Router,
+        private titleService: Title,
+        private pagesService: PagesService
     ) {
         // set options for ckeditor
         this.editorOptions = {
@@ -41,11 +41,11 @@ export class PagesFormComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.titleService.setTitle('Pages | The MEANcore Blog')
+        this.titleService.setTitle('Pages | The MEANcore Blog');
         this.page = new Page();
         this.route.params
             .subscribe(params => {
-                this.pageID = params['id'] ? params['id'] : null;
+                this.pageID = params.id ? params.id : null;
 
                 if (this.pageID) {
                     this.pagesService.GetById(this.pageID)
@@ -75,7 +75,7 @@ export class PagesFormComponent implements OnInit {
     }
 
     slugifyTitle(): void {
-        let slugifyPipe = new SlugifyPipe();
+        const slugifyPipe = new SlugifyPipe();
         this.page.slug = slugifyPipe.transform(this.page.title);
     }
 

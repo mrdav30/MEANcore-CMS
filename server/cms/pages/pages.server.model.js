@@ -27,7 +27,7 @@ var pagesSchema = new Schema({
   publish: {
     type: Boolean
   },
-  author_id: {
+  authorId: {
     type: String
   }
 }, {

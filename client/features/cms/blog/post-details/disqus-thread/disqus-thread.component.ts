@@ -12,24 +12,21 @@ import { WINDOW, DisqusMockWindow } from './disqus-window';
 
 @Injectable()
 export class DisqusThreadComponent implements OnInit {
-    /**
-      * The unique identifier for the page
-      */
+
+    // The unique identifier for the page
     @Input()
     public identifier: string;
 
-    /**
-     * Your Disqus shortname
-     */
+
+    // Your Disqus shortname
     @Input()
     public shortname: string;
 
-    /**
-     * Create new Disqus script
-     * @param {any}        document
-     * @param {MockWindow} window
-     * @param {Location}   location
-     */
+
+    // Create new Disqus script
+    // @param {any}        document
+    // @param {MockWindow} window
+    // @param {Location}   location
     constructor(
         @Inject(DOCUMENT) private document: any,
         @Inject(WINDOW) private window: DisqusMockWindow,
@@ -45,13 +42,11 @@ export class DisqusThreadComponent implements OnInit {
         }
     }
 
-    /**
-     * Get Disqus config
-     * @return {Function}
-     */
+    // Get Disqus config
+    // @return {Function}
     public getConfig(): () => void {
-        let _self = this;
-        return function () {
+        const _self = this;
+        return function() {
             this.page.url = _self.document.URL;
             this.page.identifier = _self.identifier;
             this.language = 'en';
@@ -71,26 +66,24 @@ export class DisqusThreadComponent implements OnInit {
     //  Add the Disqus script to the document.
     private addScriptTag() {
         this.window.disqus_config = this.getConfig();
-        let container = this.getScriptContainer();
-        let script = this.buildScriptTag(`https://${this.shortname}.disqus.com/embed.js`);
+        const container = this.getScriptContainer();
+        const script = this.buildScriptTag(`https://${this.shortname}.disqus.com/embed.js`);
         container.lastChild.appendChild(script);
     }
 
-    /**
-     * Get the HEAD element
-     * @return {HTMLHeadElement}
-     */
+
+    // Get the HEAD element
+    // @return {HTMLHeadElement}
     private getScriptContainer(): HTMLHeadElement {
         return this.document.head;
     }
 
-    /**
-     * Build the Disqus script element.
-     * @param  {string} src
-     * @return {HTMLElement}
-     */
+
+    // Build the Disqus script element.
+    // @param  {string} src
+    // @return {HTMLElement}
     private buildScriptTag(src: string): HTMLElement {
-        let script = this.document.createElement('script');
+        const script = this.document.createElement('script');
         script.setAttribute('src', src);
         script.setAttribute('async', 'true');
         script.setAttribute('type', 'text/javascript');

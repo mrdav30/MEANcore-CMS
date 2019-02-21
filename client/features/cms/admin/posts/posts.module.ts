@@ -27,7 +27,7 @@ import { PostsService } from '../services/posts.service';
         AdminGridModule,
         UtilsModule
     ],
-    exports:[
+    exports: [
         PostsListComponent
     ],
     declarations: [

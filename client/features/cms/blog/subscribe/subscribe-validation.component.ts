@@ -20,8 +20,8 @@ import { SeoService, RECAPTCHA_URL } from '../../../utils';
 export class SubscribeValidationComponent implements OnInit {
     public reCaptcha: boolean;
     private confirmationToken: string;
-    public isValidated: boolean = false;
-    public isTokenInvalid: boolean = false;
+    public isValidated = false;
+    public isTokenInvalid = false;
     public siteKey: string;
 
     constructor(
@@ -35,13 +35,13 @@ export class SubscribeValidationComponent implements OnInit {
         this._seoService.generateTags({
             title: 'Subscription Validation'
         });
-        //subscribe to token parameter, sent on user confirmation
+        // subscribe to token parameter, sent on user confirmation
         this.route.params
             .subscribe(params => {
-                if (params['token'] === 'invalid') {
+                if (params.token === 'invalid') {
                     this.isTokenInvalid = true;
                 } else {
-                    this.confirmationToken = params['token'];
+                    this.confirmationToken = params.token;
                 }
             });
     }
