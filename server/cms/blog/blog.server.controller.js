@@ -450,7 +450,7 @@ exports.retrievePostByDetails = function (req, res) {
         }
 
         //  permalink used by disqus comment and social links
-        post.set('perma_link', hostDomain + '/post?id=' + post._id, {
+        post.set('perma_link', hostDomain + '/api/blog/post?id=' + post._id, {
           strict: false
         });
 
