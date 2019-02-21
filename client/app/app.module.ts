@@ -11,7 +11,6 @@ import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from '../features/page-not-found/page-not-found.component';
 
 import { AppMenuModule } from '../features/app-menu/app-menu.module';
-import { UtilsModule } from '../features/utils';
 import { SignInModule } from '../features/users/sign-in/sign-in.module';
 import { RecoverPasswordModule } from '../features/users/password/recover/recover-password.module';
 import { ResetPasswordModule } from '../features/users/password/reset/reset-password.module';
@@ -19,14 +18,17 @@ import { SignUpModule } from '../features/users/sign-up/sign-up.module';
 
 import { CMSModule } from '../features/cms/cms.module';
 
-import { AuthGuard } from '../features/utils';
-import { AuthService } from '../features/utils';
-import { LoadingInterceptor } from '../features/utils';
-import { LoadingService } from '../features/utils';
-import { MessagingInterceptor } from '../features/utils';
-import { MessagingService } from '../features/utils';
-import { ScriptInjectorService } from '../features/utils';
-import { SeoService } from '../features/utils';
+import {
+  UtilsModule,
+  AuthGuard,
+  AuthService,
+  LoadingInterceptor,
+  LoadingService,
+  MessagingInterceptor,
+  MessagingService,
+  ScriptInjectorService,
+  SeoService
+} from '../features/utils';
 
 @NgModule({
   declarations: [
