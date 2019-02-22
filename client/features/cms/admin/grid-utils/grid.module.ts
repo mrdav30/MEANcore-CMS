@@ -5,20 +5,23 @@ import { AgGridModule } from 'ag-grid-angular';
 
 import { ActionButtonComponent } from '../grid-utils/action-button.component';
 import { PublishRendererComponent } from '../grid-utils/publish-render.component';
+import { UnsubscribeButtonComponent } from '../grid-utils/unsubscribe-button.component';
 
 @NgModule({
     imports: [
         CommonModule,
-        AgGridModule.withComponents([ActionButtonComponent, PublishRendererComponent])
+        AgGridModule.withComponents([ActionButtonComponent, PublishRendererComponent, UnsubscribeButtonComponent])
     ],
     exports: [
         AgGridModule,
         ActionButtonComponent,
-        PublishRendererComponent
+        PublishRendererComponent,
+        UnsubscribeButtonComponent
     ],
     declarations: [
         ActionButtonComponent,
-        PublishRendererComponent
+        PublishRendererComponent,
+        UnsubscribeButtonComponent
     ]
 })
 

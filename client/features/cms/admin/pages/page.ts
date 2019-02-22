@@ -1,5 +1,3 @@
-import * as moment from 'moment';
-
 export class Page {
     public _id: number;
     public title: string;

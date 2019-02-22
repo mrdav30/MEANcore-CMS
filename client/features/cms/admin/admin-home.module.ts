@@ -10,6 +10,7 @@ import { AdminHomeComponent } from './admin-home.component';
 import { AdminPagesModule } from './pages/pages.module';
 import { AdminPostsModule } from './posts/posts.module';
 import { AdminRedirectsModule } from './redirects/redirects.module';
+import { AdminSubscribersModule } from './subscribers/subscribers.module';
 import { AdminAccountModule } from './account/account.module';
 
 @NgModule({
@@ -21,6 +22,7 @@ import { AdminAccountModule } from './account/account.module';
         AdminPagesModule,
         AdminPostsModule,
         AdminRedirectsModule,
+        AdminSubscribersModule,
         AdminAccountModule
     ],
     declarations: [

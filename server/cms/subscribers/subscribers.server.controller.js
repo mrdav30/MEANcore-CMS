@@ -7,7 +7,7 @@ var path = require('path'),
   emailService = config.services.emailService,
   transferService = config.services.transferService,
   mongoose = require('mongoose'),
-  subscribersModel = require('./subscribe.server.model'),
+  subscribersModel = require('./subscribers.server.model'),
   crypto = require('crypto'),
   async = require('async');
 
@@ -56,7 +56,7 @@ exports.sendConfirmation = function (req, res) {
         to: req.body.email,
         from: config.mailer.from,
         subject: config.app.title + ' Newsletter: Please Confirm Subscription',
-        path: 'modules/meancore-cms/server/subscribe/templates/confirm-subscription-email',
+        path: 'server/cms/subscribers/templates/confirm-subscription-email',
         data: {
           appName: config.app.title,
           url: 'http://' + req.headers.host + req.baseUrl + '/api/subscribe/validate/' + token,
@@ -101,7 +101,7 @@ exports.validateSubscriptionToken = function (req, res) {
 };
 
 exports.getAll = function (req, res) {
-  subscribersModel.getAll(function (err, redirects) {
+  subscribersModel.getAll(function (err, subscribers) {
     if (err) {
       return res.status(400).send({
         message: err
@@ -109,7 +109,7 @@ exports.getAll = function (req, res) {
     }
 
     res.send({
-      redirects: redirects
+      subscribers: subscribers
     });
   })
 }
@@ -172,5 +172,5 @@ exports._delete = function (req, res) {
 
 exports.getContact = function (req, res) {
   var rootDir = path.normalize(process.cwd());
-  transferService.responseFile('modules/meancore-cms/server/subscribe/_content/', 'meancore_cms_vCard.vcf', res);
+  transferService.responseFile('server/cms/subscribers/_content/', 'meancore_cms_vCard.vcf', res);
 }

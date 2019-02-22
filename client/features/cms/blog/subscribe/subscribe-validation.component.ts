@@ -13,7 +13,7 @@ import { SeoService, RECAPTCHA_URL } from '../../../utils';
     templateUrl: `./subscribe-validation.component.html`,
     providers: [{
         provide: RECAPTCHA_URL,
-        useValue: '<%=APP_BASE%>validate_captcha'
+        useValue: environment.appBaseUrl + environment.apiBaseUrl + '/validate_captcha'
     }]
 })
 

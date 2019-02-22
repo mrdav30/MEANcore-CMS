@@ -1,35 +1,35 @@
 <div class="container">
-    <div class="row">
-        <div class="col-sm-4"></div>
-        <div class="col-sm-4">
-            <form name="subscribeForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="form-group"><i class="fas fa-binoculars mr-2"></i>Join Our Newsletter!</h4>
-                        <div class="form-group">
-                            <div>
-                                <label for="subscriberEmail">Drop your email here</label>
-                                <input id="subscriberEmail" name="subscriberEmail" type="email" [(ngModel)]="subscriberEmail"
-                                    #email="ngModel" class="form-control" required pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$"
-                                    spellcheck="false" appAnimatedLabel tabindex="4" (keydown.Enter)="onSubmit()" />
-                            </div>
-                            <div *ngIf="f.submitted && email.invalid" class="alert alert-danger">
-                                <div *ngIf="email.errors.required">
-                                    <i class="fas fa-exclamation mr-2"></i>Email is required
-                                </div>
-                                <div *ngIf="email.errors.pattern">
-                                    <i class="fas fa-exclamation mr-2"></i>Email must be a valid email address
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <!-- <a [routerLink]="['/unsubscribe']" routerLinkActive="router-link-active"  class="btn btn-danger float-right">Unsubscribe</a> -->
-                        <button type="submit" class="btn btn-primary float-right">Join</button>
-                    </div>
+  <div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+      <form name="subscribeForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+        <div class="card">
+          <div class="card-body">
+            <h4 class="form-group"><i class="fas fa-binoculars mr-2"></i>Join Our Newsletter!</h4>
+            <div class="form-group">
+              <div>
+                <label for="subscriberEmail">Drop your email here</label>
+                <input id="subscriberEmail" name="subscriberEmail" type="email" [(ngModel)]="subscriberEmail" #email="ngModel"
+                  class="form-control" required pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$" spellcheck="false"
+                  appAnimatedLabel tabindex="4" />
+              </div>
+              <div *ngIf="f.submitted && email.invalid" class="alert alert-danger">
+                <div *ngIf="email.errors.required">
+                  <i class="fas fa-exclamation mr-2"></i>Email is required
                 </div>
-            </form>
+                <div *ngIf="email.errors.pattern">
+                  <i class="fas fa-exclamation mr-2"></i>Email must be a valid email address
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <!-- <a [routerLink]="['/unsubscribe']" routerLinkActive="router-link-active"  class="btn btn-danger float-right">Unsubscribe</a> -->
+            <button type="submit" class="btn btn-primary float-right">Join</button>
+          </div>
         </div>
-        <div class="col-sm-4"></div>
+      </form>
     </div>
+    <div class="col-sm-4"></div>
+  </div>
 </div>

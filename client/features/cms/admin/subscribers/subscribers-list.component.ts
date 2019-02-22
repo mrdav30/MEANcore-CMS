@@ -2,54 +2,54 @@ import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { fromEvent, Observable, Subscription } from 'rxjs';
 
-import { RedirectsService } from '../services/redirects.service';
-import { Redirect } from './redirect';
+import { SubscribersService } from '../services/subscribers.service';
+import { Subscribers } from './subscribers';
 
-import { ActionButtonComponent } from '../grid-utils/action-button.component';
+import { UnsubscribeButtonComponent } from '../grid-utils/unsubscribe-button.component';
 
 @Component({
     moduleId: module.id,
-    selector: 'app-redirects-list-selector',
-    templateUrl: `./redirects-list.component.html`,
+    selector: 'app-subscribers-list-selector',
+    templateUrl: `./subscribers-list.component.html`,
     styleUrls: [`../grid-utils/grid-utils.css`],
     encapsulation: ViewEncapsulation.None // required to style innerHtml
 })
 
-export class RedirectsListComponent implements OnInit, OnDestroy {
-    public redirects: Redirect[] = [];
+export class SubscribersListComponent implements OnInit, OnDestroy {
+    public subscribers: Subscribers[] = [];
     // grid component settings
     public context;
     public gridApi;
-    public redirectsColumnDef = [
-        { headerName: 'From', field: 'from' },
-        { headerName: 'To', field: 'to' },
+    public subscribersColumnDef = [
+        { headerName: 'Email', field: 'email' },
+        { headerName: 'Opt In Date', field: 'optInDate' },
         {
-            headerName: '', field: 'ACTION', cellRenderer: 'actionButtonComponent',
+            headerName: '', field: 'ACTION', cellRenderer: 'unsubscribeButtonComponent',
             cellClass: 'center-btn-cell', filter: false, sortable: false
         }
     ];
     public frameworkComponents = {
-        actionButtonComponent: ActionButtonComponent
+        unsubscribeButtonComponent: UnsubscribeButtonComponent
     };
     private resizeObservable$: Observable<Event>;
     private resizeSubscription$: Subscription;
 
     constructor(
         private router: Router,
-        private redirectService: RedirectsService
+        private subscribersService: SubscribersService
     ) {
         this.context = { componentParent: this };
     }
 
     ngOnInit(): void {
-        this.redirectService.GetAll()
+        this.subscribersService.GetAll()
             .subscribe((data: any) => {
-                this.redirects = data.redirects ? data.redirects as Redirect[] : [];
+                this.subscribers = data.subscribers ? data.subscribers as Subscribers[] : [];
             });
     }
 
-    takeAction(redirect): void {
-        this.router.navigate(['admin/redirects/edit', redirect._id]);
+    unsubscribe(page): void {
+        //this.router.navigate(['admin/redirects/edit', page._id]);
     }
 
     // Ag Grid Related functions
