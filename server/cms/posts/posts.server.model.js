@@ -81,7 +81,7 @@ function getAll(query, pagination, callback) {
     options.limit = pagination.page_size;
   }
 
-  Posts.count(query).exec(function (err, totalCount) {
+  Posts.countDocuments(query).exec(function (err, totalCount) {
     if (err) {
       return callback(err.name + ': ' + err.message);
     }
@@ -134,7 +134,7 @@ function findText(searchText, pagination, callback) {
     options.limit = pagination.page_size;
   }
 
-  Posts.count(query).exec(function (err, totalCount) {
+  Posts.countDocuments(query).exec(function (err, totalCount) {
     if (err) {
       return callback(err.name + ': ' + err.message);
     }
