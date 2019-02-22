@@ -13,12 +13,34 @@ Review the steps for [MEANcore](https://github.com/mrdav30/MEANcore) before gett
 
 # Getting started
 
-1. Go to project folder and install dependencies:
+1. Go to project folder and create a .env file to setup your environment 
+```
+NODE_ENV='development'
+PRODUCTION=false
+DOMAIN=
+
+APP_NAME='MEANcore-CMS'
+APP_BASE_URL='/'
+API_BASE_URL='api'
+APP_DEFAULT_ROUTE='home'
+IMAGE_UPLOAD_URL='/admin/upload'
+TWITTER_HANDLE=
+DISQUS_SHORT_NAME='meancore-cms'
+
+GOOGLE_ANALYTICS_ID=''
+GOOGLE_CLIENT_EMAIL=''
+GOOGLE_PRIVATE_KEY=""
+GOOGLE_VIEW_ID=
+RECAPTCHA_SECRET_KEY=''
+RECAPTCHA_SITE_KEY=''
+```
+
+2. Next install dependencies:
  ```bash
  npm install
  ```
 
-3. Launch development server, and open `localhost:4200` in your browser:
+3. Then launch development server, and open `localhost:4200` in your browser:
  ```bash
  npm start
  ```
