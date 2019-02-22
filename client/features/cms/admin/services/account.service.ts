@@ -16,14 +16,14 @@ export class AccountService {
     ) { }
 
     GetCurrent(): Observable<{}> {
-        return this.http.get(environment.appBase + 'api/admin/accounts/current')
+        return this.http.get(environment.appBaseUrl + environment.apiBaseUrl + '/admin/accounts/current')
             .pipe(
                 catchError(this._handleErrorService.handleError<any>('GetCurrentUser'))
             );
     }
 
     Update(account: any): Observable<{}> {
-        return this.http.put(environment.appBase + 'api/admin/accounts/' + account._id, account)
+        return this.http.put(environment.appBaseUrl + environment.apiBaseUrl + '/admin/accounts/' + account._id, account)
             .pipe(
                 catchError(this._handleErrorService.handleError<any>('UpdateUser'))
             );

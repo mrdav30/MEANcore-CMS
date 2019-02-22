@@ -35,7 +35,7 @@ export class BlogFooterService {
     }
 
     public refresh() {
-        this.cachedDataService.getData(environment.appBase + environment.appEndPoint + '/blog/sharedData')
+        this.cachedDataService.getData(environment.appBaseUrl + environment.apiBaseUrl + '/blog/sharedData')
             .pipe(
                 catchError(this.handleErrorService.handleError<any>('BlogFooterRefresh'))
             )

@@ -16,7 +16,7 @@ export class ContactService {
     ) { }
 
     SendContactForm(contactForm: any): Observable<{}> {
-        return this.http.post(environment.appBase + 'api/contact', contactForm)
+        return this.http.post(environment.appBaseUrl + environment.apiBaseUrl + '/contact', contactForm)
             .pipe(
                 catchError(this.handleErrorService.handleError<any>('Contact'))
             );

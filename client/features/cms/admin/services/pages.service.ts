@@ -6,6 +6,6 @@ import { AbstractRestService, HandleErrorService } from '../../../utils';
 @Injectable()
 export class PagesService extends AbstractRestService {
     constructor(http: HttpClient, _handleErrorService: HandleErrorService) {
-        super(http, 'api/admin/pages', _handleErrorService);
+        super(http, '/admin/pages', _handleErrorService);
     }
 }

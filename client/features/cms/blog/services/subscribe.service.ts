@@ -16,21 +16,21 @@ export class SubscribeService {
     ) { }
 
     SendConfirmation(subscriberEmail: string): Observable<{}> {
-        return this.http.post(environment.appBase + 'api/subscribe/send_confirmation', { email: subscriberEmail })
+        return this.http.post(environment.appBaseUrl + environment.apiBaseUrl + '/subscribe/send_confirmation', { email: subscriberEmail })
             .pipe(
                 catchError(this.handleErrorService.handleError<any>('SubscribeConfirm'))
             );
     }
 
     SendValidation(confirmationToken: string): Observable<{}> {
-        return this.http.post(environment.appBase + 'api/subscribe/send_validation', { token: confirmationToken })
+        return this.http.post(environment.appBaseUrl + environment.apiBaseUrl + '/subscribe/send_validation', { token: confirmationToken })
             .pipe(
                 catchError(this.handleErrorService.handleError<any>('SubscribeValidate'))
             );
     }
 
     Unsubscribe(subscriberEmail: string): Observable<{}> {
-        return this.http.delete(environment.appBase + 'api/unsubscribe/' + subscriberEmail)
+        return this.http.delete(environment.appBaseUrl + environment.apiBaseUrl + '/unsubscribe/' + subscriberEmail)
             .pipe(
                 catchError(this.handleErrorService.handleError<any>('Unsubscribe'))
             );

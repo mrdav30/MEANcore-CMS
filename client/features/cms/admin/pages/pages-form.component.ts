@@ -33,7 +33,7 @@ export class PagesFormComponent implements OnInit {
         // set options for ckeditor
         this.editorOptions = {
             simpleUpload: {
-                uploadUrl: environment.appBase + 'api/admin/upload'
+                uploadUrl: environment.appBaseUrl + 'api/admin/upload'
             },
             extraPlugins: [this.getUploadAdapterPlugin],
             allowedContent: true

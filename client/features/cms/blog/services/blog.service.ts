@@ -17,7 +17,7 @@ export class BlogService {
     ) { }
 
     GetAll(view: string, pageNumber: number): Observable<{}> {
-        return this.http.get(environment.appBase + environment.appEndPoint + '/blog/posts/' + view +
+        return this.http.get(environment.appBaseUrl + environment.apiBaseUrl + '/blog/posts/' + view +
             '?page_size=' + this.defaultPageSize + '&page_number=' + pageNumber)
             .pipe(
                 catchError(this.handleErrorService.handleError<any>('AllBlogPosts'))
@@ -25,7 +25,7 @@ export class BlogService {
     }
 
     GetByTag(tag: string, pageNumber: number): Observable<{}> {
-        return this.http.get(environment.appBase + environment.appEndPoint + '/blog/posts/tag/' + tag +
+        return this.http.get(environment.appBaseUrl + environment.apiBaseUrl + '/blog/posts/tag/' + tag +
             '?page_size=' + this.defaultPageSize + '&page_number=' + pageNumber)
             .pipe(
                 catchError(this.handleErrorService.handleError<any>('BlogPostsByTag'))
@@ -33,7 +33,7 @@ export class BlogService {
     }
 
     GetByMonth(year: string, month: string, pageNumber: number): Observable<{}> {
-        return this.http.get(environment.appBase + environment.appEndPoint + '/blog/posts/date/' + year + '/' + month +
+        return this.http.get(environment.appBaseUrl + environment.apiBaseUrl + '/blog/posts/date/' + year + '/' + month +
             '?page_size=' + this.defaultPageSize + '&page_number=' + pageNumber)
             .pipe(
                 catchError(this.handleErrorService.handleError<any>('BlogPostsByMonth'))
@@ -41,7 +41,7 @@ export class BlogService {
     }
 
     GetByAuthor(authorID: string, pageNumber: number): Observable<{}> {
-        return this.http.get(environment.appBase + environment.appEndPoint + '/blog/posts/author/' + authorID +
+        return this.http.get(environment.appBaseUrl + environment.apiBaseUrl + '/blog/posts/author/' + authorID +
             '?page_size=' + this.defaultPageSize + '&page_number=' + pageNumber)
             .pipe(
                 catchError(this.handleErrorService.handleError<any>('BlogPostsByAuthor'))
@@ -49,7 +49,7 @@ export class BlogService {
     }
 
     SearchByQuery(searchQuery: string, pageNumber: number): Observable<{}> {
-        return this.http.get(environment.appBase + environment.appEndPoint + '/blog/posts/search/' + searchQuery +
+        return this.http.get(environment.appBaseUrl + environment.apiBaseUrl + '/blog/posts/search/' + searchQuery +
             '?page_size=' + this.defaultPageSize + '&page_number=' + pageNumber)
             .pipe(
                 catchError(this.handleErrorService.handleError<any>('BlogPostsByAuthor'))
@@ -57,7 +57,7 @@ export class BlogService {
     }
 
     GetPost(postParams: any): Observable<{}> {
-        return this.http.get(environment.appBase + environment.appEndPoint +
+        return this.http.get(environment.appBaseUrl + environment.apiBaseUrl +
             '/blog/post/details/' + postParams.year + '/' + postParams.month
             + '/' + postParams.day + '/' + postParams.slug)
             .pipe(
