@@ -4,8 +4,6 @@
 /dist
 /tmp
 /out-tsc
-/client/environments/version.ts
-.env
 
 # dependencies
 /node_modules
@@ -113,4 +111,4 @@ config/env/local.js
 config/env/local-*.js
 _content/
 client/assets/install.json
-client/environments/environment.ts
+.env
