@@ -156,7 +156,7 @@ exports.update = function (req, res) {
 }
 
 exports._delete = function (req, res) {
-  subscribersModel.delete(req.params.email, function (err) {
+  subscribersModel.delete(req.params._id, function (err) {
     if (err) {
       return res.status(400).send({
         message: err
@@ -171,6 +171,5 @@ exports._delete = function (req, res) {
 }
 
 exports.getContact = function (req, res) {
-  var rootDir = path.normalize(process.cwd());
   transferService.responseFile('server/cms/subscribers/_content/', 'meancore_cms_vCard.vcf', res);
 }

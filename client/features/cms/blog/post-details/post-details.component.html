@@ -10,7 +10,7 @@
           <div>
             <i class="fas fa-user mr-2"></i>
             <a class="post-author mr-2" [routerLink]="'/blog/posts/author/' + vm.post.authorId">{{vm.post.author.name}}</a>
-            <span class="post-date"><i class="far fa-clock mr-2"></i>{{vm.post.publishDate | date}}</span>
+            <span class="post-date mr-2"><i class="far fa-clock mr-2"></i>{{vm.post.publishDate | date}}</span>
             <span [hidden]="!vm.post.views" class="post-views"><i class="far fa-eye mr-2"></i>{{vm.post.views}} VIEWS</span>
           </div>
           <div>
