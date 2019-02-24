@@ -64,7 +64,7 @@ module.exports.start = function start(callback) {
       console.log(chalk.green('Environment:     ' + process.env.NODE_ENV));
       console.log(chalk.green('Server:          ' + server));
       console.log(chalk.green('Database:        ' + config.mongoDB.uri));
-      console.log(chalk.green('App version:     ' + config.meancore.version));
+      console.log(chalk.green('App version:     ' + config.meancorecms.version));
       console.log('--');
 
       if (callback) callback(app, config);

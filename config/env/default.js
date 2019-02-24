@@ -2,7 +2,7 @@
 
 module.exports = {
   app: {
-    title: 'MEANcore - MeanStack Web Projects!',
+    title: 'MEANcore-CMS - MeanStack CMS!',
     name: 'MEANcore-CMS',
     description: 'Applications runing on mean stack',
     keywords: 'mongodb, express, angular2+, typescript, node.js, mongoose, passport',
@@ -41,7 +41,7 @@ module.exports = {
     secure: false
   },
   // sessionSecret should be changed for security measures and concerns
-  sessionSecret: process.env.SESSION_SECRET || 'MEANcore',
+  sessionSecret: process.env.SESSION_SECRET || 'MEANcore-CMS',
   // sessionKey is the cookie session name
   sessionKey: process.env.SESSION_KEY || 'sessionId',
   sessionCollection: process.env.SESSION_COLLECTION || 'sessions',
