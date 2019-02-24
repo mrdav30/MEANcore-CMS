@@ -186,7 +186,7 @@ function update(_id, postParam, callback) {
 }
 
 function _delete(_id, callback) {
-  Posts.remove({
+  Posts.deleteOne({
       _id: mongoose.Types.ObjectId(_id)
     },
     function (err) {

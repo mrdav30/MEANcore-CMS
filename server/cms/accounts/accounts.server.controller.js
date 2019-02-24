@@ -113,7 +113,7 @@ exports.deleteAccount = function (req, res) {
     return res.status(401).send('You can only delete your own account');
   }
 
-  User.remove({
+  User.deleteOne({
     _id: mongo.helper.toObjectID(user._id)
   }).exec(function (err) {
     if (err) {

@@ -13,8 +13,7 @@ var async = require('async'),
   mongoose = require('mongoose'),
   User = mongoose.model('User');
 
-var metaTitleSuffix = " | The MEANcore Blog",
-  defaultMetaDescription = "MEANcore-CMS is an open source website CMS (Content Management System) and blogging platform developed using the MEAN Stack (MongoDB, Express, AngularJS and Node)."
+var metaTitleSuffix = " | The MEANcore Blog";
 
 exports.checkForRedirects = function (req, res, next) {
   var host = req.get('host');

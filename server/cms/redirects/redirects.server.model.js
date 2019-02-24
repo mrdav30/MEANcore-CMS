@@ -99,7 +99,7 @@ function update(_id, redirectParam, callback) {
 }
 
 function _delete(_id, callback) {
-    Redirects.remove({
+    Redirects.deleteOne({
             _id: mongoose.Types.ObjectId(_id)
         },
         function (err) {

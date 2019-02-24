@@ -113,7 +113,7 @@ function update(_id, pageParam, callback) {
 }
 
 function _delete(_id, callback) {
-  Pages.remove({
+  Pages.deleteOne({
       _id: mongoose.Types.ObjectId(_id)
     },
     function (err) {
