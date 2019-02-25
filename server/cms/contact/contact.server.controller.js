@@ -8,8 +8,8 @@ exports.sendContactRequest = function (req, res) {
   // email data and options
   var mailOptions = {
     to: config.mailer.from,
-    from: req.body.email,
-    subject: req.body.subject,
+    replyTo: req.body.email,
+    subject: 'Contact : ' + req.body.email + ' : ' + req.body.subject,
     emailHTML: req.body.message
   };
 

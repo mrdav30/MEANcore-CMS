@@ -6,7 +6,6 @@ var path = require('path'),
   errorHandler = require(path.resolve('./server/errors.server.controller')),
   emailService = config.services.emailService,
   transferService = config.services.transferService,
-  mongoose = require('mongoose'),
   subscribersModel = require('./subscribers.server.model'),
   crypto = require('crypto'),
   async = require('async');
@@ -29,25 +28,8 @@ exports.sendConfirmation = function (req, res) {
           return done('You are already subscribed');
         } else {
           // email isn't found, assign confirm token
-          var subscriber = {
-            email: req.body.email,
-            optIn: 0, // opt-out until validation
-            subscriptionConfirmToken: token,
-            subscriptionConfirmExpires: Date.now() + 3600000 // 1 hour
-          };
-
-          done(null, subscriber, token);
+          done(null, token);
         }
-      });
-    },
-    function (subscriber, token, done) {
-      // only store confirmation token for now
-      subscribersModel.create(subscriber, function (err) {
-        if (err) {
-          return done(err);
-        }
-
-        done(null, token);
       });
     },
     function (token, done) {
@@ -69,13 +51,30 @@ exports.sendConfirmation = function (req, res) {
           return done(err);
         }
 
+        done(null, token);
+      });
+    },
+    function (token, done) {
+      // store confirmation token for now
+      var subscriber = {
+        email: req.body.email,
+        optIn: 0, // opt-out until validation
+        subscriptionConfirmToken: token,
+        subscriptionConfirmExpires: Date.now() + 3600000 // 1 hour
+      };
+
+      subscribersModel.create(subscriber, function (err) {
+        if (err) {
+          return done(err);
+        }
+
         done(null);
       });
     }
   ], function (err) {
     if (err) {
       return res.status(200).send({
-        message: err,
+        message: errorHandler.getErrorMessage(err),
         msgSent: false
       });
     }
@@ -104,7 +103,7 @@ exports.getAll = function (req, res) {
   subscribersModel.getAll(function (err, subscribers) {
     if (err) {
       return res.status(400).send({
-        message: err
+        message: errorHandler.getErrorMessage(err)
       });
     }
 
@@ -131,7 +130,7 @@ exports.validateSubscription = function (req, res) {
     subscriber.save(subscriber, function (err) {
       if (err) {
         return res.status(400).send({
-          message: err
+          message: errorHandler.getErrorMessage(err)
         });
       }
 
@@ -147,7 +146,7 @@ exports.update = function (req, res) {
   subscribersModel.update(req.params._id, req.body, function (err) {
     if (err) {
       return res.status(400).send({
-        message: err
+        message: errorHandler.getErrorMessage(err)
       });
     }
 
@@ -159,7 +158,7 @@ exports._delete = function (req, res) {
   subscribersModel.delete(req.params._id, function (err) {
     if (err) {
       return res.status(400).send({
-        message: err
+        message: errorHandler.getErrorMessage(err)
       });
     }
 
@@ -171,5 +170,5 @@ exports._delete = function (req, res) {
 }
 
 exports.getContact = function (req, res) {
-  transferService.responseFile('server/cms/subscribers/_content/', 'meancore_cms_vCard.vcf', res);
+  transferService.responseFile('server/cms/subscribers/_content/', 'techievor_vCard.vcf', res);
 }
