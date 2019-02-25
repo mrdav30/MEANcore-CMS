@@ -8,7 +8,7 @@ import { Redirect } from './redirect';
 
 @Component({
     moduleId: module.id,
-    selector: 'redirects-form-selector',
+    selector: 'app-redirects-form-selector',
     templateUrl: `./redirects-form.component.html`
 })
 
