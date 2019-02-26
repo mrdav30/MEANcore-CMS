@@ -19,7 +19,7 @@ import { SeoService, ScriptInjectorService } from '../../../utils';
 })
 
 export class PostDetailsComponent implements OnInit, AfterViewChecked {
-    public disqusShortname: string;
+    public disqusShortname = environment.appName;
     public postParams: any;
     public vm: any = {};
     public isLoaded = false;
@@ -37,7 +37,6 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
 
     ngOnInit(): void {
         this.vm.post = new PostDetails();
-        this.disqusShortname = environment.disqusShortname;
         this.route.params
             .subscribe(params => {
                 this.postParams = {

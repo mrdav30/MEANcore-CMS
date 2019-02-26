@@ -22,8 +22,7 @@ export const environment = {
     appName: '${process.env.APP_NAME}',
     appBaseUrl: '${process.env.APP_BASE_URL}',
     imageUploadUrl: '${process.env.IMAGE_UPLOAD_URL}',
-    twitterHandle: '${process.env.TWITTER_HANDLE}',
-    disqusShortname: '${process.env.DISQUS_SHORT_NAME}'
+    twitterHandle: '${process.env.TWITTER_HANDLE}'
 };
 `;
 
