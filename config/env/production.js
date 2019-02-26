@@ -4,19 +4,20 @@ var fs = require('fs');
 
 module.exports = {
   secure: {
-    ssl: false,
-    privateKey: './config/sslcerts/private.key',
-    certificate: './config/sslcerts/certificate.crt',
+    ssl: process.env.HOST_SECURE || false,
+    privateKey: './config/sslcerts/key.pem',
+    certificate: './config/sslcerts/cert.pem',
     caBundle: './config/sslcerts/ca_bundle.crt'
   },
   port: process.env.PORT || 8443,
   // Binding to 127.0.0.1 is safer in production.
   host: process.env.HOST || '0.0.0.0',
+  proxy: process.env.PROXY || false,
   //replace with your splunk HTTP event collector endpoint
   splunkUrl: 'http://splunk.org:8088/services/collector',
   splunkToken: 'replace-with-spunk',
   mongoDB: {
-    uri: process.env.MONGOHQ_URL || process.env.MONGODB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/meancore',
+    uri: process.env.MONGOHQ_URL || process.env.MONGODB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/meancore-cms',
     options: {
       /**
       * Uncomment to enable ssl certificate based authentication to mongodb
@@ -96,20 +97,22 @@ module.exports = {
     callbackURL: '/auth/github/callback'
   },
   mailer: {
+    test: process.env.MAILER_TEST || false,
     from: process.env.MAILER_FROM || '',
     options: {
+      host: process.env.MAILER_HOST || '',
       service: process.env.MAILER_SERVICE_PROVIDER || '',
+      port: process.env.MAILER_PORT || 587,
       auth: {
-        user: process.env.MAILER_EMAIL_ID || '',
-        pass: process.env.MAILER_PASSWORD || ''
+        user: process.env.MAILER_USER || '',
+        pass: process.env.MAILER_SECRET || ''
       }
       //SNMP
-    //   host: process.env.MAILER_HOST || "smtp.ethereal.email",
-    //   port: process.env.MAILER_PORT || 587,
-    //   tls: {
-    //     rejectUnauthorized: false,
-    //     ciphers: 'SSLv3'
-    //   }
+      //   tls: {
+      //     // do not fail on invalid certs
+      //     rejectUnauthorized: false,
+      //     ciphers: 'SSLv3'
+      //   }
     }
   }
 };

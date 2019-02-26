@@ -44,7 +44,7 @@ var initLocalVariables = function (app, config) {
   // Setting application local variables
   app.locals.title = config.app.title;
   app.locals.description = config.app.description;
-  if (config.secure && config.secure.ssl === true) {
+  if (config.secure && config.secure.ssl) {
     app.locals.secure = config.secure.ssl;
   }
   app.locals.keywords = config.app.keywords;
@@ -54,10 +54,15 @@ var initLocalVariables = function (app, config) {
   // Passing entire config to app locals
   app.locals.config = config;
 
+  // if behind a proxy
+  if (config.proxy) {
+    app.set('trust proxy', 'loopback');
+  }
+
   // Passing the request url to environment locals
   app.use(function (req, res, next) {
-    res.locals.host = req.protocol + '://' + req.hostname;
-    res.locals.url = req.protocol + '://' + req.headers.host + req.originalUrl;
+    res.locals.host = req.protocol + '://' + req.get('host');
+    res.locals.url = req.protocol + '://' + req.get('host') + req.originalUrl;
     next();
   });
 };

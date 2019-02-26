@@ -9,7 +9,7 @@ module.exports = {
   splunkUrl: 'http://10.16.7.195:8088/services/collector',
   splunkToken: 'replace-with-spunk',
   mongoDB: {
-    uri: process.env.MONGOHQ_URL || process.env.MONGODB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/meancore-dev',
+    uri: process.env.MONGOHQ_URL || process.env.MONGODB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/meancore-cms-dev',
     options: {},
     // Enable mongoose debug mode
     debug: process.env.MONGODB_DEBUG || false
@@ -75,22 +75,24 @@ module.exports = {
     callbackURL: '/auth/github/callback'
   },
   mailer: {
+    test: process.env.MAILER_TEST || true,
     from: process.env.MAILER_FROM || 'test@meancore.com',
     options: {
       // using ethereal email for development
       host: process.env.MAILER_HOST || "smtp.ethereal.email",
-      port: process.env.MAILER_PORT || 587,
       service: process.env.MAILER_SERVICE_PROVIDER || '',
+      port: process.env.MAILER_PORT || 587,
       //  secure: true, // true = use TLS, false = upgrade later with STARTTLS
       auth: {
         user: process.env.MAILER_USER || "username",
         pass: process.env.MAILER_PASS || "pass"
       },
-    //   tls: {
-    //     // do not fail on invalid certs
-    //     rejectUnauthorized: false,
-    //     ciphers: 'SSLv3'
-    //   }
+      //SNMP
+      //   tls: {
+      //     // do not fail on invalid certs
+      //     rejectUnauthorized: false,
+      //     ciphers: 'SSLv3'
+      //   }
     }
   },
   livereload: true
