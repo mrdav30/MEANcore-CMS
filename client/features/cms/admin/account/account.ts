@@ -16,6 +16,7 @@ export class Account {
     public facebookUrl: string;
     public githubUrl: string;
     public linkedinUrl: string;
+    public stackOverflowUrl: string;
     public personalUrl: string;
 
     constructor() {

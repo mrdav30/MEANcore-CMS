@@ -149,6 +149,13 @@
           </div>
         </div>
         <div class="row">
+          <label for="stackOverflowUrl" class="col-sm-2 col-form-label">Stack Overflow</label>
+          <div class="col-md-10">
+            <input type="text" id="stackOverflowUrl" name="stackOverflowUrl" class="form-control" [(ngModel)]="account.stackOverflowUrl"
+              spellcheck="false" />
+          </div>
+        </div>
+        <div class="row">
           <label for="personalUrl" class="col-sm-2 col-form-label">Personal Site</label>
           <div class="col-md-10">
             <input type="text" id="personalUrl" name="personalUrl" class="form-control" [(ngModel)]="account.personalUrl"
@@ -160,7 +167,7 @@
     <div class="form-group row">
       <label for="created" class="col-sm-2">Joined</label>
       <div class="col-sm-10">
-          <span id="created" name="created">{{account.created | date}}</span>
+        <span id="created" name="created">{{account.created | date}}</span>
       </div>
     </div>
     <hr />
