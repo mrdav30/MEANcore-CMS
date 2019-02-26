@@ -40,7 +40,7 @@ exports.sendConfirmation = function (req, res) {
         subject: config.app.title + ' Newsletter: Please Confirm Subscription',
         path: 'server/cms/subscribers/templates/confirm-subscription-email',
         data: {
-          appName: config.app.title,
+          appTitle: config.app.title,
           url: 'http://' + req.headers.host + req.baseUrl + '/api/subscribe/validate/' + token,
           fromEmail: config.mailer.from
         }
