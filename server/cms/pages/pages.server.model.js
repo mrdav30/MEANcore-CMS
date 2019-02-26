@@ -98,7 +98,7 @@ function update(_id, pageParam, callback) {
   // fields to update
   var set = _.omit(pageParam, '_id');
 
-  Pages.update({
+  Pages.updateOne({
       _id: mongoose.Types.ObjectId(_id)
     }, {
       $set: set

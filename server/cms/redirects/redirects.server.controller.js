@@ -44,7 +44,7 @@ exports.create = function (req, res) {
 }
 
 exports.update = function (req, res) {
-    redirectsModel.update(req.params._id, req.body, function (err) {
+    redirectsModel.updateOne(req.params._id, req.body, function (err) {
         if (err) {
             return res.status(400).send({
                 message: err

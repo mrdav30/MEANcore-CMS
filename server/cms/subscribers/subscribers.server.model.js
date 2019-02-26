@@ -91,7 +91,7 @@ function update(_id, subscribersParam, callback) {
   // fields to update
   var set = _.omit(subscribersParam, '_id');
 
-  Subscribers.update({
+  Subscribers.updateOne({
       _id: mongoose.Types.ObjectId(_id)
     }, {
       $set: set

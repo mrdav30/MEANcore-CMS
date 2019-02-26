@@ -9,7 +9,6 @@ var path = require('path'),
     fileExists = config.helpers.fileExists;
 
 exports.checkInstall = function (req, res, next) {
-
     try {
         config.installed = JSON.parse(fs.readFileSync(path.resolve('./_content/meancore-cms/install.json')));
     } catch (e) {
@@ -25,11 +24,10 @@ exports.checkInstall = function (req, res, next) {
 }
 
 exports.upload = function (req, res, next) {
-    var hostDomain = req.protocol + '://' + req.get('host');
     // respond with image url
     res.status(200).send({
         "uploaded": true,
-        "url": hostDomain + '/api/admin/image-uploads/' + req.file.filename
+        "url": res.locals.host + '/api/admin/image-uploads/' + req.file.filename
     });
 }
 

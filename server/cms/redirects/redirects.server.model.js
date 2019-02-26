@@ -84,7 +84,7 @@ function update(_id, redirectParam, callback) {
     // fields to update
     var set = _.omit(redirectParam, '_id');
 
-    Redirects.update({
+    Redirects.updateOne({
             _id: mongoose.Types.ObjectId(_id)
         }, {
             $set: set

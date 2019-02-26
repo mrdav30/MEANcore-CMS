@@ -46,7 +46,7 @@ exports.create = function (req, res) {
 }
 
 exports.update = function (req, res) {
-    pagesModel.update(req.params._id, req.body, function (err) {
+    pagesModel.updateOne(req.params._id, req.body, function (err) {
         if (err) {
             return res.status(400).send({
                 message: err

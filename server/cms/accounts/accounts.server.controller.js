@@ -85,7 +85,7 @@ exports.updateAccount = function (req, res) {
         // fields to update
         var set = _.omit(account, '_id');
 
-        User.update({
+        User.updateOne({
             _id: mongoose.Types.ObjectId(account._id)
           }, {
             $set: set

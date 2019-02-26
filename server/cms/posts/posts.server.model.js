@@ -171,7 +171,7 @@ function update(_id, postParam, callback) {
   // fields to update
   var set = _.omit(postParam, '_id');
 
-  Posts.update({
+  Posts.updateOne({
       _id: mongoose.Types.ObjectId(_id)
     }, {
       $set: set
