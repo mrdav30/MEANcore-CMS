@@ -18,7 +18,6 @@ module.exports = function () {
       User.findOne({
           username: username
         })
-        .select('username displayName email appName roles knownIPAddresses password salt')
         .exec(function (err, user) {
           if (err) {
             return done(err);

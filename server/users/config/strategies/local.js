@@ -21,7 +21,6 @@ module.exports = function () {
             email: usernameOrEmail.toLowerCase()
           }]
         })
-        .select('username displayName email appName roles knownIPAddresses password salt')
         .exec(function (err, user) {
           if (err) {
             return done(err);

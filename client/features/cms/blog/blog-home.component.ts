@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 
 import { BlogService } from './services/blog.service';
-import { SeoService, AuthService } from '../../utils';
+import { SeoService } from '../../utils';
 
 @Component({
     moduleId: module.id,
@@ -18,12 +18,10 @@ export class BlogHomeComponent implements OnInit {
 
     constructor(
         private seoService: SeoService,
-        private blogService: BlogService,
-        private authService: AuthService
+        private blogService: BlogService
     ) { }
 
     ngOnInit(): void {
-        this.vm.isLoggedIn = this.authService.user ? true : false;
         // home page doesn't require pagination
         this.blogService.GetAll('Home', null)
             .subscribe((data: any) => {

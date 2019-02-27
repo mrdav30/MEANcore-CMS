@@ -46,6 +46,7 @@ exports.createAdministrator = function (req, res) {
       user.displayName = user.firstName + ' ' + user.lastName;
       var config = req.app.locals.config;
       user.appName = config.app.name.toLowerCase();
+      user.knownIPAddresses.push(req.connection.remoteAddress);
 
       // Then save the user
       user.save(function (err) {
@@ -69,7 +70,7 @@ exports.createAdministrator = function (req, res) {
             }
 
             res.json({
-              user: user
+              user: req.user
             });
           });
         }
