@@ -19,13 +19,20 @@ Review the steps for [MEANcore](https://github.com/mrdav30/MEANcore) before gett
 NODE_ENV='development'
 PRODUCTION=false
 DOMAIN=
+DOMAIN_PATTERN=
+HOST_SECURE=
+PROXY=
 
-APP_NAME='MEANcore-CMS'
+APP_NAME='meancore-cms'
 APP_BASE_URL='/'
 API_BASE_URL='api'
 APP_DEFAULT_ROUTE='home'
 IMAGE_UPLOAD_URL='/admin/upload'
 TWITTER_HANDLE=
+
+SESSION_SECRET='MEANCORE-CMS'
+SESSION_KEY='meancore-cms-key'
+SESSION_COLLECTION='meancore-cms-sessions'
 
 GOOGLE_ANALYTICS_ID=''
 GOOGLE_CLIENT_EMAIL=''
@@ -33,6 +40,14 @@ GOOGLE_PRIVATE_KEY=""
 GOOGLE_VIEW_ID=
 RECAPTCHA_SECRET_KEY=''
 RECAPTCHA_SITE_KEY=''
+
+MAILER_FROM='support@meancorecms.com'
+MAILER_SERVICE_PROVIDER=
+MAILER_HOST='smtp.ethereal.email'
+MAILER_PORT=587
+MAILER_USER="username"
+MAILER_SECRET="pass"
+MAILER_TEST=true
 ```
 
 2. Next install dependencies:
@@ -42,7 +57,7 @@ RECAPTCHA_SITE_KEY=''
 
 3. Then launch development server, and open `localhost:4200` in your browser:
  ```bash
- npm start
+ npm start:dev
  ```
 
 ## Contributing
