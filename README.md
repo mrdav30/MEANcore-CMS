@@ -5,9 +5,11 @@
 [![devDependencies Status](https://david-dm.org/mrdav30/MEANcore-CMS/dev-status.svg)](https://david-dm.org/mrdav30/MEANcore-CMS?type=dev)
 [![Known Vulnerabilities](https://snyk.io/test/github/mrdav30/MEANcore-CMS/badge.svg?targetFile=package.json)](https://snyk.io/test/github/mrdav30/MEANcore-CMS?targetFile=package.json)
 
-# Meancore-CMS
+# MEANcore-CMS
 
 MEANcore-CMS is a blogging platform built using [MEANcore](https://github.com/mrdav30/MEANcore). MEANcore-CMS has been designed with developers in mind, to be easily extensible and customisable throughout the code base.
+
+Check out our blog [Techievor](https://techievor.com), built on MEANcore-CMS, to see the platform in action.
 
 ## Prerequisites
 Review the steps for [MEANcore](https://github.com/mrdav30/MEANcore) before getting started.
