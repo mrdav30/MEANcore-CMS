@@ -56,7 +56,7 @@ module.exports = {
         "'self'",
         "'unsafe-eval'",
         'https://cdn.embedly.com/',
-        'https://meancore.disqus.com/',
+        'https://meancore-cms.disqus.com/',
         'https://www.googletagmanager.com/gtag/',
         'https://www.google-analytics.com/'
       ],
