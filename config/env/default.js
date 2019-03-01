@@ -81,6 +81,7 @@ module.exports = {
       ],
       imgSrc: [
         "'self'",
+        'data:',
         'https://referrer.disqus.com/juggler/',
         'https://c.disquscdn.com/next/embed/assets/img/',
         'https://www.gravatar.com/avatar/',
