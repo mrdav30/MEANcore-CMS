@@ -52,22 +52,37 @@ module.exports = {
     // Specify directives as normal.
     directives: {
       defaultSrc: ["'self'"],
+      connectSrc: [
+        "'self",
+        'https://links.services.disqus.com/api/'
+      ],
       scriptSrc: [
         "'self'",
         "'unsafe-eval'",
         'https://cdn.embedly.com/',
         'https://meancore-cms.disqus.com/',
+        'https://disqus.com/next/',
+        'https://c.disquscdn.com/next/embed/',
         'https://www.googletagmanager.com/gtag/',
         'https://www.google-analytics.com/'
       ],
-      styleSrc: ["'self'", "'unsafe-inline'"],
+      styleSrc: [
+        "'self'",
+        "'unsafe-inline'",
+        'https://c.disquscdn.com/next/embed/styles/',
+      ],
       fontSrc: [
         "'self'",
         'https://fonts.gstatic.com/s/montserrat/'
       ],
-      childSrc: ["'self'"],
+      childSrc: [
+        "'self'",
+        'https://disqus.com'
+      ],
       imgSrc: [
         "'self'",
+        'https://referrer.disqus.com/juggler/',
+        'https://c.disquscdn.com/next/embed/assets/img/',
         'https://www.gravatar.com/avatar/',
         'https://www.google-analytics.com/'
       ],
