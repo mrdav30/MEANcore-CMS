@@ -192,7 +192,7 @@ exports.retrievePostsByTag = function (req, res, next) {
   var queryTag = "^" + _.replace(req.params.tag, '-', '.*')
   var query = {
       publish: true,
-      tags: new RegExp(queryTag)
+      tags: new RegExp(queryTag, "i")
     },
     // meta info
     vm = {
