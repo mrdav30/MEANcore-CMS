@@ -47,13 +47,35 @@ module.exports = {
   // sessionKey is the cookie session name
   sessionKey: process.env.SESSION_KEY || 'sessionId',
   sessionCollection: process.env.SESSION_COLLECTION || 'sessions',
-  // Lusca config
-  csrf: {
-    csrf: false,
-    csp: false,
-    xframe: 'SAMEORIGIN',
-    p3p: 'ABCDEF',
-    xssProtection: true
+  // Helmet-CPS config
+  cps: {
+    // Specify directives as normal.
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: [
+        "'self'",
+        "'unsafe-eval'",
+        'https://cdn.embedly.com/',
+        'https://meancore.disqus.com/',
+        'https://www.googletagmanager.com/gtag/',
+        'https://www.google-analytics.com/'
+      ],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      fontSrc: [
+        "'self'",
+        'https://fonts.gstatic.com/s/montserrat/'
+      ],
+      childSrc: ["'self'"],
+      imgSrc: [
+        "'self'",
+        'https://www.gravatar.com/avatar/',
+        'https://www.google-analytics.com/'
+      ],
+      reportUri: '/report-violation',
+      objectSrc: ["'none'"],
+      upgradeInsecureRequests: true,
+      workerSrc: false // This is not set.
+    }
   },
   illegalUsernames: ['meancore', 'administrator', 'password', 'admin', 'user',
     'unknown', 'anonymous', 'null', 'undefined', 'api'
