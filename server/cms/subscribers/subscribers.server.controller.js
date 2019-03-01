@@ -143,7 +143,7 @@ exports.validateSubscription = function (req, res) {
 }
 
 exports.update = function (req, res) {
-  subscribersModel.updateOne(req.params._id, req.body, function (err) {
+  subscribersModel.update(req.params._id, req.body, function (err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
