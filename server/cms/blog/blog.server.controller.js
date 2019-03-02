@@ -13,10 +13,7 @@ var async = require('async'),
   mongoose = require('mongoose'),
   User = mongoose.model('User');
 
-var metaTitleSuffix = " | The MEANcore Blog";
-
 exports.checkForRedirects = function (req, res, next) {
-  var host = req.get('host');
   var url = req.url.toLowerCase();
 
   // redirects entered into cms
@@ -148,7 +145,9 @@ exports.retrieveAllPosts = function (req, res, next) {
       publish: true
     },
     vm = {
-      metaTitle: forView + metaTitleSuffix,
+      metaTitle: forView,
+      metaImage: req.protocol + '://' + req.get('host') + config.app.logo,
+      metaDescription: config.app.description,
       pagination: req.pagination ? req.pagination : null
     };
 
@@ -168,8 +167,9 @@ exports.retrieveAllPosts = function (req, res, next) {
 exports.retrievePostsBySearch = function (req, res, next) {
   var query = _.trim(req.params.searchText),
     vm = {
-      metaTitle: 'Posts containing "' + query + '"' + metaTitleSuffix,
-      metaDescription: 'Posts containing "' + query + '" :',
+      metaTitle: 'Posts containing ' + query,
+      metaImage: req.protocol + '://' + req.get('host') + config.app.logo,
+      pageHeader: 'Posts containing "' + query + '" :',
       pagination: req.pagination ? req.pagination : null
     };
 
@@ -196,8 +196,9 @@ exports.retrievePostsByTag = function (req, res, next) {
     },
     // meta info
     vm = {
-      metaTitle: 'Posts tagged "' + _.replace(req.params.tag, '-', ' ') + '"' + metaTitleSuffix,
-      metaDescription: 'Posts tagged "' + _.replace(req.params.tag, '-', ' ') + '" :',
+      metaTitle: 'Posts tagged ' + _.replace(req.params.tag, '-', ' '),
+      metaImage: req.protocol + '://' + req.get('host') + config.app.logo,
+      pageHeader: 'Posts tagged "' + _.replace(req.params.tag, '-', ' ') + '" :',
       pagination: req.pagination ? req.pagination : null
     };
   retrieveViewModel(vm, query, function (err) {
@@ -223,8 +224,9 @@ exports.retrievePostsByDate = function (req, res, next) {
     },
     // meta info
     vm = {
-      metaTitle: 'Posts for ' + moment(req.params.month, 'MM').format('MMMM') + ' ' + req.params.year + metaTitleSuffix,
-      metaDescription: 'Posts for ' + moment(req.params.month, 'MM').format('MMMM') + ' ' + req.params.year + ' :',
+      metaTitle: 'Posts for ' + moment(req.params.month, 'MM').format('MMMM') + ' ' + req.params.year,
+      metaImage: req.protocol + '://' + req.get('host') + config.app.logo,
+      pageHeader: 'Posts for ' + moment(req.params.month, 'MM').format('MMMM') + ' ' + req.params.year + ' :',
       pagination: req.pagination ? req.pagination : null
     };
   retrieveViewModel(vm, query, function (err) {
@@ -263,8 +265,9 @@ exports.retrievePostsByAuthor = function (req, res, next) {
         authorId: req.params.authorId
       },
       vm = {
-        metaTitle: 'Posts by ' + account.get('displayName') + metaTitleSuffix,
-        metaDescription: 'Posts by ' + account.get('displayName') + ' :',
+        metaTitle: 'Posts by ' + account.get('displayName'),
+        metaImage: req.protocol + '://' + req.get('host') + config.app.logo,
+        pageHeader: 'Posts by ' + account.get('displayName') + ' :',
         pagination: req.pagination ? req.pagination : null,
         author: {
           name: account.get('displayName'),
@@ -464,6 +467,8 @@ exports.retrievePostByDetails = function (req, res) {
           strict: false
         });
 
+        post.set('url', hostDomain + post.get('url'));
+
         // slugify post tags
         post.set('slugTags', _.map(post.tags, function (tag) {
           return {
@@ -530,7 +535,7 @@ exports.retrievePostByDetails = function (req, res) {
 
     // meta tags
     var vm = {};
-    vm.metaTitle = post.title + metaTitleSuffix;
+    vm.metaTitle = post.title;
     vm.metaDescription = post.summary;
     vm.post = post ? post : {};
 
@@ -554,8 +559,8 @@ exports.retrievePageDetails = function (req, res, next) {
       vm.page = page;
 
       // meta tags
-      vm.metaTitle = vm.page.title + metaTitleSuffix;
-      vm.metaDescription = vm.page.description + metaTitleSuffix;
+      vm.metaTitle = vm.page.title;
+      vm.metaDescription = vm.page.description;
 
       render('pages/details.view.html', req, res);
     })

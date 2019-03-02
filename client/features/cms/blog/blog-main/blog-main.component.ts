@@ -92,7 +92,9 @@ export class BlogMainComponent implements OnInit {
             this.vm = data.vm ? data.vm : {};
             this.seoService.generateTags({
                 title: this.vm.metaTitle,
-                description: this.vm.metaDescription ? this.vm.metaDescription : ''
+                description: this.vm.metaDescription || '',
+                type: 'website',
+                image: this.vm.metaImage || ''
             });
             this.isLoaded = true;
             this.isDomFormatted = true;

@@ -11,18 +11,18 @@
     </div>
   </div>
 
-  <div class="card form-group">
+  <div class="card">
     <div class="card-body">
       <span class="card-text">LATEST ARTICLES</span>
     </div>
   </div>
 
   <div class="row post-list">
-    <div *ngFor="let post of vm.posts" class="col-sm-6 mb-4">
-      <div class="card post mx-auto w-75">
+    <div *ngFor="let post of vm.posts" class="col-sm-6 p-4">
+      <div class="card post mx-auto w-100">
         <div class="card-img-top">
           <a class="card-link" routerLink="{{post.url}}">
-            <img class="post-image img-fluid" [src]="post.thumbnailUrl">
+            <img width="550" height="300" class="post-image img-fluid" [src]="post.thumbnailUrl">
           </a>
         </div>
         <div class="view-btn-container">
@@ -34,7 +34,7 @@
           <div class="post-tag form-group">
             <a *ngFor="let tag of post.slugTags" [routerLink]="'/blog/posts/tag/' + tag.slug" class="btn btn-light btn-sm mr-2">#{{tag.text}}</a>
           </div>
-          <div class="text-nowrap meta">
+          <div class="d-flex flex-row meta">
             <span class="post-date mr-2"><i class="far fa-clock mr-2"></i>{{post.publishDate | date}}</span>
             <span class="mr-2">
               <i class="fas fa-user mr-2"></i>

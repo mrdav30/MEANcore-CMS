@@ -22,6 +22,7 @@ export const environment = {
     appName: '${process.env.APP_NAME}',
     appBaseUrl: '${process.env.APP_BASE_URL}',
     imageUploadUrl: '${process.env.IMAGE_UPLOAD_URL}',
+    metaTitleSuffix: '${process.env.META_TITLE_SUFFIX}',
     twitterHandle: '${process.env.TWITTER_HANDLE}'
 };
 `;

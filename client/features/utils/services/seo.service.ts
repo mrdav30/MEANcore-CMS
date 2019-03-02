@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 export class SeoService {
     private siteName = environment.appName;
     private twitterHandle = environment.twitterHandle;
+    private metaTitleSuffix = environment.metaTitleSuffix;
 
     constructor(
         private titleService: Title,
@@ -20,6 +21,7 @@ export class SeoService {
             { name: 'twitter:site', content: '' },
             { name: 'twitter:title', content: '' },
             { name: 'twitter:description', content: '' },
+            { name: 'twitter:creator', content: '' },
             { name: 'twitter:image', content: '' },
             { property: 'og:type', content: '' },
             { property: 'og:site_name', content: '' },
@@ -42,7 +44,7 @@ export class SeoService {
             ...config
         };
 
-        this.titleService.setTitle(config.title);
+        this.titleService.setTitle(config.title + ' ' + this.metaTitleSuffix);
 
         this.meta.updateTag({ name: 'description', content: config.description });
         this.meta.updateTag({ name: 'author', content: config.author });
@@ -52,13 +54,17 @@ export class SeoService {
         this.meta.updateTag({ name: 'twitter:site', content: this.twitterHandle });
         this.meta.updateTag({ name: 'twitter:title', content: config.title });
         this.meta.updateTag({ name: 'twitter:description', content: config.description });
+        this.meta.updateTag({ name: 'twitter:creator', content: this.twitterHandle });
         this.meta.updateTag({ name: 'twitter:image', content: config.image });
 
-        this.meta.updateTag({ property: 'og:type', content: 'article' });
+        this.meta.updateTag({ property: 'og:type', content: config.type || 'article' });
         this.meta.updateTag({ property: 'og:site_name', content: this.siteName });
-        this.meta.updateTag({ property: 'og:title', content: config.title });
-        this.meta.updateTag({ property: 'og:description', content: config.description });
-        this.meta.updateTag({ property: 'og:image', content: config.image });
+        this.meta.updateTag({ name: 'title', property: 'og:title', content: config.title });
+        this.meta.updateTag({ name: 'description', property: 'og:description', content: config.description });
+        this.meta.updateTag({ name: 'image', property: 'og:image', content: config.image });
+        this.meta.updateTag({ property: 'og.image:type', content: 'png' });
+        this.meta.updateTag({ property: 'og:image:width', content: '750' });
+        this.meta.updateTag({ property: 'og:image:height', content: '500' });
         this.meta.updateTag({ property: 'og:url', content: config.url });
     }
 }

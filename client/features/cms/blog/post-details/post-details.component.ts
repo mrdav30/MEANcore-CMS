@@ -55,7 +55,7 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
                             this.seoService.generateTags({
                                 title: this.vm.metaTitle,
                                 description: this.vm.metaDescription,
-                                author: this.vm.post.author.authorName,
+                                author: this.vm.post.author.name,
                                 keywords: _.map(this.vm.post.tags).join(', '),
                                 url: this.vm.post.perma_link,
                                 image: this.vm.post.thumbnailUrl

@@ -6,7 +6,7 @@ import { SeoService } from '../../utils';
 
 @Component({
     moduleId: module.id,
-    selector: 'home-blog-selector',
+    selector: 'app-home-blog-selector',
     templateUrl: `./blog-home.component.html`,
     styleUrls: [`./blog-home.component.css`]
 })
@@ -28,7 +28,10 @@ export class BlogHomeComponent implements OnInit {
                 if (data && data.vm) {
                     this.vm = data.vm;
                     this.seoService.generateTags({
-                        title: this.vm.metaTitle
+                        title: this.vm.metaTitle,
+                        description: this.vm.metaDescription,
+                        type: 'website',
+                        image: this.vm.metaImage || ''
                     });
                     this.isLoaded = true;
                     this.isDomFormatted = true;
