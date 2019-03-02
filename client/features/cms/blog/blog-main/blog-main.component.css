@@ -37,18 +37,14 @@
   font-size: 2em;
 }
 
-.author-personal-info {
-  border-left: 1px solid #000000
-}
-
 /*styling required for cdk virtual scroll*/
 /* .post-list-viewport {
     height: 150vh;
     height: 700px
-} */
+}  */
 
 /* styling for virtual scrollbar */
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 1em;
 }
 
@@ -59,6 +55,5 @@
 
 ::-webkit-scrollbar-thumb {
   background-color: rgb(238, 169, 79);
-}
+} */
 
-/****/
