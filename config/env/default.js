@@ -55,7 +55,7 @@ module.exports = {
     directives: {
       defaultSrc: ["'self'"],
       connectSrc: [
-        "'self",
+        "'self'",
         'https://links.services.disqus.com/api/'
       ],
       scriptSrc: [
