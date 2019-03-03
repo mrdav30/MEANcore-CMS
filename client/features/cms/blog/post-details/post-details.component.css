@@ -21,3 +21,12 @@
 .author-social-links{
     font-size: 2em;
 }
+
+a {
+  color: #b70e0c;
+}
+
+a:focus,
+a:hover {
+  color: #7b7b7b;
+}

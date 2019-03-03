@@ -37,6 +37,14 @@
   font-size: 2em;
 }
 
+.author-social-links a {
+  color: #b70e0c;
+}
+
+.author-social-links a:hover {
+  color: #7b7b7b;
+}
+
 /*styling required for cdk virtual scroll*/
 /* .post-list-viewport {
     height: 150vh;
