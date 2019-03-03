@@ -37,7 +37,7 @@ export class PostsFormComponent implements OnInit {
         // set options for ckeditor
         this.editorOptions = {
             simpleUpload: {
-                uploadUrl: environment.appBaseUrl + environment.imageUploadUrl
+                uploadUrl: environment.appBaseUrl + environment.apiBaseUrl + environment.imageUploadUrl
             },
             extraPlugins: [this.getUploadAdapterPlugin],
             allowedContent: true
