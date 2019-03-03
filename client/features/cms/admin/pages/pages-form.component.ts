@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import * as CustomEditor from '../_content/ckeditor-custom/ckeditor';
@@ -15,7 +15,8 @@ import { SlugifyPipe } from '../../../utils';
 @Component({
     moduleId: module.id,
     selector: 'app-pages-form-selector',
-    templateUrl: `./pages-form.component.html`
+    templateUrl: `./pages-form.component.html`,
+    encapsulation: ViewEncapsulation.None // required to style innerHtml
 })
 
 export class PagesFormComponent implements OnInit {
