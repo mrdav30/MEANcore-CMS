@@ -36,6 +36,10 @@ var postsSchema = new Schema({
     type: String,
     trim: true
   },
+  updated: {
+    type: String,
+    trim: true
+  },
   url: {
     type: String,
     trim: true
@@ -167,6 +171,7 @@ function create(postParam, callback) {
 function update(_id, postParam, callback) {
   // generate slug from title if empty
   postParam.slug = postParam.slug || slugify(postParam.title);
+  postParam.updated = Date.now();
 
   // fields to update
   var set = _.omit(postParam, '_id');
