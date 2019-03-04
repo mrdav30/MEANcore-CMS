@@ -5,17 +5,16 @@
 .post-author:hover {
   color: #7b7b7b;
   text-decoration: none;
-  font-weight: 900;
 }
 
 .title-avatar {
-  width: 50px !important;
-  height: 50px !important;
+  width: 4em !important;
+  height: 4em !important;
 }
 
 .bio-avatar {
-  width: 100px !important;
-  height: 100px !important;
+  width: 10em !important;
+  height: 10em !important;
 }
 
 .author-social-links{

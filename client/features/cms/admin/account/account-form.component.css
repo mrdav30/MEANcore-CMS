@@ -1,4 +1,8 @@
 .bio-avatar {
-    width: 100px !important;
-    height: 100px !important;
+  width: 10em !important;
+  height: 10em !important;
+}
+
+.ck.ck-editor__main>.ck-editor__editable {
+  max-height: 500px
 }

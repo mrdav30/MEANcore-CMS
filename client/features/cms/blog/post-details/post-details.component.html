@@ -1,4 +1,4 @@
-<div [hidden]="!this.isLoaded && !this.isDomFormatted" class="container">
+<div [hidden]="!isLoaded && !isDomFormatted" class="container">
   <div class="card form-group">
     <div class="card-body">
       <h2 class="post-title card-title">{{vm.post.title}}</h2>
@@ -38,6 +38,9 @@
               ngbTooltip="My personal site">
               <i class="fas fa-external-link-alt"></i>
             </a>
+          </div>
+          <div [hidden]="!vm.post.updated">
+            <strong>Last Updated - </strong>{{vm.post.updated | date}}
           </div>
         </div>
       </div>
@@ -87,8 +90,8 @@
                   placement="top" ngbTooltip="Find me on LinkedIn">
                   <i class="fab fa-linkedin-in"></i>
                 </a>
-                <a [hidden]="!vm.post.author.stackOverflowUrl" class="mr-2" [href]="vm.post.author.stackOverflowUrl" target="_blank"
-                  placement="top" ngbTooltip="Find me on StackOverflow">
+                <a [hidden]="!vm.post.author.stackOverflowUrl" class="mr-2" [href]="vm.post.author.stackOverflowUrl"
+                  target="_blank" placement="top" ngbTooltip="Find me on StackOverflow">
                   <i class="fab fa-stack-overflow"></i>
                 </a>
                 <a [hidden]="!vm.post.author.personalUrl" [href]="vm.post.author.personalUrl" target="_blank" placement="top"

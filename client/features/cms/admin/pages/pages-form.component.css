@@ -2,7 +2,7 @@
   width: 50%
 }
 
-.ck .ck-content .ck-editor__editable {
+.ck.ck-editor__main>.ck-editor__editable {
   max-height: 500px
 }
 
