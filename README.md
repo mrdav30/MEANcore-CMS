@@ -14,9 +14,7 @@ Check out the platform in action by visiting our blog powered by MEANcore-CMS, [
 ## Prerequisites
 Review the steps for [MEANcore](https://github.com/mrdav30/MEANcore) before getting started.
 
-Or you can checkout [Techievor](https://techievor.com) for a full rundown on how to setup the MEAN stack with MEANcore:
-* [Windows](https://techievor.com/blog/post/2019/02/28/how-to-install-the-mean-stack-on-windows)
-* [CentOS](https://techievor.com/blog/post/2019/03/03/how-to-install-the-mean-stack-on-centos)
+Or you can checkout [Techievor](https://techievor.com) for a full rundown on [how to setup MEANcore-CMS](https://techievor.com/blog/post/2019/03/05/meancore-cms-mean-stack-cms-blogging-platform)
 
 # Getting started
 
