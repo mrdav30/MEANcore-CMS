@@ -5,6 +5,7 @@ import { fromEvent, Observable, Subscription } from 'rxjs';
 import { RedirectsService } from '../services/redirects.service';
 import { Redirect } from './redirect';
 
+import { TooltipRenderComponent } from '../grid-utils/tooltip-render.component';
 import { ActionButtonComponent } from '../grid-utils/action-button.component';
 
 @Component({
@@ -21,15 +22,16 @@ export class RedirectsListComponent implements OnInit, OnDestroy {
     public context;
     public gridApi;
     public redirectsColumnDef = [
-        { headerName: 'From', field: 'from' },
-        { headerName: 'To', field: 'to' },
+        { headerName: 'From', field: 'from', cellRenderer: 'tooltipCellRenderer', filter: 'agTextColumnFilter' },
+        { headerName: 'To', field: 'to', cellRenderer: 'tooltipCellRenderer', filter: 'agTextColumnFilter' },
         {
             headerName: '', field: 'ACTION', cellRenderer: 'actionButtonComponent',
             cellClass: 'center-btn-cell', filter: false, sortable: false
         }
     ];
     public frameworkComponents = {
-        actionButtonComponent: ActionButtonComponent
+        actionButtonComponent: ActionButtonComponent,
+        tooltipCellRenderer: TooltipRenderComponent
     };
     private resizeObservable$: Observable<Event>;
     private resizeSubscription$: Subscription;

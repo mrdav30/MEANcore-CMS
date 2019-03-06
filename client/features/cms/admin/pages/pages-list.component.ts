@@ -5,6 +5,7 @@ import { fromEvent, Observable, Subscription } from 'rxjs';
 import { PagesService } from '../services/pages.service';
 import { Page } from './page';
 
+import { TooltipRenderComponent } from '../grid-utils/tooltip-render.component';
 import { ActionButtonComponent } from '../grid-utils/action-button.component';
 import { PublishRendererComponent } from '../grid-utils/publish-render.component';
 
@@ -22,7 +23,7 @@ export class PagesListComponent implements OnInit, OnDestroy {
     public context;
     public gridApi;
     public pagesColumnDef = [
-        { headerName: 'Title', field: 'title' },
+        { headerName: 'Title', field: 'title', cellRenderer: 'tooltipCellRenderer', filter: 'agTextColumnFilter' },
         {
             headerName: 'Published', field: 'publish', cellRenderer: 'publishRendererComponent',
             cellClass: 'center-btn-cell'
@@ -34,7 +35,8 @@ export class PagesListComponent implements OnInit, OnDestroy {
     ];
     public frameworkComponents = {
         actionButtonComponent: ActionButtonComponent,
-        publishRendererComponent: PublishRendererComponent
+        publishRendererComponent: PublishRendererComponent,
+        tooltipCellRenderer: TooltipRenderComponent
     };
     private resizeObservable$: Observable<Event>;
     private resizeSubscription$: Subscription;

@@ -5,6 +5,7 @@ import { fromEvent, Observable, Subscription } from 'rxjs';
 import { PostsService } from '../services/posts.service';
 import { Post } from './post';
 
+import { TooltipRenderComponent } from '../grid-utils/tooltip-render.component';
 import { ActionButtonComponent } from '../grid-utils/action-button.component';
 import { PublishRendererComponent } from '../grid-utils/publish-render.component';
 
@@ -22,8 +23,8 @@ export class PostsListComponent implements OnInit, OnDestroy {
     public context;
     public gridApi;
     public postsColumnDef = [
-        { headerName: 'Title', field: 'title' },
-        { headerName: 'Tags', field: 'tags' },
+        { headerName: 'Title', field: 'title', cellRenderer: 'tooltipCellRenderer', filter: 'agTextColumnFilter' },
+        { headerName: 'Tags', field: 'tags', cellRenderer: 'tooltipCellRenderer', filter: 'agTextColumnFilter' },
         { headerName: 'Publish Date', field: 'publishDate', filter: 'agDateColumnFilter' },
         {
             headerName: 'Published', field: 'publish', cellRenderer: 'publishRendererComponent',
@@ -36,7 +37,8 @@ export class PostsListComponent implements OnInit, OnDestroy {
     ];
     public frameworkComponents = {
         actionButtonComponent: ActionButtonComponent,
-        publishRendererComponent: PublishRendererComponent
+        publishRendererComponent: PublishRendererComponent,
+        tooltipCellRenderer: TooltipRenderComponent
     };
     private resizeObservable$: Observable<Event>;
     private resizeSubscription$: Subscription;
