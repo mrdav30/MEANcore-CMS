@@ -3,25 +3,36 @@ import { CommonModule } from '@angular/common';
 
 import { AgGridModule } from 'ag-grid-angular';
 
-import { ActionButtonComponent } from '../grid-utils/action-button.component';
-import { PublishRendererComponent } from '../grid-utils/publish-render.component';
-import { UnsubscribeButtonComponent } from '../grid-utils/unsubscribe-button.component';
+import { UtilsModule } from '../../../utils';
+
+import { TooltipRenderComponent } from './tooltip-render.component';
+import { ActionButtonComponent } from './action-button.component';
+import { PublishRendererComponent } from './publish-render.component';
+import { UnsubscribeButtonComponent } from './unsubscribe-button.component';
 
 @NgModule({
     imports: [
         CommonModule,
-        AgGridModule.withComponents([ActionButtonComponent, PublishRendererComponent, UnsubscribeButtonComponent])
+        UtilsModule,
+        AgGridModule.withComponents([
+            ActionButtonComponent,
+            PublishRendererComponent,
+            UnsubscribeButtonComponent,
+            TooltipRenderComponent
+        ])
     ],
     exports: [
         AgGridModule,
         ActionButtonComponent,
         PublishRendererComponent,
-        UnsubscribeButtonComponent
+        UnsubscribeButtonComponent,
+        TooltipRenderComponent
     ],
     declarations: [
         ActionButtonComponent,
         PublishRendererComponent,
-        UnsubscribeButtonComponent
+        UnsubscribeButtonComponent,
+        TooltipRenderComponent
     ]
 })
 
