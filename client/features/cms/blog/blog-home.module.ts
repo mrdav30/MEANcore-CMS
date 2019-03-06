@@ -12,6 +12,7 @@ import { BlogPostDetailsModule } from './post-details/post-details.module';
 import { BlogFooterModule } from './blog-footer/blog-footer.module';
 import { BlogContactModule } from './contact/contact.module';
 import { BlogSubscribeModule } from './subscribe/subscribe.module';
+import { BlogPageDetailsModule } from './pages/page-details.module';
 
 import { BlogService } from './services/blog.service';
 import { BlogFooterService } from './services/blog-footer.service';
@@ -27,7 +28,8 @@ import { BlogFooterService } from './services/blog-footer.service';
         BlogFooterModule,
         BlogContactModule,
         BlogSubscribeModule,
-        BlogAboutModule
+        BlogAboutModule,
+        BlogPageDetailsModule
     ],
     declarations: [
         BlogHomeComponent

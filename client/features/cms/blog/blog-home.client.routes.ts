@@ -8,6 +8,7 @@ import { ContactComponent } from './contact/contact.component';
 import { BlogMainRoutes } from './blog-main/blog-main.client.routes';
 import { SubscribeRoutes } from './subscribe/subscribe.client.routes';
 import { PostDetailsRoutes } from './post-details/post-details.client.routes';
+import { PageDetailsRoutes } from './pages/page-details.routes';
 
 export const BlogHomeRoutes: Route[] = [
     {
@@ -32,7 +33,8 @@ export const BlogHomeRoutes: Route[] = [
             },
             ...SubscribeRoutes,
             ...BlogMainRoutes,
-            ...PostDetailsRoutes
+            ...PostDetailsRoutes,
+            ...PageDetailsRoutes
         ]
     }
 ];

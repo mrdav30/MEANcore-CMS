@@ -7,6 +7,7 @@ var async = require('async'),
   _ = require('lodash'),
   slugify = config.helpers.slugify,
   googleAnalytics = config.services.googleAnalytics,
+  errorHandler = require('../../errors.server.controller.js'),
   pagesModel = require('../pages/pages.server.model'),
   postsModel = require('../posts/posts.server.model'),
   redirectsModel = require('../redirects/redirects.server.model'),
@@ -20,7 +21,7 @@ exports.checkForRedirects = function (req, res, next) {
   redirectsModel.getByFrom(url, function (err, redirect) {
     if (err) {
       return res.status(400).send({
-        message: err
+        message: errorHandler.getErrorMessage(err)
       });
     }
 
@@ -61,7 +62,7 @@ exports.retrieveSharedData = function (req, res, next) {
   ], function (err) {
     if (err) {
       return res.status(400).send({
-        message: err
+        message: errorHandler.getErrorMessage(err)
       });
     }
 
@@ -154,7 +155,7 @@ exports.retrieveAllPosts = function (req, res, next) {
   retrieveViewModel(vm, query, function (err) {
     if (err) {
       return res.status(400).send({
-        message: err
+        message: errorHandler.getErrorMessage(err)
       })
     }
 
@@ -176,7 +177,7 @@ exports.retrievePostsBySearch = function (req, res, next) {
   retrieveViewModel(vm, query, function (err) {
     if (err) {
       return res.status(400).send({
-        message: err
+        message: errorHandler.getErrorMessage(err)
       })
     }
 
@@ -204,7 +205,7 @@ exports.retrievePostsByTag = function (req, res, next) {
   retrieveViewModel(vm, query, function (err) {
     if (err) {
       return res.status(400).send({
-        message: err
+        message: errorHandler.getErrorMessage(err)
       })
     }
 
@@ -232,7 +233,7 @@ exports.retrievePostsByDate = function (req, res, next) {
   retrieveViewModel(vm, query, function (err) {
     if (err) {
       return res.status(400).send({
-        message: err
+        message: errorHandler.getErrorMessage(err)
       })
     }
 
@@ -249,7 +250,7 @@ exports.retrievePostsByAuthor = function (req, res, next) {
   }).exec(function (err, account) {
     if (err) {
       return res.status(400).send({
-        message: err
+        message: errorHandler.getErrorMessage(err)
       })
     } else if (!account) {
       // redirect to home page if there are no posts with author
@@ -289,7 +290,7 @@ exports.retrievePostsByAuthor = function (req, res, next) {
     retrieveViewModel(vm, query, function (err) {
       if (err) {
         return res.status(400).send({
-          message: err
+          message: errorHandler.getErrorMessage(err)
         })
       }
 
@@ -309,7 +310,7 @@ function retrieveViewModel(vm, query, callback) {
         postsModel.findText(query, vm.pagination, function (err, posts, totalCount) {
           if (err) {
             return done({
-              message: err
+              message: errorHandler.getErrorMessage(err)
             });
           }
 
@@ -319,7 +320,7 @@ function retrieveViewModel(vm, query, callback) {
         postsModel.getAll(query, vm.pagination, function (err, posts, totalCount) {
           if (err) {
             return done({
-              message: err
+              message: errorHandler.getErrorMessage(err)
             });
           }
 
@@ -344,7 +345,7 @@ function retrieveViewModel(vm, query, callback) {
       googleAnalytics.getData('2005-01-01', 'today', 'ga:pagePath', 'ga:pageviews', 'ga:pagePath=@/blog/post/', function (err, analytics) {
         if (err) {
           return done({
-            message: err
+            message: errorHandler.getErrorMessage(err)
           });
         }
 
@@ -388,7 +389,7 @@ function retrieveViewModel(vm, query, callback) {
       }, function (err) {
         if (err) {
           return done({
-            message: err
+            message: errorHandler.getErrorMessage(err)
           });
         }
 
@@ -435,7 +436,7 @@ exports.retrievePostByID = function (req, res) {
     // find by post id or disqus id (old post id)
     if (err) {
       return res.status(404).send({
-        message: err
+        message: errorHandler.getErrorMessage(err)
       });
     } else if (!post) {
       return res.status(404).send({
@@ -529,7 +530,7 @@ exports.retrievePostByDetails = function (req, res) {
   ], function (err, post) {
     if (err) {
       return res.status(400).send({
-        message: err
+        message: errorHandler.getErrorMessage(err)
       });
     }
 
@@ -546,26 +547,27 @@ exports.retrievePostByDetails = function (req, res) {
 };
 
 exports.retrievePageDetails = function (req, res, next) {
-  var vm = req.vm;
+  var vm = {};
 
-  pagesModel.getBySlug(req.params.slug)
-    .then(function (page) {
-      if (!page) {
-        return res.status(404).send({
-          message: 'Not found'
-        })
-      };
+  pagesModel.getBySlug(req.params.slug, function (err, page) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else if (!page) {
+      return res.status(404).send({
+        message: 'Not found'
+      })
+    };
 
-      vm.page = page;
+    vm.page = page;
 
-      // meta tags
-      vm.metaTitle = vm.page.title;
-      vm.metaDescription = vm.page.description;
+    // meta tags
+    vm.metaTitle = vm.page.title;
+    vm.metaDescription = vm.page.description;
 
-      render('pages/details.view.html', req, res);
+    res.status(200).send({
+      vm: vm ? vm : []
     })
-    .catch(function (err) {
-      vm.error = err;
-      // res.render(indexPath, vm);
-    });
+  })
 };

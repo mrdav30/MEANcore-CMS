@@ -1,0 +1,12 @@
+<div [hidden]="!isLoaded && !isDomFormatted" class="container">
+  <div class="card form-group">
+    <div class="card-body">
+        <h1>{{vm.page.title}}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="page-body ck ck-content" [innerHtml]="vm.page.body"></div>
+    </div>
+  </div>
+</div>
