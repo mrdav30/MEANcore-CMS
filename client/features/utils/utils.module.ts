@@ -13,12 +13,12 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 
 import { ImageUploadModule } from './image-upload/image-upload.module';
+import { DynamicFormsModule } from './dynamic-forms/dynamic-forms.module';
 
 import { LoadingComponent } from './loading/loading.component';
 import { MessagingComponent } from './messaging/messaging.component';
 import { PasswordValidatorComponent } from './password-validator/password-validator.component';
 
-import { TooltipDirective } from './directives/tooltip.directive';
 import { EqualValidatorDirective } from './directives/equal-validator.directive';
 import { PasswordToggleDirective } from './directives/password-toggle.directive';
 import { AnimatedLabelDirective } from './directives/animated-label.directive';
@@ -34,8 +34,8 @@ import { AuthGuard } from './services/auth-guard.service';
 import { DirectAccessGuard } from './services/direct-access-guard.service';
 import { AuthService } from './services/auth.service';
 import { HandleErrorService } from './services/handle-error.service';
-import { LoadingService } from './services/loading.service';
-import { MessagingService } from './services/messaging.service';
+import { LoadingService } from './loading/loading.service';
+import { MessagingService } from './messaging/messaging.service';
 import { PasswordValidatorService } from './services/password-validator.service';
 
 export * from './pipes/slugify.pipe';
@@ -47,16 +47,18 @@ export * from './services/auth-guard.service';
 export * from './services/direct-access-guard.service';
 export * from './services/auth.service';
 export * from './services/handle-error.service';
-export * from './services/loading.service';
-export * from './services/messaging.service';
+export * from './loading/loading.service';
+export * from './messaging/messaging.service';
 export * from './services/password-validator.service';
 export * from './services/recaptcha.service';
 export * from './services/cached-data.service';
 export * from './services/seo.service';
 export * from './services/script-injector.service';
 
-export { LoadingInterceptor } from './services/loading.interceptor';
-export { MessagingInterceptor } from './services/messaging.interceptor';
+export { dynamicQuestionClasses } from './dynamic-forms/dynamic-forms.module';
+
+export { LoadingInterceptor } from './loading/loading.interceptor';
+export { MessagingInterceptor } from './messaging/messaging.interceptor';
 
 export { CanDeactivateGuard } from './services/can-deactivate-guard.service';
 
@@ -74,11 +76,11 @@ const modules = [
   NgbTabsetModule,
   NgbProgressbarModule,
   NgbPaginationModule,
-  ImageUploadModule
+  ImageUploadModule,
+  DynamicFormsModule
 ];
 
 const directives = [
-  TooltipDirective,
   EqualValidatorDirective,
   PasswordToggleDirective,
   AnimatedLabelDirective,

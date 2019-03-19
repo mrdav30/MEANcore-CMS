@@ -4,7 +4,6 @@
  * Module dependencies.
  */
 var errorHandler = require('../errors.server.controller'),
-  passport = require('passport'),
   mongoose = require('mongoose'),
   User = mongoose.model('User'),
   path = require('path'),
@@ -59,7 +58,7 @@ exports.forgot = function (req, res, next) {
         to: user.email,
         from: config.mailer.from,
         subject: 'Password Reset',
-        path: 'server/users/templates/reset-password-email',
+        path: 'server/users/templates/reset-password-email.server.view.html',
         data: {
           name: user.displayName,
           appTitle: config.app.title,
@@ -173,10 +172,10 @@ exports.reset = function (req, res, next) {
         to: user.email,
         from: config.mailer.from,
         subject: 'Your password has been changed',
-        path: 'server/users/templates/reset-password-confirm-email',
+        path: 'server/users/templates/reset-password-confirm-email.server.view.html',
         data: {
           name: user.displayName,
-          appTitle: config.app.title
+          appName: config.app.title
         }
       };
 

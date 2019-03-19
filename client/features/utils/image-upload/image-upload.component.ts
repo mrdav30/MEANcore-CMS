@@ -19,15 +19,20 @@ export class ImageUploadComponent implements OnInit {
     @Input()
     public imageHeight = 200;
 
+    // Type of input that matches
+    // Should match to option under config.uploads.images.options
+    @Input()
+    public uploadType = '';
+
     @Input()
     public currentUrl = '';
 
     @Output()
     public urlChange = new EventEmitter();
 
-    constructor() {
+    ngOnInit(): void {
         this.uploader = new FileUploader({
-            url: environment.appBaseUrl + environment.apiBaseUrl + environment.imageUploadUrl,
+            url: environment.appBaseUrl + environment.apiBaseUrl + environment.imageBaseUrl + '?upload=' + this.uploadType,
             disableMultipart: false,
             autoUpload: true,
             itemAlias: 'upload'
@@ -41,10 +46,6 @@ export class ImageUploadComponent implements OnInit {
         }, (error) => {
             alert('Error uploading image!');
         });
-    }
-
-    // tslint:disable-next-line
-    ngOnInit() {
     }
 
     public fileOver(e: any): void {

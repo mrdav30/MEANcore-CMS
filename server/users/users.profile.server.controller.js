@@ -5,7 +5,7 @@
  */
 var errorHandler = require('../errors.server.controller.js'),
   _ = require('lodash'),
-  userValidation = require('./users.validation.server');
+  userValidation = require('./users.validation.service');
 
 /**
  * Update user details

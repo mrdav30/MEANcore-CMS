@@ -9,7 +9,7 @@ var async = require('async'),
   mongoose = require('mongoose'),
   passport = require('passport'),
   User = mongoose.model('User'),
-  userValidation = require('./users.validation.server');
+  userValidation = require('./users.validation.service');
 
 exports.validateUser = function (req, res) {
   var usernameOrEmail = String(req.body.usernameOrEmail).toLowerCase();
@@ -51,7 +51,7 @@ exports.signUp = function (req, res) {
       // User name already exists, provide other possibilities
       var possibleUsername = user.username || ((user.email) ? user.email.split('@')[0] : '');
 
-      User.findUniqueUsername(possibleUsername, null, function (availableUsername) {
+      User.findUniqueUsername(possibleUsername, null, function (err, availableUsername) {
         return res.status(200).send({
           userExists: true,
           possibleUsername: availableUsername
@@ -108,8 +108,8 @@ exports.signIn = function (req, res, next) {
       });
     } else {
       async.series([
+        // Set last known IP of a successful login to prevent logins from unknown IPs.
         function (done) {
-          // Set last known IP of a successful login to prevent logins from unknown IPs.
           var knownIPAddresses = user.get('knownIPAddresses') ? user.get('knownIPAddresses') : [];
           if (!knownIPAddresses.includes(req.connection.remoteAddress)) {
             user.knownIPAddresses.push(req.connection.remoteAddress);
@@ -121,6 +121,10 @@ exports.signIn = function (req, res, next) {
               done(err);
             });
           } else {
+            // Remove sensitive data before login
+            user.password = undefined;
+            user.salt = undefined;
+
             done(null);
           }
         }
@@ -130,10 +134,6 @@ exports.signIn = function (req, res, next) {
             message: errorHandler.getErrorMessage(err)
           });
         }
-
-        // Remove sensitive data before login
-        user.password = undefined;
-        user.salt = undefined;
 
         req.login(user, function (err) {
           if (err) {
@@ -211,7 +211,7 @@ exports.saveOAuthUserProfile = function (req, providerUserProfile, done) {
         if (!user) {
           var possibleUsername = providerUserProfile.username || ((providerUserProfile.email) ? providerUserProfile.email.split('@')[0] : '');
 
-          User.findUniqueUsername(possibleUsername, null, function (availableUsername) {
+          User.findUniqueUsername(possibleUsername, null, function (err, availableUsername) {
             user = new User({
               firstName: providerUserProfile.firstName,
               lastName: providerUserProfile.lastName,

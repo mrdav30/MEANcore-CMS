@@ -7,21 +7,24 @@ import { ConfigService } from './config.service';
 
 @Injectable()
 export class AppLoadService {
-    private getUserUrl = environment.appBaseUrl + environment.apiBaseUrl + '/users/me';
+    private getAppConfig = environment.appBaseUrl + environment.apiBaseUrl + '/core/config';
 
     constructor(
-        private http: HttpClient,
-        private configService: ConfigService
+        public configService: ConfigService,
+        private http: HttpClient
     ) { }
 
     initializeApp(): Promise<any> {
-        const profilePromise = this.http.get(this.getUserUrl)
+        const configPromise = this.http.get(this.getAppConfig)
             .toPromise()
             .then((data: any) => {
-
-                this.configService.user = data ? data : null;
+                if (data) {
+                    // set user stored in server session
+                    this.configService.user = data.user ? data.user : null;
+                    this.configService.config = data.config ? data.config : null;
+                }
             });
 
-        return profilePromise;
+        return configPromise;
     }
 }
