@@ -11,10 +11,6 @@ MEANcore-CMS is a blogging platform built using [MEANcore](https://github.com/mr
 
 Check out the platform in action by visiting our blog powered by MEANcore-CMS, [Techievor](https://techievor.com).
 
-Checkout our blog [Techievor](https://techievor.com) built on meancore for a full rundown on how to setup the MEAN stack with MEANcore:
-* [Windows](https://techievor.com/blog/post/2019/02/28/how-to-install-the-mean-stack-on-windows)
-* [CentOS](https://techievor.com/blog/post/2019/03/03/how-to-install-the-mean-stack-on-centos)
-
 ## Prerequisites
 Review the steps for [MEANcore](https://github.com/mrdav30/MEANcore) before getting started.
 
@@ -22,7 +18,7 @@ Or you can checkout [Techievor](https://techievor.com) for a full rundown on [ho
 
 # Getting started
 
-1. Go to project folder and create a .env file to setup your environment
+1. Go to project folder and create a .env file to setup your environment 
 ```
 NODE_ENV='development'
 PRODUCTION=false
@@ -32,13 +28,11 @@ HOST_SECURE=
 PROXY=
 
 APP_NAME='meancore-cms'
-APP_LOGO='assets/images/logo.png'
-APP_DEFAULT_ROUTE='home'
 APP_BASE_URL='/'
 API_BASE_URL='api'
-IMAGE_BASE_URL='/image-uploads'
-IMAGE_STORAGE='./_content/image-uploads/'
-TWITTER_HANDLE=''
+APP_DEFAULT_ROUTE='home'
+IMAGE_UPLOAD_URL='/admin/upload'
+TWITTER_HANDLE=
 
 SESSION_SECRET='MEANCORE-CMS'
 SESSION_KEY='meancore-cms-key'
@@ -67,12 +61,12 @@ MAILER_TEST=true
 
 3. Then launch development server, and open `localhost:4200` in your browser:
  ```bash
- npm run start:dev
+ npm start:dev
  ```
 
 ## Contributing
 We welcome pull requests from the community! Just be sure to read the [contributing](https://github.com/mrdav30/MEANcore-CMS/blob/meancore-cms/CONTRIBUTING.MD) doc to get started.
 
-# License
+# Licence
 
-[License](https://github.com/mrdav30/MEANcore-CMS/blob/meancore-cms/LICENSE.MD)
+[License](https://github.com/mrdav30/MEANcore-CMS/blob/meancore-cms/LICENSE.MD) 

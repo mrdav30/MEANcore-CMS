@@ -4,7 +4,8 @@ import { AuthService } from '../utils';
 import * as _ from 'lodash';
 
 import { environment } from '../../environments/environment';
-import { ConfigService, MenuConfig } from '../utils';
+
+export class MenuConfig { label: string; route: string; roles: string[]; permission: string[]; visible: boolean; }
 
 @Component({
   moduleId: module.id,
@@ -14,12 +15,26 @@ import { ConfigService, MenuConfig } from '../utils';
 })
 
 export class AppMenuComponent implements OnInit {
-  public appHome = environment.appDefaultRoute;
-  public appLogo = environment.appLogo;
+  public appHome: string = environment.appDefaultRoute;
+  public appBase: string;
+  public appLogo = 'assets/images/logo.png';
   //  UI Config
-  public menus: MenuConfig[];
+  public menus: MenuConfig[] = [{
+    label: 'Blog',
+    route: '/blog',
+    roles: ['user', 'admin'],
+    permission: null,
+    visible: true
+  },
+  {
+    label: 'Admin',
+    route: '/admin',
+    roles: ['admin'],
+    permission: null,
+    visible: true
+  }];
   public visibleMenus: MenuConfig[] = [];
-  public showLoginNav = true;
+  public showLoginNav = false;
   public showSearchNav = true;
   // used to toggle search input
   public isSearchVisible = false;
@@ -30,12 +45,10 @@ export class AppMenuComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authService: AuthService,
-    private configService: ConfigService
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
-    this.menus = this.configService.config.menuConfig ? this.configService.config.menuConfig : [];
     this.authService.userChange$.subscribe(user => {
       this.onSetUser(user);
     });
@@ -60,10 +73,10 @@ export class AppMenuComponent implements OnInit {
     if (!Array.isArray(userRoles)) {
       userRoles = [userRoles];
     }
-    const userPermissions = this.user && this.user.rolePermissions ? this.user.rolePermissions : [];
+    const userPermissions = this.user && this.user.permissions ? this.user.permissions : ['user'];
     this.visibleMenus = _.filter(this.menus, (menu) => {
-      return _.intersection(userRoles, menu.roles).length ? true : false ||
-        _.includes(userPermissions as string, _.toLower(menu.permission as string));
+      return _.intersection(userRoles, menu.roles).length ||
+        _.includes(userPermissions, _.toLower(menu.permission));
     });
   }
 

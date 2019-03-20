@@ -25,7 +25,7 @@ export class SplitDirective implements ControlValueAccessor {
     ) { }
 
     @HostListener('input', ['$event.target.value'])
-    input(value: any) {
+    input(value) {
         if (value) {
             this.onChange(
                 _.chain(value)
@@ -34,7 +34,7 @@ export class SplitDirective implements ControlValueAccessor {
                         // filter out null values
                         return el;
                     })
-                    .map((tag: string) => {
+                    .map((tag) => {
                         // trim whitespace
                         return _.trim(tag);
                     })

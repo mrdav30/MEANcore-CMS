@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-
-import { environment } from '../../environments/environment';
 
 @Component({
     moduleId: module.id,
@@ -12,15 +9,9 @@ export class PageNotFoundComponent implements OnInit {
     public url: string;
 
     // tslint:disable-next-line
-    constructor(
-        private router: Router
-    ) { }
+    constructor() { }
 
     ngOnInit() {
         this.url = window.document.URL;
-        // navigate back to app base after 2 seconds
-        setTimeout(() => {
-            this.router.navigate([environment.appBaseUrl]);
-        }, 2000);
     }
 }

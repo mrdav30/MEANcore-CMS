@@ -6,9 +6,10 @@ module.exports = {
     name: process.env.APP_NAME || 'meancore-cms',
     description: 'Applications runing on mean stack',
     keywords: 'mongodb, express, angular2+, typescript, node.js, mongoose, passport',
-    appBaseUrl: process.env.APP_BASE_URL || '/',
-    apiBaseUrl: process.env.API_BASE_URL || 'api',
-    defaultPage: 'index.html'
+    appBase: process.env.APP_BASE_URL || '/',
+    defaultPage: 'index.html',
+    logo: '/assets/images/logo.png',
+    favicon: '/favicon.ico'
   },
   // Config required for Google Analytics
   GOOGLE_CLIENT_EMAIL: process.env.GOOGLE_CLIENT_EMAIL || '',
@@ -74,7 +75,6 @@ module.exports = {
       ],
       fontSrc: [
         "'self'",
-        'data:',
         'https://fonts.gstatic.com/s/montserrat/'
       ],
       childSrc: [
@@ -84,10 +84,10 @@ module.exports = {
       imgSrc: [
         "'self'",
         'data:',
-        'https://www.google-analytics.com/',
         'https://referrer.disqus.com/juggler/',
         'https://c.disquscdn.com/next/embed/assets/img/',
         'https://www.gravatar.com/avatar/',
+        'https://www.google-analytics.com/'
       ],
       reportUri: '/report-violation',
       objectSrc: ["'none'"],
@@ -106,19 +106,19 @@ module.exports = {
     }
   },
   uploads: {
-    images: {
-      baseUrl: process.env.IMAGE_BASE_URL || '/image-uploads',
-      uploadRepository: process.env.IMAGE_STORAGE || './_content/image-uploads/',
-      limits: {
-        fileSize: 1 * 1024 * 1024 // Max file size in bytes (1 MB)
-      },
-      options: {
-        profile: {
-          finalDest: 'profile',
-          maxAge: (24 * 60 * 60 * 30) * 1000, // 30 days in milliseconds
-          index: false
+    // Storage can be 'local' or 's3'
+    storage: process.env.UPLOADS_STORAGE || 'local',
+    profile: {
+      image: {
+        dest: './modules/users/client/img/profile/uploads/',
+        limits: {
+          fileSize: 1 * 1024 * 1024 // Max file size in bytes (1 MB)
         }
       }
     }
-  }
+  },
+  //CMS specific config
+  imageUploadRepository: './_content/meancore-cms/uploads/img',
+  adminContentRepository: './_content/meancore-cms/admin',
+  blogContentRepository: './_content/meancore-cms/blog'
 };

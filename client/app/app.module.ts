@@ -8,7 +8,6 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { UnauthorizedComponent } from '../features/unauthorized/unauthorized.component';
 import { PageNotFoundComponent } from '../features/page-not-found/page-not-found.component';
 
 import { AppMenuModule } from '../features/app-menu/app-menu.module';
@@ -16,7 +15,6 @@ import { SignInModule } from '../features/users/sign-in/sign-in.module';
 import { RecoverPasswordModule } from '../features/users/password/recover/recover-password.module';
 import { ResetPasswordModule } from '../features/users/password/reset/reset-password.module';
 import { SignUpModule } from '../features/users/sign-up/sign-up.module';
-import { UserAccessControlModule } from '../features/user-access-control/uac-dashboard.module';
 
 import { CMSModule } from '../features/cms/cms.module';
 
@@ -40,7 +38,6 @@ export function init_app(appLoadService: AppLoadService) {
 @NgModule({
   declarations: [
     AppComponent,
-    UnauthorizedComponent,
     PageNotFoundComponent
   ],
   imports: [
@@ -53,7 +50,6 @@ export function init_app(appLoadService: AppLoadService) {
     RecoverPasswordModule,
     ResetPasswordModule,
     SignUpModule,
-    UserAccessControlModule,
     AppMenuModule,
     CMSModule
   ],

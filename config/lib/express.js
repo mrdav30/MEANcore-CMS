@@ -9,7 +9,6 @@ var config = require('../config'),
   logger = require('./logger'),
   bodyParser = require('body-parser'),
   session = require('express-session'),
-  mongoose = require('./mongoose'),
   mongoStore = require('connect-mongo')({
     session: session
   }),
@@ -30,8 +29,11 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 /**
  * Configure the models
  */
-var initServerModels = function () {
-  mongoose.loadModels();
+var initServerModels = function (config) {
+  // Globbing routing files
+  config.files.server.models.forEach(function (modelPath) {
+    require(path.resolve(modelPath));
+  });
 };
 
 /**
@@ -51,7 +53,7 @@ var initLocalVariables = function (app, config) {
   // Passing entire config to app locals
   app.locals.config = config;
 
-  // if behind a proxy, such as nginx...
+  // if behind a proxy
   if (config.proxy) {
     app.set('trust proxy', 'loopback');
   }
@@ -94,9 +96,6 @@ var initMiddleware = function (app, config) {
   //Should be placed before express.static
   app.use(compress({
     filter: function (req, res) {
-      res.setHeader('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
-      res.setHeader('Pragma', 'no-cache');
-      res.removeHeader('ETag');
       return (/json|text|javascript|css|font|svg/).test(res.getHeader('Content-Type'));
     },
     level: 9
@@ -170,24 +169,15 @@ var initHandlebars = function () {
  * Configure view engine
  */
 var initViewEngine = function (app, config) {
-  var serverViewPath = path.resolve(config.serverViewPath ? config.serverViewPath : './');
-  app.set('views', [serverViewPath, config.staticFiles]);
-
-  // server side html
   app.engine('server.view.html', hbs.express4({
     extname: '.server.view.html'
   }));
   app.set('view engine', 'server.view.html');
-
-  //client side html
-  app.engine('html', hbs.express4({
-    extname: 'html'
-  }));
-  app.set('view engine', 'html');
-
   app.engine('js', hbs.express4({
     extname: '.js'
   }));
+  var viewDir = path.resolve(config.appViewPath ? config.appViewPath : './');
+  app.set('views', viewDir);
 };
 
 /**
@@ -241,7 +231,7 @@ var initClientRoutes = function (app, config) {
 
   // in development mode files are loaded from node_modules
   app.use('/node_modules', express.static(path.resolve(config.staticFiles + '../../node_modules/'), {
-    maxAge: '30d', // Cache node modules in development as well as they are not updated that frequently.
+    maxAge: '30d', // Cache node modules in development as well as they are not updated that frequantly.
     index: false,
     setHeaders: function (res, path, stat) {
       res.setHeader('Cache-Control', '');
@@ -258,16 +248,6 @@ var initClientRoutes = function (app, config) {
       res.setHeader('Pragma', '');
     }
   }));
-
-  // Setting the app router and static folder for image paths
-  let imageOptions = _.map(config.uploads.images.options),
-    defaultRoute = config.app.appBaseUrl + config.app.apiBaseUrl + config.uploads.images.baseUrl;
-  _.forEach(imageOptions, (option) => {
-    app.use(defaultRoute + '/' + option.finalDest, express.static(path.resolve(config.uploads.images.uploadRepository + option.finalDest), {
-      maxAge: option.maxAge,
-      index: option.index
-    }));
-  })
 };
 
 /**
@@ -294,8 +274,8 @@ var initErrorRoutes = function (app, config) {
     console.error(err.stack);
 
     // Redirect to error page
-    let appBaseUrl = config.appBaseUrl || '/';
-    res.redirect(appBaseUrl + 'server-error');
+    let appBase = config.appBase || '/';
+    res.redirect(appBase + 'server-error');
   });
 };
 
@@ -308,6 +288,16 @@ var configureSocketIO = function (app, db) {
 
   // Return server object
   return server;
+};
+
+/**
+ * Connect to all required databases
+ *
+ **/
+var initDatabases = function (cb) {
+  //uncomment to prepare oracle db connections set in config
+  // oracleQueryService.prepareService(cb);
+  return cb();
 };
 
 var enableCORS = function (app) {
@@ -337,6 +327,9 @@ var init = function (config, db) {
   // Initialize local variables
   initLocalVariables(app, config);
 
+  // Initialize Express session
+  initSession(app, config, db);
+
   // Initialize Express middleware
   initMiddleware(app, config);
 
@@ -355,11 +348,11 @@ var init = function (config, db) {
   // Initialize modules static client routes, before session!
   initClientRoutes(app, config);
 
-  // Initialize Express session
-  initSession(app, config, db);
-
   //  Configure mongodb models
-  initServerModels();
+  initServerModels(config);
+
+  // // Initialize Express session
+  // initSession(app, config, db);
 
   // Initialize Modules configuration
   initServerConfiguration(app, config);
@@ -385,13 +378,13 @@ var initApps = function (db) {
   config.helpers = require(path.resolve('./server/helpers.js'));
 
   // set up view
-  config.serverViewPath = 'server';
+  config.appViewPath = '/server';
 
   // set up static file location
   config.staticFiles = 'dist/' + config.app.name + '/';
 
-  if (config.app.appBaseUrl) {
-    rootApp.use(config.app.appBaseUrl, init(config, db));
+  if (config.app.appBase) {
+    rootApp.use(config.app.appBase, init(config, db));
   } else if (config.app.domainPattern) {
     rootApp.use(vhost(config.app.domainPattern, init(config, db)));
   }
@@ -402,8 +395,11 @@ var initApps = function (db) {
 };
 
 module.exports.initAllApps = function (db, callback) {
-  var rootApp = initApps(db);
-  if (callback) {
-    callback(rootApp);
-  }
+  // Initialize databases using query service will be shared accross various modules;
+  initDatabases(function () {
+    var rootApp = initApps(db);
+    if (callback) {
+      callback(rootApp);
+    }
+  });
 };

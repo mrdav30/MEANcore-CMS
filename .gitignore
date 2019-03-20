@@ -106,6 +106,7 @@ Thumbs.db
 
 # MEANcore app and assets
 # ======================
+/content
 config/env/local.js
 config/env/local-*.js
 _content/

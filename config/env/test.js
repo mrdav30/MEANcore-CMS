@@ -49,18 +49,19 @@ module.exports = {
     // Can specify one of 'combined', 'common', 'dev', 'short', 'tiny'
     format: process.env.LOG_FORMAT || 'dev',
     fileLogger: {
-      directoryPath: process.env.LOG_DIR_PATH || process.cwd(),
-      fileName: process.env.LOG_FILE || 'app.log',
+      directoryPath: process.cwd(),
+      fileName: 'app.log',
       maxsize: 10485760,
       maxFiles: 2
     }
   },
   uploads: {
-    images: {
-      baseUrl: process.env.IMAGE_BASE_URL || '/image-uploads',
-      uploadRepository: process.env.IMAGE_STORAGE || './_content/image-uploads/',
-      limits: {
-        fileSize: 100000 // Limit filesize (100kb) for testing purposes
+    profile: {
+      image: {
+        dest: './modules/users/client/img/profile/uploads/',
+        limits: {
+          fileSize: 100000 // Limit filesize (100kb) for testing purposes
+        }
       }
     }
   },
