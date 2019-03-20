@@ -39,6 +39,7 @@ API_BASE_URL='api'
 IMAGE_BASE_URL='/image-uploads'
 IMAGE_STORAGE='./_content/image-uploads/'
 TWITTER_HANDLE=''
+META_TITLE_SUFFIX=' | The MEANcore Blog'
 
 SESSION_SECRET='MEANCORE-CMS'
 SESSION_KEY='meancore-cms-key'
