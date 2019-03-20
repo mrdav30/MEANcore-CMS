@@ -2,7 +2,7 @@
 
 var path = require('path'),
   _ = require('lodash'),
-  userValidation = require(path.resolve('./server/users/users.validation.server')),
+  userValidation = require(path.resolve('./server/users/users.validation.service')),
   errorHandler = require('../../errors.server.controller.js'),
   mongoose = require('mongoose'),
   User = mongoose.model('User');
