@@ -372,6 +372,10 @@ function retrieveViewModel(vm, query, callback) {
           strict: false
         });
 
+        post.set('showImage', false, {
+          strict: false
+        });
+
         User.findById(post.authorId).exec(function (err, account) {
           if (err) {
             return cb(err);

@@ -12,8 +12,6 @@ import { SeoService } from '../../utils';
 
 export class BlogHomeComponent implements OnInit {
     public vm: any = {};
-    public isLoaded = false;
-    public isDomFormatted = false;
 
     constructor(
         private seoService: SeoService,
@@ -32,8 +30,6 @@ export class BlogHomeComponent implements OnInit {
                         type: 'website',
                         image: this.vm.metaImage || ''
                     });
-                    this.isLoaded = true;
-                    this.isDomFormatted = true;
                 }
             });
     }

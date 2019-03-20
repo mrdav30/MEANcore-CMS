@@ -1,4 +1,4 @@
-<div [hidden]="!isLoaded && !isDomFormatted" class="container form-group">
+<div class="container form-group">
 
   <div class="card form-group">
     <div class="card-body">
@@ -20,9 +20,9 @@
   <div class="row post-list">
     <div *ngFor="let post of vm.posts" class="col-sm-6 p-4">
       <div class="card post mx-auto w-100">
-        <div class="card-img-top">
+        <div class="card-img-top" (appDeferLoad)="post.showImage=true">
           <a class="card-link" routerLink="{{post.url}}">
-            <img width="550" height="300" class="post-image" [src]="post.thumbnailUrl">
+            <img *ngIf="post.showImage" width="550" height="300" class="post-image" [src]="post.thumbnailUrl">
           </a>
         </div>
         <div class="view-btn-container">

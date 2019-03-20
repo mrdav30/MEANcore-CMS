@@ -65,9 +65,9 @@
     <div class="col-sm-3"></div>
     <div class="col-sm-6">
       <div *ngFor="let post of vm.posts" class="card post mx-auto mb-4">
-        <div class="card-img-top">
+        <div class="card-img-top" (appDeferLoad)="post.showImage=true">
           <a class="card-link" routerLink="{{post.url}}">
-            <img width="700" height="400" class="post-image img-fluid" [src]="post.thumbnailUrl">
+            <img *ngIf="post.showImage" width="700" height="400" class="post-image img-fluid" [src]="post.thumbnailUrl">
           </a>
         </div>
         <div class="card-body post-body">
