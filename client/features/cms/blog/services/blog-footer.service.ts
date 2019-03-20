@@ -2,7 +2,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import * as _ from 'lodash';
 
 import { environment } from '../../../../environments/environment';
 

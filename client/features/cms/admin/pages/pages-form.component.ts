@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import * as CustomEditor from '../_content/ckeditor-custom/ckeditor';
-import * as _ from 'lodash';
+import { merge } from 'lodash';
 
 import { environment } from '../../../../environments/environment';
 
@@ -52,7 +52,7 @@ export class PagesFormComponent implements OnInit {
                     this.pagesService.GetById(this.pageID)
                         .subscribe((data: any) => {
                             if (data && data.page) {
-                                this.page = _.merge(this.page, data.page) as Page;
+                                this.page = merge(this.page, data.page) as Page;
                             }
                         });
                 }

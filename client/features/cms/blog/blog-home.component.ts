@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import * as _ from 'lodash';
 
 import { BlogService } from './services/blog.service';
 import { SeoService } from '../../utils';

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map, publishReplay, refCount, catchError } from 'rxjs/operators';
-import * as _ from 'lodash';
+import { publishReplay, refCount, catchError } from 'rxjs/operators';
+
+import { map, forEach } from 'lodash';
 
 let allData: any = {};
 
@@ -18,9 +19,9 @@ export class CachedDataService {
 
     populateFields(res: any) {
         if (res.fields) {
-            res.result = _.map(res.result, el => { // _.map is fater then map at least 50%
+            res.result = map(res.result, el => { // _.map is fater then map at least 50%
                 const tmp = {};
-                _.forEach(res.fields, (key, ind) => {
+                forEach(res.fields, (key, ind) => {
                     tmp[key] = el[ind];
                 });
                 return tmp;

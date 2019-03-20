@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewEncapsulation, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import * as _ from 'lodash';
-import * as hljs from 'highlightjs';
+
+import { map, forEach } from 'lodash';
+import { highlightBlock } from 'highlightjs';
 
 import { environment } from '../../../../environments/environment';
 
@@ -56,7 +57,7 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
                                 title: this.vm.metaTitle,
                                 description: this.vm.metaDescription,
                                 author: this.vm.post.author.name,
-                                keywords: _.map(this.vm.post.tags).join(', '),
+                                keywords: map(this.vm.post.tags).join(', '),
                                 url: this.vm.post.perma_link,
                                 image: this.vm.post.thumbnailUrl
                             });
@@ -78,10 +79,11 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
     ngAfterViewChecked() {
         if (this.isLoaded && !this.isDomFormatted) {
 
-            document.querySelectorAll('pre').forEach((block) => {
-                hljs.highlightBlock(block);
+            forEach(document.querySelectorAll('pre'), (block) => {
+                highlightBlock(block);
             });
-            document.querySelectorAll('oembed[url]').forEach(element => {
+
+            forEach(document.querySelectorAll('oembed[url]'), (element) => {
                 // Create the <a href="..." class="embedly-card"></a> element that Embedly uses
                 // to discover the media.
                 const anchor = document.createElement('a');
@@ -91,6 +93,7 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
 
                 element.appendChild(anchor);
             });
+
             this.isDomFormatted = true;
             this.ref.detectChanges();
         }

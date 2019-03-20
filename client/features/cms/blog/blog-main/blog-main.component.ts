@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as _ from 'lodash';
+
+import { isEmpty } from 'lodash';
 
 import { BlogService } from '../services/blog.service';
 import { SeoService } from '../../../utils';
@@ -29,7 +30,7 @@ export class BlogMainComponent implements OnInit {
     ngOnInit(): void {
         this.route.params
             .subscribe(params => {
-                if (_.isEmpty(params)) {
+                if (isEmpty(params)) {
                     this.postParams = null;
                 } else {
                     // query based on param

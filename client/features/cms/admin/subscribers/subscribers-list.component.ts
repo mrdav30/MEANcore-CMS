@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { fromEvent, Observable, Subscription } from 'rxjs';
 
-import * as _ from 'lodash';
+import { filter, map } from 'lodash';
 import { saveAs } from 'file-saver';
 
 import { SubscribersService } from '../services/subscribers.service';
@@ -67,22 +67,22 @@ export class SubscribersListComponent implements OnInit, OnDestroy {
         const replacer = (key, value) => value === null ? '' : value;
 
         // only map values with a defined header name
-        let headerDefs = _.filter(this.subscribersColumnDef, (def) => {
+        let headerDefs = filter(this.subscribersColumnDef, (def) => {
             if (!def.headerName) {
                 return false;
             }
             return true;
         });
 
-        const csv = _.map(this.subscribers, (row) => {
+        const csv = map(this.subscribers, (row) => {
             // match header field to data field
-            return _.map(headerDefs, (def) => {
+            return map(headerDefs, (def) => {
                 return JSON.stringify(row[def.field], replacer);
             }).join(',');
         });
 
         // mutate to array of header names
-        headerDefs = _.map(headerDefs, (def) => {
+        headerDefs = map(headerDefs, (def) => {
             return def.headerName;
         });
 

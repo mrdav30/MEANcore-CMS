@@ -2,8 +2,9 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import * as CustomEditor from '../_content/ckeditor-custom/ckeditor';
-import * as _ from 'lodash';
-import * as moment from 'moment';
+
+import { merge } from 'lodash';
+import moment from 'moment';
 
 import { environment } from '../../../../environments/environment';
 
@@ -55,7 +56,7 @@ export class PostsFormComponent implements OnInit {
                     this.postsService.GetById(this.postID)
                         .subscribe((data: any) => {
                             if (data && data.post) {
-                                this.post = _.merge(this.post, data.post) as Post;
+                                this.post = merge(this.post, data.post) as Post;
                                 this.setDate();
                             }
                         }, (error) => {

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import * as _ from 'lodash';
+
+import { merge } from 'lodash';
 
 import { RedirectsService } from '../services/redirects.service';
 import { Redirect } from './redirect';
@@ -33,7 +34,7 @@ export class RedirectsFormComponent implements OnInit {
                 if (this.redirectID) {
                     this.redirectsService.GetById(this.redirectID)
                         .subscribe((data: any) => {
-                            this.redirect = _.merge(this.redirect, data.redirect) as Redirect;
+                            this.redirect = merge(this.redirect, data.redirect) as Redirect;
                         }, (error) => {
                             alert('Error loading redirect');
                             this.router.navigate(['/admin']);
