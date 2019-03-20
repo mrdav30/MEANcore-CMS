@@ -6,11 +6,11 @@ var fs = require("fs"),
   errorHandler = require(path.resolve('server/errors.server.controller')),
   mongoose = require('mongoose'),
   User = mongoose.model('User'),
-  userValidation = require(path.resolve('server/users/users.validation.server'));
+  userValidation = require(path.resolve('server/users/users.validation.service'));
 
 exports.createAdministrator = function (req, res) {
   try {
-    config.installed = JSON.parse(fs.readFileSync(path.resolve('./_content/meancore-cms/install.json')));
+    config.installed = JSON.parse(fs.readFileSync(path.resolve('./_content/install.json')));
   } catch (e) {
     config.installed = false;
   }
@@ -58,7 +58,7 @@ exports.createAdministrator = function (req, res) {
 
           // save installed flag in config file
           config.installed = true;
-          fs.writeFileSync(path.resolve('./_content/meancore-cms/install.json'), JSON.stringify(true));
+          fs.writeFileSync(path.resolve('./_content/install.json'), JSON.stringify(true));
 
           // Remove sensitive data before login
           user.password = undefined;
