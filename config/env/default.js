@@ -117,6 +117,16 @@ module.exports = {
           finalDest: 'profile',
           maxAge: (24 * 60 * 60 * 30) * 1000, // 30 days in milliseconds
           index: false
+        },
+        posts: {
+          finalDest: 'posts',
+          maxAge: (24 * 60 * 60 * 30) * 1000, // 30 days in milliseconds
+          index: false
+        },
+        pages: {
+          finalDest: 'pages',
+          maxAge: (24 * 60 * 60 * 30) * 1000, // 30 days in milliseconds
+          index: false
         }
       }
     }
