@@ -17,8 +17,6 @@ export class BlogMainComponent implements OnInit {
     public postParams: any;
     public pageNumber = 1;
     public vm: any = {};
-    public isLoaded = false;
-    public isDomFormatted = false;
 
     constructor(
         private seoService: SeoService,
@@ -97,8 +95,6 @@ export class BlogMainComponent implements OnInit {
                 type: 'website',
                 image: this.vm.metaImage || ''
             });
-            this.isLoaded = true;
-            this.isDomFormatted = true;
         } else {
             this.router.navigate(['/home']);
         }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -9,7 +9,7 @@ import { environment } from '../../../../environments/environment';
 
 import { PageService } from '../services/page.service';
 import { PageDetails } from './page-details';
-import { SeoService } from '../../../utils';
+import { SeoService, ScriptInjectorService } from '../../../utils';
 
 @Component({
     moduleId: module.id,
@@ -18,18 +18,17 @@ import { SeoService } from '../../../utils';
     encapsulation: ViewEncapsulation.None // required to style innerHtml
 })
 
-export class PageDetailsComponent implements OnInit, AfterViewChecked {
+export class PageDetailsComponent implements OnInit {
     public disqusShortname = environment.appName;
     public pageSlug: string;
     public vm: any = {};
-    public isLoaded = false;
-    public isDomFormatted = false;
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private sanitizer: DomSanitizer,
         private seoService: SeoService,
+        private scriptInjectorService: ScriptInjectorService,
         private ref: ChangeDetectorRef,
         private pageService: PageService
     ) { }
@@ -41,7 +40,7 @@ export class PageDetailsComponent implements OnInit, AfterViewChecked {
                 this.pageSlug = params.slug ? params.slug : null;
 
                 this.pageService.GetPage(this.pageSlug)
-                    .subscribe((data: any) => {
+                    .subscribe(async (data: any) => {
                         if (data && data.vm) {
                             this.vm = data.vm;
                             // prevent angular from stripping out oembed content
@@ -50,7 +49,11 @@ export class PageDetailsComponent implements OnInit, AfterViewChecked {
                                 title: this.vm.metaTitle,
                                 description: this.vm.metaDescription
                             });
-                            this.isLoaded = true;
+                            this.scriptInjectorService.load('embedly').then(async () => {
+                                await this.formatDom();
+                            }).catch(error => {
+                                console.log(error);
+                            });
                         }
                     }, (error) => {
                         alert('Error loading post');
@@ -60,9 +63,8 @@ export class PageDetailsComponent implements OnInit, AfterViewChecked {
     }
 
     // not elegant, but need to ensure DOM is loaded before applying hljs formatting
-    ngAfterViewChecked() {
-        if (this.isLoaded && !this.isDomFormatted) {
-
+    formatDom() {
+        return new Promise((resolve) => {
             forEach(document.querySelectorAll('pre'), (block) => {
                 highlightBlock(block);
             });
@@ -78,8 +80,9 @@ export class PageDetailsComponent implements OnInit, AfterViewChecked {
                 element.appendChild(anchor);
             });
 
-            this.isDomFormatted = true;
             this.ref.detectChanges();
-        }
+
+            resolve();
+        });
     }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -19,12 +19,10 @@ import { SeoService, ScriptInjectorService } from '../../../utils';
     encapsulation: ViewEncapsulation.None // required to style innerHtml
 })
 
-export class PostDetailsComponent implements OnInit, AfterViewChecked {
+export class PostDetailsComponent implements OnInit {
     public disqusShortname = environment.appName;
     public postParams: any;
     public vm: any = {};
-    public isLoaded = false;
-    public isDomFormatted = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -61,8 +59,8 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
                                 url: this.vm.post.perma_link,
                                 image: this.vm.post.thumbnailUrl
                             });
-                            this.scriptInjectorService.load('embedly').then(() => {
-                                this.isLoaded = true;
+                            this.scriptInjectorService.load('embedly').then(async () => {
+                                await this.formatDom();
                             }).catch(error => {
                                 console.log(error);
                             });
@@ -76,9 +74,8 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
 
 
     // not elegant, but need to ensure DOM is loaded before applying hljs formatting
-    ngAfterViewChecked() {
-        if (this.isLoaded && !this.isDomFormatted) {
-
+    formatDom() {
+        return new Promise((resolve) => {
             forEach(document.querySelectorAll('pre'), (block) => {
                 highlightBlock(block);
             });
@@ -94,8 +91,9 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
                 element.appendChild(anchor);
             });
 
-            this.isDomFormatted = true;
             this.ref.detectChanges();
-        }
+
+            resolve();
+        });
     }
 }
