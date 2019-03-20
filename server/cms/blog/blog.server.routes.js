@@ -1,20 +1,10 @@
 'use strict';
 
-var express = require('express'),
-  path = require('path'),
-  config = require(path.resolve('./config/config'));
-
-var oneWeekSeconds = 60 * 60 * 24 * 7;
-var oneWeekMilliseconds = oneWeekSeconds * 1000;
+var path = require('path');
 
 module.exports = function (app) {
   var blog = require('./blog.server.controller'),
     pagination = require(path.resolve('./server/middleware/pagination'));
-
-  app.use('/api/blog/content*', express.static(path.resolve(config.blogContentRepository), {
-    maxAge: oneWeekMilliseconds,
-    index: false
-  }));
 
   app.use('/api/blog', blog.checkForRedirects);
 
@@ -39,7 +29,7 @@ module.exports = function (app) {
   app.route('/api/blog/post').get(blog.retrievePostByID);
   // post details route
   app.route('/api/blog/post/details/:year/:month/:day/:slug').get(blog.retrievePostByDetails);
-  
+
   // page details route
   app.route('/api/blog/page/:slug').get(blog.retrievePageDetails);
 };
