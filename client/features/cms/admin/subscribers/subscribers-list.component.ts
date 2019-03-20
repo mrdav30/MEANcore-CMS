@@ -82,12 +82,12 @@ export class SubscribersListComponent implements OnInit, OnDestroy {
         });
 
         // mutate to array of header names
-        headerDefs = map(headerDefs, (def) => {
+        const headerNames = map(headerDefs, (def) => {
             return def.headerName;
         });
 
         // add headers to start of csv data
-        csv.unshift(headerDefs.join(','));
+        csv.unshift(headerNames.join(','));
 
         const csvArray = csv.join('\r\n');
 
