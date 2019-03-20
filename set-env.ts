@@ -23,8 +23,8 @@ export const environment = {
     imageBaseUrl: '${process.env.IMAGE_BASE_URL}',
     googleAnalyticsID: '${process.env.GOOGLE_ANALYTICS_ID}',
     recaptchaSiteKey: '${process.env.RECAPTCHA_SITE_KEY}',
-    twitterHandle: '${process.env.TWITTER_HANDLE}'
-    metaTitleSuffix: '${process.env.META_TITLE_SUFFIX}',
+    twitterHandle: '${process.env.TWITTER_HANDLE}',
+    metaTitleSuffix: '${process.env.META_TITLE_SUFFIX}'
 };
 `;
 
