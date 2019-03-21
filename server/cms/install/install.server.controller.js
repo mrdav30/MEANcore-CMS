@@ -40,7 +40,7 @@ exports.createAdministrator = function (req, res) {
       });
     } else {
       // installer defaults to the admin role
-      user.roles = ['admin'];
+      user.roles = ['admin', 'user'];
       // Add missing user fields
       user.provider = 'local';
       user.displayName = user.firstName + ' ' + user.lastName;
