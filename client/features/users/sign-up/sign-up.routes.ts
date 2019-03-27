@@ -9,9 +9,5 @@ export const SignUpRoutes: Route[] = [
     path: 'sign-up',
     component: SignUpComponent,
     canActivate: [DirectAccessGuard]
-  },
-  {
-    path: 'sign-up-admin/:install',
-    component: SignUpComponent
   }
 ];
