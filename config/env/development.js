@@ -114,17 +114,34 @@ module.exports = {
             name: 'default'
           }]
         }
+      },{
+        data: {
+          name: 'Blog',
+          route: '/blog',
+          permissions: [{
+            name: 'default'
+          }]
+        }
+      },{
+        data: {
+          name: 'Admin',
+          route: '/admin',
+          permissions: [{
+            name: 'default'
+          }]
+        }
       }]
     }, {
       model: 'Roles',
       docs: [{
         data: {
           name: 'admin',
-          featurePermissions: ['uac:default']
+          featurePermissions: ['uac:default', 'admin:default']
         }
       }, {
         data: {
-          name: 'user'
+          name: 'user',
+          featurePermissions: ['blog:default']
         }
       }]
     }, {
@@ -153,5 +170,4 @@ module.exports = {
       }]
     }]
   }
-
 };
