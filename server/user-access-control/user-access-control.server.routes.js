@@ -10,7 +10,7 @@ var uac = require('./user-access-control.server.controller'),
 module.exports = function (app) {
 
   // Dashboard viewmodel
-  app.use(['/api/uac'], userAuth.hasAuthorization(['admin'], config.appBase));
+  app.use(['/uac'], userAuth.hasAuthorization(['admin'], config.appBase));
 
   app.route('/api/uac/view').get(uac.getUACViewModel);
 
@@ -32,8 +32,6 @@ module.exports = function (app) {
     .delete(roles.removeUserFromRole);
 
   // Features
-  app.route('/api/uac/features').get(features.getFeatures);
-
   app.route('/api/uac/feature').post(features.createFeature);
 
   app.route('/api/uac/feature/:feature_id')

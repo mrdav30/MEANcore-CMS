@@ -16,11 +16,11 @@
   },
   "scripts": {
     "ng": "ng",
-    "config": "node set-env.ts",
-    "version": "node version.ts",
+    "config": "node ./scripts/set-env.ts",
+    "version": "node ./scripts/version.ts",
     "build:dev": "npm run config && npm run version && ng build",
     "build:prod": "npm run config && npm run version && ng build --prod --aot ",
-    "client:dev": "ng serve --aot --progress=false --proxy-config proxy.conf.js",
+    "client:dev": "npm run build:dev && ng serve --aot --progress=false --proxy-config proxy.conf.js",
     "server:dev": "nodemon server.js",
     "start:dev": "npm run build:dev && npm-run-all -p client:dev server:dev",
     "server:prod": "node server.js",
@@ -28,7 +28,8 @@
     "test:client": "ng test",
     "lint:client": "ng lint",
     "lint:server": "tslint './server/**/*.ts' -c ./server/tslint.json --fix",
-    "e2e": "npm run config && ng e2e"
+    "e2e": "npm run config && ng e2e",
+    "seed:dev": "node ./scripts/seed-db.js"
   },
   "dependencies": {
     "@angular/animations": "~7.2.0",
@@ -62,6 +63,7 @@
     "express-hbs": "^2.0.2",
     "express-session": "^1.15.6",
     "fs-extra": "^7.0.1",
+    "generate-password": "^1.4.1",
     "git-describe": "^4.0.4",
     "googleapis": "^37.1.0",
     "helmet": "^3.8.2",

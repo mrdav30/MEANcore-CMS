@@ -1,7 +1,10 @@
 'use strict';
-var mongoose = require('mongoose'),
+
+var async = require('async'),
+  mongoose = require('mongoose'),
   _ = require('lodash'),
-  Schema = mongoose.Schema;
+  Schema = mongoose.Schema,
+  chalk = require('chalk');
 
 var rolesSchema = new Schema({
   name: {
@@ -9,149 +12,134 @@ var rolesSchema = new Schema({
     unique: true,
     trim: true
   },
-  users: {
-    type: [String]
-  },
-  permissions: {
+  featurePermissions: {
     type: [String]
   }
 });
 
-var Roles = mongoose.model('Roles', rolesSchema);
 
-var service = {};
+/**
+ * Seeds the Features collection with document (Feature)
+ * and provided options.
+ */
+rolesSchema.statics.seed = function (doc, options) {
+  var Roles = mongoose.model('Roles'),
+    Features = mongoose.model('Features');
 
-service.getAll = getAll;
-service.create = create;
-service.update = update;
-service.delete = _delete;
-service.connectPermission = connectPermission;
-service.disconnectPermission = disconnectPermission;
-service.addUser = addUser;
-service.removeUser = removeUser;
+  return new Promise(function (resolve, reject) {
 
-module.exports = service;
+    skipDocument()
+      .then(add)
+      .then(function (response) {
+        return resolve(response);
+      })
+      .catch(function (err) {
+        return reject(err);
+      });
 
+    function skipDocument() {
+      return new Promise(function (resolve, reject) {
+        Roles
+          .findOne({
+            name: doc.name
+          })
+          .exec(function (err, existing) {
+            if (err) {
+              return reject(err);
+            }
 
-// get roles
-function getAll(query, callback) {
+            if (!existing) {
+              return resolve(false);
+            }
 
-  Roles.find(query).sort({
-    _id: -1
-  }).lean().exec((err, roles) => {
-    if (err) {
-      return callback(err);
+            if (existing && !options.overwrite) {
+              return resolve(true);
+            }
+
+            // Remove User (overwrite)
+
+            existing.remove(function (err) {
+              if (err) {
+                return reject(err);
+              }
+
+              return resolve(false);
+            });
+          });
+      });
     }
 
-    callback(null, roles);
-  })
-};
+    function add(skip) {
+      return new Promise(function (resolve, reject) {
 
-function create(roleParam, callback) {
-  Roles(roleParam).save(function (err, role) {
-    if (err) {
-      return callback(err.name + ': ' + err.message);
+        if (skip) {
+          return resolve({
+            message: chalk.yellow('Database Seeding: Role\t\t' + doc.name + ' skipped')
+          });
+        }
+
+        async.series([
+          function (callback) {
+            var permissionIds = [];
+            async.each(doc.featurePermissions, (featurePermission, done) => {
+              var featureName = _.split(featurePermission, ':')[0],
+                permissionName = _.split(featurePermission, ':')[1];
+
+              Features.findOne({
+                  name: {
+                    $regex: new RegExp(_.escapeRegExp(featureName)),
+                    $options: 'i'
+                  }
+                },
+                (err, result) => {
+                  if (err) {
+                    return done(err)
+                  } else if (result) {
+                    async.each(result.permissions, (permission, cb) => {
+                      if (permission.name === permissionName) {
+                        permissionIds.push(permission.perm_id);
+                      }
+                      cb(null);
+                    }, () => {
+                      done(null);
+                    });
+                  } else {
+                    done(null);
+                  }
+                })
+            }, (err) => {
+              if (err) {
+                return callback(err)
+              }
+
+              doc.featurePermissions = permissionIds;
+
+              callback(null);
+            })
+          },
+          function (callback) {
+            var role = new Roles(doc);
+
+            role.save(function (err) {
+              if (err) {
+                return callback(err)
+              }
+
+              callback(null);
+            });
+          }
+        ], (err) => {
+          if (err) {
+            return reject(err);
+          }
+
+          return resolve({
+            message: 'Database Seeding: Role\t\t' + doc.name + ' added'
+          });
+        })
+      });
     }
+  });
+}
 
-    callback(null, role)
-  })
-};
-
-function update(_id, roleParam, callback) {
-  // fields to update
-  var set = _.omit(roleParam, '_id');
-
-  Roles.updateOne({
-      _id: mongoose.Types.ObjectId(_id)
-    }, {
-      $set: set
-    },
-    function (err, role) {
-      if (err) {
-        return callback(err.name + ': ' + err.message);
-      }
-
-      callback(null, role)
-    });
-};
-
-function _delete(_id, callback) {
-  Roles.deleteOne({
-      _id: mongoose.Types.ObjectId(_id)
-    },
-    function (err) {
-      if (err) {
-        return callback(err.name + ': ' + err.message);
-      }
-
-      callback(null)
-    });
-};
-
-function connectPermission(role_id, perm_id, callback) {
-  Roles.updateOne({
-      _id: mongoose.Types.ObjectId(role_id)
-    }, {
-      $push: {
-        permissions: perm_id
-      }
-    },
-    function (err) {
-      if (err) {
-        return callback(err.name + ': ' + err.message);
-      }
-
-      callback(null)
-    });
-};
-
-function disconnectPermission(role_id, perm_id, callback) {
-  Roles.updateOne({
-      _id: mongoose.Types.ObjectId(role_id)
-    }, {
-      $pull: {
-        permissions: perm_id
-      }
-    },
-    function (err) {
-      if (err) {
-        return callback(err.name + ': ' + err.message);
-      }
-
-      callback(null)
-    });
-};
-
-function addUser(user_id, role_id, callback) {
-  Roles.findOneAndUpdate({
-      _id: mongoose.Types.ObjectId(role_id)
-    }, {
-      $push: {
-        users: user_id
-      }
-    },
-    function (err, role) {
-      if (err) {
-        return callback(err.name + ': ' + err.message);
-      }
-
-      callback(null, role);
-    })
-};
-
-function removeUser(user_id, role_id, callback) {
-  Roles.findOneAndUpdate({
-      _id: mongoose.Types.ObjectId(role_id)
-    }, {
-      $pull: {
-        users: user_id
-      }
-    },
-    function (err, role) {
-      if (err) {
-        return callback(err.name + ': ' + err.message);
-      }
-
-      callback(null, role);
-    })
-};
+mongoose.model('Roles', rolesSchema);

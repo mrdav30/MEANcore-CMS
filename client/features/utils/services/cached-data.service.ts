@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { tap, publishReplay, refCount, catchError } from 'rxjs/operators';
 
+import { tap, publishReplay, refCount, catchError } from 'rxjs/operators';
 import { map, forEach } from 'lodash';
 
 import { HandleErrorService } from './handle-error.service';
@@ -30,14 +30,12 @@ export class CachedDataService {
                 return tmp;
             });
         }
-
         return done(res);
     }
 
     getData(url: string): any {
         if (!allData[url]) {
             allData[url] = this.http.get(url).pipe(
-                //  Mapping fields to array and create object in case we get list or arrays
                 tap((res: any) => {
                     this.populateFields(res, (obj: any) => {
                         Object.freeze(obj.result); // making sure that no one modified list. but still they can modify values (TODO fix)
@@ -49,7 +47,7 @@ export class CachedDataService {
                 catchError((err) => {
                     console.log('error', err);
                     delete allData[url];
-                    return this.handleErrorService.handleError<any>(err);
+                    return this.handleErrorService.handleError<any>();
                 })
             );
         }
