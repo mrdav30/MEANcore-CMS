@@ -1,9 +1,7 @@
 'use strict';
 
-var path = require('path'),
-  config = require(path.resolve('./config/config')),
+var slugify = require('../../helpers'),
   _ = require('lodash'),
-  slugify = config.helpers.slugify,
   mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 

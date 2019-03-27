@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { AgGridModule } from 'ag-grid-angular';
 
-import { UtilsModule } from '../../../utils';
+//import { UtilsModule } from '../../../utils';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { TooltipRenderComponent } from './tooltip-render.component';
 import { ActionButtonComponent } from './action-button.component';
@@ -13,7 +14,7 @@ import { UnsubscribeButtonComponent } from './unsubscribe-button.component';
 @NgModule({
     imports: [
         CommonModule,
-        UtilsModule,
+        NgbTooltipModule,
         AgGridModule.withComponents([
             ActionButtonComponent,
             PublishRendererComponent,

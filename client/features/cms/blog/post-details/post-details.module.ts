@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { GravatarModule } from 'ngx-gravatar';
 
 import { UtilsModule } from '../../../utils';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { PostDetailsComponent } from './post-details.component';
 import { DisqusThreadComponent } from './disqus-thread/disqus-thread.component';
@@ -20,7 +21,8 @@ import { DisqusWindowProvider } from './disqus-thread/disqus-window';
         FormsModule,
         RouterModule,
         GravatarModule,
-        UtilsModule
+        UtilsModule,
+        NgbTooltipModule
     ],
     declarations: [
         PostDetailsComponent,

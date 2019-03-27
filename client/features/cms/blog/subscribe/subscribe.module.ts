@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { UtilsModule } from '../../../utils';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { SubscribeComponent } from './subscribe.component';
 import { SubscribeValidationComponent } from './subscribe-validation.component';
@@ -16,7 +17,8 @@ import { SubscribeService } from '../services/subscribe.service';
         CommonModule,
         FormsModule,
         RouterModule,
-        UtilsModule
+        UtilsModule,
+        NgbCollapseModule
     ],
     declarations: [
         SubscribeComponent,

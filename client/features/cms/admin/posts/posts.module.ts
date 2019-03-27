@@ -8,6 +8,7 @@ import { FileUploadModule } from 'ng2-file-upload/ng2-file-upload';
 import { GravatarModule } from 'ngx-gravatar';
 
 import { UtilsModule, CanDeactivateGuard } from '../../../utils';
+import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { PostsListComponent } from './posts-list.component';
 import { PostsFormComponent } from './posts-form.component';
@@ -25,7 +26,8 @@ import { PostsService } from '../services/posts.service';
         CKEditorModule,
         GravatarModule,
         AdminGridModule,
-        UtilsModule
+        UtilsModule,
+        NgbDatepickerModule
     ],
     exports: [
         PostsListComponent

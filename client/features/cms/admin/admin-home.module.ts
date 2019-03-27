@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { UtilsModule } from '../../utils';
+import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AdminHomeComponent } from './admin-home.component';
 
@@ -19,6 +20,7 @@ import { AdminAccountModule } from './account/account.module';
         FormsModule,
         RouterModule,
         UtilsModule,
+        NgbTabsetModule,
         AdminPagesModule,
         AdminPostsModule,
         AdminRedirectsModule,

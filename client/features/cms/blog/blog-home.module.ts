@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { UtilsModule, CachedDataService } from '../../utils';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { BlogHomeComponent } from './blog-home.component';
 import { BlogAboutModule } from './about/about.module';
@@ -23,6 +24,7 @@ import { BlogFooterService } from './services/blog-footer.service';
         FormsModule,
         RouterModule,
         UtilsModule,
+        NgbTooltipModule,
         BlogMainModule,
         BlogPostDetailsModule,
         BlogFooterModule,
