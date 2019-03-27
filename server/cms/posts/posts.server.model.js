@@ -1,8 +1,6 @@
 'use strict';
 
-var slugify = require('../../helpers'),
-  _ = require('lodash'),
-  mongoose = require('mongoose'),
+var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 var postsSchema = new Schema({
@@ -62,46 +60,11 @@ postsSchema.index({
     summary: 1
   }
 })
-var Posts = mongoose.model('Posts', postsSchema);
 
-var service = {};
+postsSchema.statics.getByUrl = function (year, month, day, slug, callback) {
+  var _this = this;
 
-service.getAll = getAll;
-service.getByUrl = getByUrl;
-service.getById = getById;
-service.findText = findText;
-service.create = create;
-service.update = update;
-service.delete = _delete;
-
-module.exports = service;
-
-function getAll(query, pagination, callback) {
-  var options = {};
-  if (pagination) {
-    options.skip = pagination.page_size * (pagination.page_number - 1);
-    options.limit = pagination.page_size;
-  }
-
-  Posts.countDocuments(query).exec(function (err, totalCount) {
-    if (err) {
-      return callback(err.name + ': ' + err.message);
-    }
-
-    Posts.find(query, {}, options).sort({
-      publishDate: -1
-    }).exec(function (err, posts) {
-      if (err) {
-        return callback(err.name + ': ' + err.message);
-      }
-
-      callback(null, posts, totalCount);
-    });
-  })
-}
-
-function getByUrl(year, month, day, slug, callback) {
-  Posts.findOne({
+  _this.findOne({
     publishDate: year + '-' + month + '-' + day,
     slug: slug
   }).exec(function (err, post) {
@@ -113,17 +76,9 @@ function getByUrl(year, month, day, slug, callback) {
   });
 }
 
-function getById(_id, callback) {
-  Posts.findById(_id).exec(function (err, post) {
-    if (err) {
-      return callback(err.name + ': ' + err.message);
-    }
+postsSchema.statics.findText = function (searchText, pagination, callback) {
+  var _this = this;
 
-    callback(null, post)
-  });
-}
-
-function findText(searchText, pagination, callback) {
   var options = {},
     query = {
       publish: true,
@@ -136,12 +91,12 @@ function findText(searchText, pagination, callback) {
     options.limit = pagination.page_size;
   }
 
-  Posts.countDocuments(query).exec(function (err, totalCount) {
+  _this.countDocuments(query).exec(function (err, totalCount) {
     if (err) {
       return callback(err.name + ': ' + err.message);
     }
 
-    Posts.find(query, {}, options).sort({
+    _this.find(query, {}, options).sort({
       publishDate: -1
     }).exec(function (err, posts) {
       if (err) {
@@ -153,50 +108,4 @@ function findText(searchText, pagination, callback) {
   })
 }
 
-function create(postParam, callback) {
-  // generate slug from title if empty
-  postParam.slug = postParam.slug || slugify(postParam.title);
-
-  Posts(postParam).save(function (err, doc) {
-    if (err) {
-      return callback(err.name + ': ' + err.message);
-    }
-
-    callback(null)
-  });
-}
-
-function update(_id, postParam, callback) {
-  // generate slug from title if empty
-  postParam.slug = postParam.slug || slugify(postParam.title);
-  postParam.updated = Date.now();
-
-  // fields to update
-  var set = _.omit(postParam, '_id');
-
-  Posts.updateOne({
-      _id: mongoose.Types.ObjectId(_id)
-    }, {
-      $set: set
-    },
-    function (err, doc) {
-      if (err) {
-        return callback(err.name + ': ' + err.message);
-      }
-
-      callback(null)
-    });
-}
-
-function _delete(_id, callback) {
-  Posts.deleteOne({
-      _id: mongoose.Types.ObjectId(_id)
-    },
-    function (err) {
-      if (err) {
-        return callback(err.name + ': ' + err.message);
-      }
-
-      callback(null)
-    });
-}
+mongoose.model('Posts', postsSchema);

@@ -8,17 +8,17 @@ var async = require('async'),
   slugify = config.helpers.slugify,
   googleAnalytics = config.services.googleAnalytics,
   errorHandler = require('../../errors.server.controller.js'),
-  pagesModel = require('../pages/pages.server.model'),
-  postsModel = require('../posts/posts.server.model'),
-  redirectsModel = require('../redirects/redirects.server.model'),
   mongoose = require('mongoose'),
+  Pages = mongoose.model('Pages'),
+  Posts = mongoose.model('Posts'),
+  Redirects = mongoose.model('Redirects'),
   User = mongoose.model('User');
 
 exports.checkForRedirects = function (req, res, next) {
   var url = req.url.toLowerCase();
 
   // redirects entered into cms
-  redirectsModel.getByFrom(url, function (err, redirect) {
+  Redirects.getByFrom(url, function (err, redirect) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -39,11 +39,9 @@ exports.retrieveSharedData = function (req, res, next) {
   async.waterfall([
     function (callback) {
       // return only published posts
-      var query = {
+      Posts.find({
         publish: true
-      };
-
-      postsModel.getAll(query, null, function (err, posts) {
+      }, (err, posts) => {
         if (err) {
           return callback(err);
         }
@@ -307,7 +305,7 @@ function retrieveViewModel(vm, query, callback) {
     function (done) {
       //check if query is search text
       if (typeof query === 'string') {
-        postsModel.findText(query, vm.pagination, function (err, posts, totalCount) {
+        Posts.findText(query, vm.pagination, function (err, posts, totalCount) {
           if (err) {
             return done({
               message: errorHandler.getErrorMessage(err)
@@ -317,28 +315,39 @@ function retrieveViewModel(vm, query, callback) {
           done(null, posts, totalCount);
         });
       } else {
-        postsModel.getAll(query, vm.pagination, function (err, posts, totalCount) {
+        var options = {};
+        if (vm.pagination) {
+          options.skip = pagination.page_size * (pagination.page_number - 1);
+          options.limit = pagination.page_size;
+        }
+
+        Posts.countDocuments(query).exec(function (err, totalCount) {
           if (err) {
-            return done({
-              message: errorHandler.getErrorMessage(err)
-            });
+            return callback(err.name + ': ' + err.message);
           }
 
-          done(null, posts, totalCount);
-        });
-      }
-    },
-    function (posts, totalCount, done) {
-      if (!posts.length) {
-        //don't proceed if there are no posts
-        return done(true);
-      }
+          Posts.find(query, {}, options).sort({
+            publishDate: -1
+          }).exec(function (err, posts) {
+            if (err) {
+              return done({
+                message: errorHandler.getErrorMessage(err)
+              });
+            }
 
-      if (vm.pagination) {
-        vm.pagination.collectionSize = totalCount;
-      }
+            // don't proceed if there are no posts
+            if (!posts.length) {
+              return done(true);
+            }
 
-      done(null, posts);
+            if (vm.pagination) {
+              vm.pagination.collectionSize = totalCount;
+            }
+
+            done(null, posts);
+          });
+        })
+      }
     },
     function (posts, done) {
       // retrieve google analytics for posts
@@ -436,7 +445,7 @@ exports.retrievePostByID = function (req, res) {
     });
   }
 
-  postsModel.getById(req.query.id, function (err, post) {
+  Posts.findById(req.query.id, function (err, post) {
     // find by post id or disqus id (old post id)
     if (err) {
       return res.status(404).send({
@@ -460,7 +469,7 @@ exports.retrievePostByDetails = function (req, res) {
 
   async.waterfall([
     function (callback) {
-      postsModel.getByUrl(req.params.year, req.params.month, req.params.day, req.params.slug, function (err, post) {
+      Posts.getByUrl(req.params.year, req.params.month, req.params.day, req.params.slug, function (err, post) {
         if (err) {
           return callback(err)
         } else if (!post) {
@@ -553,7 +562,7 @@ exports.retrievePostByDetails = function (req, res) {
 exports.retrievePageDetails = function (req, res, next) {
   var vm = {};
 
-  pagesModel.getBySlug(req.params.slug, function (err, page) {
+  Pages.getBySlug(req.params.slug, function (err, page) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)

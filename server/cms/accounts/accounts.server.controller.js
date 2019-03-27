@@ -16,7 +16,9 @@ exports.getCurrentAccount = function (req, res) {
     });
   }
 
-  User.findById(user.get('_id')).exec(function (err, account) {
+  User.findById(user._id)
+  .lean()
+  .exec(function (err, account) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -34,7 +36,9 @@ exports.getCurrentAccount = function (req, res) {
 }
 
 exports.getById = function (req, res) {
-  User.findById(req.params._id).exec(function (err, account) {
+  User.findById(req.params._id)
+  .lean()
+  .exec(function (err, account) {
     if (err) {
       return res.status(400).send({
         message: err
@@ -79,13 +83,13 @@ exports.updateAccount = function (req, res) {
 
 exports.deleteAccount = function (req, res) {
   let user = req.user || null;
-  if (req.params._id !== user.get('_id')) {
+  if (req.params._id !== user._id) {
     // can only delete own account
     return res.status(401).send('You can only delete your own account');
   }
 
   User.deleteOne({
-    _id: mongo.helper.toObjectID(user.get('_id'))
+    _id: mongo.helper.toObjectID(user._id)
   }).exec(function (err) {
     if (err) {
       return res.status(400).send({
