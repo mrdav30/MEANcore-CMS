@@ -362,6 +362,7 @@ exports.retrievePostsByAuthor = function (req, res, next) {
       facebookUrl: 1,
       githubUrl: 1,
       linkedinUrl: 1,
+      stackOverflowUrl: 1,
       personalUrl: 1
     })
     .lean()
@@ -401,6 +402,7 @@ exports.retrievePostsByAuthor = function (req, res, next) {
             facebookUrl: account.facebookUrl,
             githubUrl: account.githubUrl,
             linkedinUrl: account.linkedinUrl,
+            stackOverflowUrl: account.stackOverflowUrl,
             personalUrl: account.personalUrl
           }
         };
@@ -613,6 +615,7 @@ exports.retrievePostByDetails = function (req, res) {
           facebookUrl: 1,
           githubUrl: 1,
           linkedinUrl: 1,
+          stackOverflowUrl: 1,
           personalUrl: 1
         })
         .lean()
@@ -635,6 +638,7 @@ exports.retrievePostByDetails = function (req, res) {
             facebookUrl: account.facebookUrl,
             githubUrl: account.githubUrl,
             linkedinUrl: account.linkedinUrl,
+            stackOverflowUrl: account.stackOverflowUrl,
             personalUrl: account.personalUrl
           };
 
