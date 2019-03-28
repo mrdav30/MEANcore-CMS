@@ -12,18 +12,18 @@ module.exports = function (app) {
     .get(blog.retrieveSharedData);
 
   app.route('/api/blog/posts/:view')
-    .get(pagination, blog.retrieveAllPosts, blog.sendViewModel);
+    .get(pagination, blog.retrieveAllPosts);
   app.route('/api/blog/posts/search/:searchText')
-    .get(pagination, blog.retrievePostsBySearch, blog.sendViewModel);
+    .get(pagination, blog.retrievePostsBySearch);
   // posts for tag route
   app.route('/api/blog/posts/tag/:tag')
-    .get(pagination, blog.retrievePostsByTag, blog.sendViewModel);
+    .get(pagination, blog.retrievePostsByTag);
   // posts for date route
   app.route('/api/blog/posts/date/:year/:month')
-    .get(pagination, blog.retrievePostsByDate, blog.sendViewModel);
+    .get(pagination, blog.retrievePostsByDate);
   // posts for author route
   app.route('/api/blog/posts/author/:authorId')
-    .get(pagination, blog.retrievePostsByAuthor, blog.sendViewModel);
+    .get(pagination, blog.retrievePostsByAuthor);
 
   // post by id route (permalink used by disqus comments plugin)
   app.route('/api/blog/post').get(blog.retrievePostByID);

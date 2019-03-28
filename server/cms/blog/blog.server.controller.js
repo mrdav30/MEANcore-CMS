@@ -3,6 +3,7 @@
 var async = require('async'),
   moment = require('moment'),
   path = require('path'),
+  fs = require('fs'),
   config = require(path.resolve('./config/config')),
   _ = require('lodash'),
   slugify = config.helpers.slugify,
@@ -36,7 +37,7 @@ exports.checkForRedirects = function (req, res, next) {
 
 exports.retrieveSharedData = function (req, res, next) {
   var vm = {};
-  async.waterfall([
+  async.series([
     function (callback) {
       // return only the publishDate and tags from published posts
       Posts.find({
@@ -57,6 +58,9 @@ exports.retrieveSharedData = function (req, res, next) {
         });
     },
     function (callback) {
+      refreshPostViews(callback)
+    },
+    function (callback) {
       loadYears(vm, callback);
     },
     function (callback) {
@@ -73,9 +77,76 @@ exports.retrieveSharedData = function (req, res, next) {
     delete vm.posts;
 
     res.status(200).send({
-      vm: vm ? vm : []
+      vm: vm ? vm : {}
     })
   })
+}
+
+function refreshPostViews(callback) {
+  var runTimeConfig;
+  try{
+    runTimeConfig = JSON.parse(fs.readFileSync(path.resolve('./_content/blog_runtime_config.json')));
+  } catch(e){
+    runTimeConfig = {};
+  }
+
+  var lastRefreshDate = !runTimeConfig.VIEWS_LAST_REFRESHED ? new Date() : Date(runTimeConfig.VIEWS_LAST_REFRESHED);
+  var ONE_HOUR = 60 * 60 * 1000; /* ms */ ;
+  if (((new Date) - lastRefreshDate) < ONE_HOUR) {
+    async.waterfall([
+      function (done) {
+        // retrieve google analytics for posts
+        googleAnalytics.getData('2005-01-01', 'today', 'ga:pagePath', 'ga:pageviews', 'ga:pagePath=@/blog/post/', function (err, analytics) {
+          if (err) {
+            return done({
+              message: errorHandler.getErrorMessage(err)
+            });
+          }
+
+          done(null, analytics)
+        });
+      },
+      function (analytics, done) {
+        Posts.find({
+            publish: true
+          })
+          .exec((err, posts) => {
+            if (err) {
+              return done(err)
+            }
+
+            async.each(posts, (post, cb) => {
+              post.views = _.result(_.find(analytics, {
+                'pagePath': post.url
+              }), 'pageviews');
+
+              post.save(() => {
+                cb()
+              });
+            }, (err) => {
+              if (err) {
+                return done(err);
+              }
+
+              done();
+            })
+          })
+      },
+      function (done) {
+        runTimeConfig.VIEWS_LAST_REFRESHED = new Date();
+        fs.writeFileSync(path.resolve('./_content/blog_runtime_config.json'), JSON.stringify(runTimeConfig));
+        done(null);
+      }
+    ], (err) => {
+      if (err) {
+        return callback(err);
+      }
+
+      callback(null);
+    })
+  } else {
+    callback(null);
+  }
 }
 
 function loadYears(vm, callback) {
@@ -162,9 +233,16 @@ exports.retrieveAllPosts = function (req, res, next) {
       })
     }
 
-    req.vm = vm;
+    if (vm && !vm.posts) {
+      return res.status(200).send({
+        vm: vm ? vm : {},
+        message: 'No posts found'
+      });
+    }
 
-    next();
+    res.status(200).send({
+      vm: vm
+    });
   });
 }
 
@@ -184,9 +262,16 @@ exports.retrievePostsBySearch = function (req, res, next) {
       })
     }
 
-    req.vm = vm;
+    if (vm && !vm.posts) {
+      return res.status(200).send({
+        vm: vm ? vm : {},
+        message: 'No posts found'
+      });
+    }
 
-    next();
+    res.status(200).send({
+      vm: vm
+    });
   });
 }
 
@@ -212,9 +297,16 @@ exports.retrievePostsByTag = function (req, res, next) {
       })
     }
 
-    req.vm = vm;
+    if (vm && !vm.posts) {
+      return res.status(200).send({
+        vm: vm ? vm : {},
+        message: 'No posts found'
+      });
+    }
 
-    next();
+    res.status(200).send({
+      vm: vm
+    });
   });
 }
 
@@ -240,9 +332,16 @@ exports.retrievePostsByDate = function (req, res, next) {
       })
     }
 
-    req.vm = vm;
+    if (vm && !vm.posts) {
+      return res.status(200).send({
+        vm: vm ? vm : {},
+        message: 'No posts found'
+      });
+    }
 
-    next();
+    res.status(200).send({
+      vm: vm
+    });
   });
 }
 
@@ -313,9 +412,16 @@ exports.retrievePostsByAuthor = function (req, res, next) {
           })
         }
 
-        req.vm = vm;
+        if (vm && !vm.posts) {
+          return res.status(200).send({
+            vm: vm ? vm : {},
+            message: 'No posts found'
+          });
+        }
 
-        next();
+        res.status(200).send({
+          vm: vm
+        });
       });
     });
 }
@@ -323,145 +429,113 @@ exports.retrievePostsByAuthor = function (req, res, next) {
 // retrieve and transform published blog posts
 function retrieveViewModel(vm, query, callback) {
   async.waterfall([
-    function (done) {
-      //check if query is search text
-      if (typeof query === 'string') {
-        Posts.findText(query, vm.pagination, function (err, posts, totalCount) {
+      function (done) {
+        //check if query is search text
+        if (typeof query === 'string') {
+          Posts.findText(query, vm.pagination, function (err, posts, totalCount) {
+            if (err) {
+              return done({
+                message: errorHandler.getErrorMessage(err)
+              });
+            }
+
+            done(null, posts, totalCount);
+          });
+        } else {
+          var options = {};
+          if (vm.pagination) {
+            options.skip = vm.pagination.page_size * (vm.pagination.page_number - 1);
+            options.limit = vm.pagination.page_size;
+          }
+
+          Posts.countDocuments(query).exec(function (err, totalCount) {
+            if (err) {
+              return callback(err.name + ': ' + err.message);
+            }
+
+            Posts.find(query, {
+                url: 1,
+                tags: 1,
+                authorId: 1,
+                thumbnailUrl: 1,
+                title: 1,
+                publishDate: 1,
+                summary: 1,
+                views: 1
+              }, options).sort({
+                publishDate: -1
+              })
+              .lean()
+              .exec(function (err, posts) {
+                if (err) {
+                  return done({
+                    message: errorHandler.getErrorMessage(err)
+                  });
+                }
+
+                // don't proceed if there are no posts
+                if (!posts.length) {
+                  return done(true);
+                }
+
+                if (vm.pagination) {
+                  vm.pagination.collectionSize = totalCount;
+                }
+
+                done(null, posts);
+              });
+          })
+        }
+      },
+      function (posts, done) { //, analytics
+        // loop through each post and set meta data
+        async.each(posts, (post, cb) => {
+          //slugify tags
+          post.slugTags = _.map(post.tags, function (tag) {
+            return {
+              text: _.trim(tag),
+              slug: slugify(tag)
+            };
+          });
+
+          post.showImage = false;
+
+          User.findById(post.authorId, {
+              displayName: 1
+            })
+            .lean()
+            .exec(function (err, account) {
+              if (err) {
+                return cb(err);
+              } else if (!account) {
+                return cb(null);
+              }
+
+              // add author's information to posts
+              post.authorName = account.displayName;
+
+              cb(null);
+            });
+        }, function (err) {
           if (err) {
             return done({
               message: errorHandler.getErrorMessage(err)
             });
           }
 
-          done(null, posts, totalCount);
+          done(null, posts);
         });
-      } else {
-        var options = {};
-        if (vm.pagination) {
-          options.skip = vm.pagination.page_size * (vm.pagination.page_number - 1);
-          options.limit = vm.pagination.page_size;
-        }
-
-        Posts.countDocuments(query).exec(function (err, totalCount) {
-          if (err) {
-            return callback(err.name + ': ' + err.message);
-          }
-
-          Posts.find(query, {
-              url: 1,
-              tags: 1,
-              authorId: 1,
-              thumbnailUrl: 1,
-              title: 1,
-              publishDate: 1,
-              summary: 1
-            }, options).sort({
-              publishDate: -1
-            })
-            .lean()
-            .exec(function (err, posts) {
-              if (err) {
-                return done({
-                  message: errorHandler.getErrorMessage(err)
-                });
-              }
-
-              // don't proceed if there are no posts
-              if (!posts.length) {
-                return done(true);
-              }
-
-              if (vm.pagination) {
-                vm.pagination.collectionSize = totalCount;
-              }
-
-              done(null, posts);
-            });
-        })
+      },
+    ],
+    function (err, result) {
+      if (err && err.message) {
+        return callback(err.message);
       }
-    },
-    function (posts, done) {
-      // retrieve google analytics for posts
-      googleAnalytics.getData('2005-01-01', 'today', 'ga:pagePath', 'ga:pageviews', 'ga:pagePath=@/blog/post/', function (err, analytics) {
-        if (err) {
-          return done({
-            message: errorHandler.getErrorMessage(err)
-          });
-        }
 
-        done(null, posts, analytics)
-      });
-    },
-    function (posts, analytics, done) {
-      // loop through each post and set meta data
-      async.each(posts, (post, cb) => {
-        //add page views from GA
-        post.views = _.result(_.find(analytics, {
-          'pagePath': post.url
-        }), 'pageviews');
+      vm.posts = result ? result : null;
 
-        //slugify tags
-        post.slugTags = _.map(post.tags, function (tag) {
-          return {
-            text: _.trim(tag),
-            slug: slugify(tag)
-          };
-        });
-
-        post.showImage = false;
-
-        User.findById(post.authorId, {
-            displayName: 1
-          })
-          .lean()
-          .exec(function (err, account) {
-            if (err) {
-              return cb(err);
-            } else if (!account) {
-              return cb(null);
-            }
-
-            // add author's information to posts
-            post.authorName = account.displayName;
-
-            cb(null);
-          });
-      }, function (err) {
-        if (err) {
-          return done({
-            message: errorHandler.getErrorMessage(err)
-          });
-        }
-
-        done(null, posts);
-      });
-    },
-  ], function (err, result) {
-    if (err && err.message) {
-      return callback(err.message);
-    }
-
-    vm.posts = result ? result : null;
-
-    callback(null);
-  })
-}
-
-exports.sendViewModel = function (req, res, next) {
-  if (req.vm && !req.vm.posts) {
-    return res.status(200).send({
-      vm: req.vm ? req.vm : {},
-      message: 'No posts found'
-    });
-  }
-
-  // check if unauthorized msg was set from core
-  var message = req.flash('unauthorizedMsg')[0];
-
-  res.status(200).send({
-    vm: req.vm ? req.vm : {},
-    message: message ? message : null
-  });
+      callback(null);
+    })
 }
 
 // post by id route (permalink used by disqus comments plugin)
@@ -523,21 +597,6 @@ exports.retrievePostByDetails = function (req, res) {
 
         callback(null, post)
       })
-    },
-    function (post, callback) {
-      // retrieve google analytics for posts
-      googleAnalytics.getData('2005-01-01', 'today', 'ga:pagePath', 'ga:pageviews', 'ga:pagePath=@' + post.url, function (err, analytics) {
-        if (err) {
-          return callback(err);
-        }
-
-        //add page views from GA
-        post.views = _.result(_.find(analytics, {
-          'pagePath': post.url
-        }), 'pageviews');
-
-        callback(null, post)
-      });
     },
     function (post, callback) {
       //retireve author's information

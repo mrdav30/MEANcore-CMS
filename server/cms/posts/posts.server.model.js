@@ -45,6 +45,9 @@ var postsSchema = new Schema({
   },
   authorId: {
     type: String
+  },
+  views: {
+    type: Number
   }
 }, {
   strict: false
@@ -120,7 +123,8 @@ postsSchema.statics.findText = function (searchText, pagination, callback) {
         thumbnailUrl: 1,
         title: 1,
         publishDate: 1,
-        summary: 1
+        summary: 1,
+        views: 1
       }, options).sort({
         publishDate: -1
       })
