@@ -4,7 +4,7 @@ import { ICellRendererAngularComp } from 'ag-grid-angular';
 @Component({
     moduleId: module.id,
     selector: 'app-publish-renderer',
-    template: `<i *ngIf="model.publish" class="fas fa-check align-super"></i>`,
+    template: `<i *ngIf="model.publish" class="icon-check align-super"></i>`,
 })
 
 export class PublishRendererComponent implements ICellRendererAngularComp {

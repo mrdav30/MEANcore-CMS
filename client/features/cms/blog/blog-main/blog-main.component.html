@@ -11,27 +11,27 @@
           <div class="author-social-links d-flex flex-row">
             <a [hidden]="!vm.author.twitterUrl" class="mr-2" [href]="vm.author.twitterUrl" target="_blank"
               placement="top" ngbTooltip="Find me on Twitter">
-              <i class="fab fa-twitter"></i>
+              <i class="icon-twitter"></i>
             </a>
             <a [hidden]="!vm.author.facebookUrl" class="mr-2" [href]="vm.author.facebookUrl" target="_blank"
               placement="top" ngbTooltip="Find me on Facebook">
-              <i class="fab fa-facebook-f"></i>
+              <i class="icon-facebook-f"></i>
             </a>
             <a [hidden]="!vm.author.githubUrl" class="mr-2" [href]="vm.author.githubUrl" target="_blank" placement="top"
               ngbTooltip="Find me on Github">
-              <i class="fab fa-github"></i>
+              <i class="icon-github"></i>
             </a>
             <a [hidden]="!vm.author.linkedinUrl" class="mr-2" [href]="vm.author.linkedinUrl" target="_blank"
               placement="top" ngbTooltip="Find me on LinkedIn">
-              <i class="fab fa-linkedin-in"></i>
+              <i class="icon-linkedin-in"></i>
             </a>
             <a [hidden]="!vm.author.stackOverflowUrl" class="mr-2" [href]="vm.author.stackOverflowUrl" target="_blank"
               placement="top" ngbTooltip="Find me on StackOverflow">
-              <i class="fab fa-stack-overflow"></i>
+              <i class="icon-stack-overflow"></i>
             </a>
             <a [hidden]="!vm.author.personalUrl" [href]="vm.author.personalUrl" target="_blank" placement="top"
               ngbTooltip="My personal site">
-              <i class="fas fa-external-link-alt"></i>
+              <i class="icon-external-link-alt"></i>
             </a>
           </div>
         </div>
@@ -73,14 +73,14 @@
         <div class="card-body post-body">
           <a class="post-title" routerLink="{{post.url}}">{{post.title}}</a>
           <div class="d-flex flex-row meta">
-            <span class="post-date mr-2"><i class="far fa-clock mr-2"></i>{{post.publishDate | date}}</span>
+            <span class="post-date mr-2"><i class="icon-clock mr-2"></i>{{post.publishDate | date}}</span>
             <span class="mr-2">
-              <i class="fas fa-user mr-2"></i>
+              <i class="icon-user mr-2"></i>
               <a class="post-author" [routerLink]="'/blog/posts/author/' + post.authorId" placement="top"
                 ngbTooltip="Posts by {{post.authorName}}">{{post.authorName}}</a>
             </span>
             <span [hidden]="!post.views" class="post-views">
-              <i class="far fa-eye mr-2"></i>{{post.views}} VIEWS</span>
+              <i class="icon-eye mr-2"></i>{{post.views}} VIEWS</span>
           </div>
           <hr />
           <div class="post-middle">
@@ -89,7 +89,7 @@
             <div class="float-right">
               <a routerLink="{{post.url}}" class="view-btn btn btn-light btn-outline-dark" placement="top"
                 ngbTooltip="Read more">
-                <i class="fas fa-chevron-right"></i>
+                <i class="icon-chevron-right"></i>
               </a>
             </div>
           </div>

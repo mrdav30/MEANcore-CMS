@@ -8,7 +8,7 @@
         <input type="text" id="title" name="title" class="form-control" [(ngModel)]="post.title" #title="ngModel"
           required />
         <div *ngIf="f.submitted && title.invalid" class="alert alert-danger">
-          <div *ngIf="title.errors.required"><i class="fas fa-exclamation mr-2"></i>Title is required</div>
+          <div *ngIf="title.errors.required"><i class="icon-exclamation mr-2"></i>Title is required</div>
         </div>
       </div>
     </div>
@@ -44,7 +44,7 @@
         <input type="text" id="tags" name="tags" class="form-control" [(ngModel)]="post.tags" #tags="ngModel"
           appSplitControl required />
         <div *ngIf="f.submitted && tags.invalid" class="alert alert-danger">
-          <div *ngIf="tags.errors.required"><i class="fas fa-exclamation mr-2"></i>Tags are required</div>
+          <div *ngIf="tags.errors.required"><i class="icon-exclamation mr-2"></i>Tags are required</div>
         </div>
       </div>
     </div>
@@ -52,13 +52,13 @@
       <label for="publishDate" class="col-sm-2"><strong>Publish Date</strong></label>
       <div class="col-sm-3">
         <div class="input-group">
-          <span class="input-group-addon"><i class="fas fa-calendar md-36 mr-2"></i></span>
+          <span class="input-group-addon"><i class="icon-calendar-o md-36 mr-2"></i></span>
           <input id="publishDate" name="publishDate" class="form-control text-right" [(ngModel)]="currentDateObj"
             [ngModelOptions]="{standalone: true}" #postDate="ngModel" ngbDatepicker #dp="ngbDatepicker"
             (focus)="dp.toggle()" (dateSelect)="onDateSelect($event)" required />
         </div>
         <div *ngIf="f.submitted && postDate.invalid" class="alert alert-danger">
-          <div *ngIf="postDate.errors.required"><i class="fas fa-exclamation mr-2"></i>Publish date is
+          <div *ngIf="postDate.errors.required"><i class="icon-exclamation mr-2"></i>Publish date is
             required</div>
         </div>
       </div>
