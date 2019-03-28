@@ -3,7 +3,7 @@
   <hr />
   <form name="postForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
     <div class="form-group row">
-      <label for="title" class="col-sm-2 col-form-label">Title</label>
+      <label for="title" class="col-sm-2"><strong>Title</strong></label>
       <div class="col-sm-10">
         <input type="text" id="title" name="title" class="form-control" [(ngModel)]="post.title" #title="ngModel"
           required />
@@ -13,33 +13,33 @@
       </div>
     </div>
     <div class="form-group row">
-      <label for="slug" class="col-sm-2 col-form-label">Slug</label>
+      <label for="slug" class="col-sm-2"><strong>Slug</strong></label>
       <div class="col-sm-10">
         <input type="text" id="slug" name="slug" class="form-control" [(ngModel)]="post.slug" />
         <button type="button" class="btn btn-link" (click)="slugifyTitle()">Generate from title</button>
       </div>
     </div>
     <div class="form-group row">
-      <label for="postImage" class="col-sm-2 col-form-label">Post Image</label>
+      <label for="postImage" class="col-sm-2"><strong>Post Image</strong></label>
       <div class="col-sm-10">
         <app-image-upload [currentUrl]="post.thumbnailUrl" [uploadType]="'posts'" [imageWidth]="700" [imageHeight]="400"
           (urlChange)="post.thumbnailUrl=$event"></app-image-upload>
       </div>
     </div>
     <div class="form-group row">
-      <label for="summary" class="col-sm-2 col-form-label">Summary</label>
+      <label for="summary" class="col-sm-2"><strong>Summary</strong></label>
       <div class="col-sm-10">
         <textarea id="summary" name="summary" class="form-control" rows="4" [(ngModel)]="post.summary"></textarea>
       </div>
     </div>
     <div class="form-group row">
-      <label for="body" class="col-sm-2 col-form-label">Body</label>
+      <label for="body" class="col-sm-2"><strong>Body</strong></label>
       <div class="col-sm-10">
         <ckeditor id="body" name="body" [config]="editorOptions" [editor]="editor" [(ngModel)]="post.body"></ckeditor>
       </div>
     </div>
     <div class="form-group row">
-      <label for="tags" class="col-sm-2 col-form-label">Tags</label>
+      <label for="tags" class="col-sm-2"><strong>Tags</strong></label>
       <div class="col-sm-10">
         <input type="text" id="tags" name="tags" class="form-control" [(ngModel)]="post.tags" #tags="ngModel"
           appSplitControl required />
@@ -49,7 +49,7 @@
       </div>
     </div>
     <div class="form-group row">
-      <label for="publishDate" class="col-sm-2 col-form-label">Publish Date</label>
+      <label for="publishDate" class="col-sm-2"><strong>Publish Date</strong></label>
       <div class="col-sm-3">
         <div class="input-group">
           <span class="input-group-addon"><i class="fas fa-calendar md-36 mr-2"></i></span>

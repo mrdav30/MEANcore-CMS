@@ -77,8 +77,4 @@ export class AccountFormComponent implements OnInit {
             this.router.navigate(['/admin']);
         });
     }
-
-    clear(): void {
-        this.account.avatarUrl = '';
-    }
 }

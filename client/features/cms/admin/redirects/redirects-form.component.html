@@ -3,7 +3,7 @@
     <hr />
     <form name="redirectForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
         <div class="form-group row">
-            <label for="from" class="col-sm-3 col-form-label">From (e.g. '/old-url')</label>
+            <label for="from" class="col-sm-3"><strong>From (e.g. '/old-url')</strong></label>
             <div class="col-sm-9">
                 <input type="text" id="from" name="from" class="form-control" [(ngModel)]="redirect.from" #from="ngModel"
                     required />
@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="to" class="col-sm-3 col-form-label">To (e.g. '/new-url')</label>
+            <label for="to" class="col-sm-3"><strong>To (e.g. '/new-url')</strong></label>
             <div class="col-sm-9">
                 <input type="text" id="to" name="from" class="form-control" [(ngModel)]="redirect.to" #to="ngModel"
                     required />

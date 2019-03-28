@@ -1,58 +1,58 @@
-<div class="container">
-    <div class="row" [ngbCollapse]="isValidated || isTokenInvalid">
-        <div class="col-sm-3"></div>
-        <div class="col-sm-6">
-            <form name="subscribeForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="form-group"><i class="fas fa-robot mr-2"></i>Confirm Humanity</h4>
-                        <p>Before we subscribe you, we need to confirm you are a human.</p>
-                        <div appRecaptcha key="{{siteKey}}" id="reCaptcha" name="reCaptcha" [(ngModel)]="reCaptcha"
-                            #recaptcha="ngModel"></div>
-                        <div *ngIf="f.submitted && recaptcha.invalid" class="alert alert-danger">
-                            <div *ngIf="recaptcha.errors.required">
-                                <i class="fas fa-exclamation mr-2"></i>ReCaptcha is required
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary float-right">Subscribe to list</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="col-sm-3"></div>
-    </div>
-    <div class="row" [ngbCollapse]="!isValidated || isTokenInvalid">
-        <div class="col-sm-3"></div>
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="form-group"><i class="fas fa-smile-wink mr-2"></i>Subscription Confirmed</h4>
-                    <p>Your subscription to our list has been confirmed.</p>
-                    <p>Thank you for subscribing!</p>
-                </div>
-                <div class="card-footer">
-                    <a href="api/subscribe/get_contact" target="_blank">Add us to your address book</a>
-                    <a routerLink="/home" class="btn btn-primary float-right">Continue</a>
-                </div>
+<div class="container p-3">
+  <div class="row" [ngbCollapse]="isValidated || isTokenInvalid">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+      <form name="subscribeForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+        <div class="card">
+          <div class="card-body">
+            <h4 class="form-group"><i class="fas fa-robot mr-2"></i>Confirm Humanity</h4>
+            <p>Before we subscribe you, we need to confirm you are a human.</p>
+            <div appRecaptcha key="{{siteKey}}" id="reCaptcha" name="reCaptcha" [(ngModel)]="reCaptcha"
+              #recaptcha="ngModel"></div>
+            <div *ngIf="f.submitted && recaptcha.invalid" class="alert alert-danger">
+              <div *ngIf="recaptcha.errors.required">
+                <i class="fas fa-exclamation mr-2"></i>ReCaptcha is required
+              </div>
             </div>
+          </div>
+          <div class="card-footer">
+            <button type="submit" class="btn btn-primary float-right">Subscribe to list</button>
+          </div>
         </div>
-        <div class="col-sm-3"></div>
+      </form>
     </div>
-    <div class="row" [ngbCollapse]="isValidated || !isTokenInvalid">
-        <div class="col-sm-3"></div>
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="form-group"><i class="fas fa-user mr-2"></i>Invalid Subscription</h4>
-                    <p>Your subscription validation has expired. Please try subscribing again below.</p>
-                </div>
-                <div class="card-footer">
-                    <a routerLink="/subscribe" class="btn btn-secondary mr-2">Subscribe</a>
-                </div>
-            </div>
+    <div class="col-sm-3"></div>
+  </div>
+  <div class="row" [ngbCollapse]="!isValidated || isTokenInvalid">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="form-group"><i class="fas fa-smile-wink mr-2"></i>Subscription Confirmed</h4>
+          <p>Your subscription to our list has been confirmed.</p>
+          <p>Thank you for subscribing!</p>
         </div>
-        <div class="col-sm-3"></div>
+        <div class="card-footer">
+          <a href="api/subscribe/get_contact" target="_blank">Add us to your address book</a>
+          <a routerLink="/home" class="btn btn-primary float-right">Continue</a>
+        </div>
+      </div>
     </div>
+    <div class="col-sm-3"></div>
+  </div>
+  <div class="row" [ngbCollapse]="isValidated || !isTokenInvalid">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="form-group"><i class="fas fa-user mr-2"></i>Invalid Subscription</h4>
+          <p>Your subscription validation has expired. Please try subscribing again below.</p>
+        </div>
+        <div class="card-footer">
+          <a routerLink="/subscribe" class="btn btn-secondary mr-2">Subscribe</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3"></div>
+  </div>
 </div>
