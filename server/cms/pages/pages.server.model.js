@@ -35,7 +35,9 @@ pagesSchema.statics.getBySlug = function (slug, callback) {
 
   _this.findOne({
     slug: slug
-  }).exec(function (err, page) {
+  })
+  .lean()
+  .exec(function (err, page) {
     if (err) {
       return callback(err);
     } else if (!page) {

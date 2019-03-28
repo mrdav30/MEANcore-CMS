@@ -38,18 +38,23 @@ exports.retrieveSharedData = function (req, res, next) {
   var vm = {};
   async.waterfall([
     function (callback) {
-      // return only published posts
+      // return only the publishDate and tags from published posts
       Posts.find({
-        publish: true
-      }, (err, posts) => {
-        if (err) {
-          return callback(err);
-        }
+          publish: true
+        }, {
+          publishDate: 1,
+          tags: 1
+        })
+        .lean()
+        .exec((err, posts) => {
+          if (err) {
+            return callback(err);
+          }
 
-        vm.posts = posts ? posts : [];
+          vm.posts = posts ? posts : [];
 
-        callback(null);
-      });
+          callback(null);
+        });
     },
     function (callback) {
       loadYears(vm, callback);
@@ -244,59 +249,75 @@ exports.retrievePostsByDate = function (req, res, next) {
 exports.retrievePostsByAuthor = function (req, res, next) {
 
   User.findOne({
-    _id: req.params.authorId
-  }).exec(function (err, account) {
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      })
-    } else if (!account) {
-      // redirect to home page if there are no posts with author
-      return res.status(200).send({
-        message: 'Author not found'
-      });
-    }
-
-    // always return only published posts
-    //query by date
-    var query = {
-        publish: true,
-        authorId: req.params.authorId
-      },
-      vm = {
-        metaTitle: 'Posts by ' + account.get('displayName'),
-        metaImage: req.protocol + '://' + req.get('host') + config.app.logo,
-        pageHeader: 'Posts by ' + account.get('displayName') + ' :',
-        pagination: req.pagination ? req.pagination : null,
-        author: {
-          name: account.get('displayName'),
-          about: account.get('about'),
-          email: account.get('email'),
-          avatar: account.get('avatarUrl'),
-          workplace: account.get('workplace'),
-          location: account.get('location'),
-          education: account.get('education'),
-          created: account.get('created'),
-          twitterUrl: account.get('twitterUrl'),
-          facebookUrl: account.get('facebookUrl'),
-          githubUrl: account.get('githubUrl'),
-          linkedinUrl: account.get('linkedinUrl'),
-          personalUrl: account.get('personalUrl')
-        }
-      };
-
-    retrieveViewModel(vm, query, function (err) {
+      _id: req.params.authorId
+    }, {
+      displayName: 1,
+      about: 1,
+      email: 1,
+      avatarUrl: 1,
+      workplace: 1,
+      location: 1,
+      education: 1,
+      created: 1,
+      twitterUrl: 1,
+      facebookUrl: 1,
+      githubUrl: 1,
+      linkedinUrl: 1,
+      personalUrl: 1
+    })
+    .lean()
+    .exec(function (err, account) {
       if (err) {
         return res.status(400).send({
           message: errorHandler.getErrorMessage(err)
         })
+      } else if (!account) {
+        // redirect to home page if there are no posts with author
+        return res.status(200).send({
+          message: 'Author not found'
+        });
       }
 
-      req.vm = vm;
+      // always return only published posts
+      //query by date
+      var query = {
+          publish: true,
+          authorId: req.params.authorId
+        },
+        vm = {
+          metaTitle: 'Posts by ' + account.displayName,
+          metaImage: req.protocol + '://' + req.get('host') + config.app.logo,
+          pageHeader: 'Posts by ' + account.displayName + ' :',
+          pagination: req.pagination ? req.pagination : null,
+          author: {
+            name: account.displayName,
+            about: account.about,
+            email: account.email,
+            avatar: account.avatarUrl,
+            workplace: account.workplace,
+            location: account.location,
+            education: account.education,
+            created: account.created,
+            twitterUrl: account.twitterUrl,
+            facebookUrl: account.facebookUrl,
+            githubUrl: account.githubUrl,
+            linkedinUrl: account.linkedinUrl,
+            personalUrl: account.personalUrl
+          }
+        };
 
-      next();
+      retrieveViewModel(vm, query, function (err) {
+        if (err) {
+          return res.status(400).send({
+            message: errorHandler.getErrorMessage(err)
+          })
+        }
+
+        req.vm = vm;
+
+        next();
+      });
     });
-  });
 }
 
 // retrieve and transform published blog posts
@@ -317,8 +338,8 @@ function retrieveViewModel(vm, query, callback) {
       } else {
         var options = {};
         if (vm.pagination) {
-          options.skip = pagination.page_size * (pagination.page_number - 1);
-          options.limit = pagination.page_size;
+          options.skip = vm.pagination.page_size * (vm.pagination.page_number - 1);
+          options.limit = vm.pagination.page_size;
         }
 
         Posts.countDocuments(query).exec(function (err, totalCount) {
@@ -326,26 +347,36 @@ function retrieveViewModel(vm, query, callback) {
             return callback(err.name + ': ' + err.message);
           }
 
-          Posts.find(query, {}, options).sort({
-            publishDate: -1
-          }).exec(function (err, posts) {
-            if (err) {
-              return done({
-                message: errorHandler.getErrorMessage(err)
-              });
-            }
+          Posts.find(query, {
+              url: 1,
+              tags: 1,
+              authorId: 1,
+              thumbnailUrl: 1,
+              title: 1,
+              publishDate: 1,
+              summary: 1
+            }, options).sort({
+              publishDate: -1
+            })
+            .lean()
+            .exec(function (err, posts) {
+              if (err) {
+                return done({
+                  message: errorHandler.getErrorMessage(err)
+                });
+              }
 
-            // don't proceed if there are no posts
-            if (!posts.length) {
-              return done(true);
-            }
+              // don't proceed if there are no posts
+              if (!posts.length) {
+                return done(true);
+              }
 
-            if (vm.pagination) {
-              vm.pagination.collectionSize = totalCount;
-            }
+              if (vm.pagination) {
+                vm.pagination.collectionSize = totalCount;
+              }
 
-            done(null, posts);
-          });
+              done(null, posts);
+            });
         })
       }
     },
@@ -365,40 +396,36 @@ function retrieveViewModel(vm, query, callback) {
       // loop through each post and set meta data
       async.each(posts, (post, cb) => {
         //add page views from GA
-        post.set('views', _.result(_.find(analytics, {
-          'pagePath': post.get('url')
-        }), 'pageviews'), {
-          strict: false
-        });
+        post.views = _.result(_.find(analytics, {
+          'pagePath': post.url
+        }), 'pageviews');
 
         //slugify tags
-        post.set('slugTags', _.map(post.tags, function (tag) {
+        post.slugTags = _.map(post.tags, function (tag) {
           return {
             text: _.trim(tag),
             slug: slugify(tag)
           };
-        }), {
-          strict: false
         });
 
-        post.set('showImage', false, {
-          strict: false
-        });
+        post.showImage = false;
 
-        User.findById(post.authorId).exec(function (err, account) {
-          if (err) {
-            return cb(err);
-          } else if (!account) {
-            return cb(null);
-          }
+        User.findById(post.authorId, {
+            displayName: 1
+          })
+          .lean()
+          .exec(function (err, account) {
+            if (err) {
+              return cb(err);
+            } else if (!account) {
+              return cb(null);
+            }
 
-          // add author's information to posts
-          post.set('authorName', account.get('displayName'), {
-            strict: false
+            // add author's information to posts
+            post.authorName = account.displayName;
+
+            cb(null);
           });
-
-          cb(null);
-        });
       }, function (err) {
         if (err) {
           return done({
@@ -445,22 +472,27 @@ exports.retrievePostByID = function (req, res) {
     });
   }
 
-  Posts.findById(req.query.id, function (err, post) {
-    // find by post id or disqus id (old post id)
-    if (err) {
-      return res.status(404).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else if (!post) {
-      return res.status(404).send({
-        message: 'Not found'
-      });
-    }
+  // find by post id or disqus id (old post id)
+  Posts.findById(req.query.id, {
+      publishDate: 1,
+      slug: 1
+    })
+    .lean()
+    .exec((err, post) => {
+      if (err) {
+        return res.status(404).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else if (!post) {
+        return res.status(404).send({
+          message: 'Not found'
+        });
+      }
 
-    // 301 redirect to main post url
-    var postUrl = '/blog/post/' + moment(post.publishDate).format('YYYY/MM/DD') + '/' + post.slug;
-    return res.redirect(301, postUrl);
-  })
+      // 301 redirect to main post url
+      var postUrl = '/blog/post/' + moment(post.publishDate).format('YYYY/MM/DD') + '/' + post.slug;
+      return res.redirect(301, postUrl);
+    })
 };
 
 // post details route
@@ -477,68 +509,78 @@ exports.retrievePostByDetails = function (req, res) {
         }
 
         //  permalink used by disqus comment and social links
-        post.set('perma_link', hostDomain + '/api/blog/post?id=' + post._id, {
-          strict: false
-        });
+        post.perma_link = hostDomain + '/api/blog/post?id=' + post._id;
 
-        post.set('url', hostDomain + post.get('url'));
+        post.url = hostDomain + post.url;
 
         // slugify post tags
-        post.set('slugTags', _.map(post.tags, function (tag) {
+        post.slugTags = _.map(post.tags, function (tag) {
           return {
             text: tag,
             slug: slugify(tag)
           };
-        }));
+        });
 
         callback(null, post)
       })
     },
     function (post, callback) {
       // retrieve google analytics for posts
-      googleAnalytics.getData('2005-01-01', 'today', 'ga:pagePath', 'ga:pageviews', 'ga:pagePath=@' + post.get('url'), function (err, analytics) {
+      googleAnalytics.getData('2005-01-01', 'today', 'ga:pagePath', 'ga:pageviews', 'ga:pagePath=@' + post.url, function (err, analytics) {
         if (err) {
           return callback(err);
         }
 
         //add page views from GA
-        post.set('views', _.result(_.find(analytics, {
-          'pagePath': post.get('url')
-        }), 'pageviews'), {
-          strict: false
-        });
+        post.views = _.result(_.find(analytics, {
+          'pagePath': post.url
+        }), 'pageviews');
 
         callback(null, post)
       });
     },
     function (post, callback) {
       //retireve author's information
-      User.findById(post.authorId).exec(function (err, account) {
-        if (err) {
-          return callback(err);
-        }
+      User.findById(post.authorId, {
+          displayName: 1,
+          about: 1,
+          email: 1,
+          avatarUrl: 1,
+          workplace: 1,
+          location: 1,
+          education: 1,
+          created: 1,
+          twitterUrl: 1,
+          facebookUrl: 1,
+          githubUrl: 1,
+          linkedinUrl: 1,
+          personalUrl: 1
+        })
+        .lean()
+        .exec(function (err, account) {
+          if (err) {
+            return callback(err);
+          }
 
-        // add author's information to posts
-        post.set('author', {
-          name: account.get('displayName'),
-          about: account.get('about'),
-          email: account.get('email'),
-          avatar: account.get('avatarUrl'),
-          workplace: account.get('workplace'),
-          location: account.get('location'),
-          education: account.get('education'),
-          created: account.get('created'),
-          twitterUrl: account.get('twitterUrl'),
-          facebookUrl: account.get('facebookUrl'),
-          githubUrl: account.get('githubUrl'),
-          linkedinUrl: account.get('linkedinUrl'),
-          personalUrl: account.get('personalUrl')
-        }, {
-          strict: false
+          // add author's information to posts
+          post.author = {
+            name: account.displayName,
+            about: account.about,
+            email: account.email,
+            avatar: account.avatarUrl,
+            workplace: account.workplace,
+            location: account.location,
+            education: account.education,
+            created: account.created,
+            twitterUrl: account.twitterUrl,
+            facebookUrl: account.facebookUrl,
+            githubUrl: account.githubUrl,
+            linkedinUrl: account.linkedinUrl,
+            personalUrl: account.personalUrl
+          };
+
+          callback(null, post);
         });
-
-        callback(null, post);
-      });
     }
   ], function (err, post) {
     if (err) {

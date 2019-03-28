@@ -17,18 +17,20 @@ var redirectsSchema = new Schema({
 });
 
 
-redirectsSchema.static.getByFrom = function (from, callback) {
+redirectsSchema.statics.getByFrom = function (from, callback) {
   var _this = this;
 
   _this.findOne({
-    from: from
-  }).exec(function (err, redirect) {
-    if (err) {
-      return callback(err.name + ': ' + err.message)
-    }
+      from: from
+    })
+    .lean()
+    .exec(function (err, redirect) {
+      if (err) {
+        return callback(err.name + ': ' + err.message)
+      }
 
-    callback(null, redirect);
-  });
+      callback(null, redirect);
+    });
 }
 
 mongoose.model('Redirects', redirectsSchema);

@@ -59,21 +59,38 @@ postsSchema.index({
     body: 3,
     summary: 1
   }
-})
+});
+postsSchema.index({
+  publish: 1
+});
+postsSchema.index({
+  tags: 1
+});
+postsSchema.index({
+  publishDate: 1
+});
+postsSchema.index({
+  authorId: 1
+});
+postsSchema.index({
+  slug: 1
+});
 
 postsSchema.statics.getByUrl = function (year, month, day, slug, callback) {
   var _this = this;
 
   _this.findOne({
-    publishDate: year + '-' + month + '-' + day,
-    slug: slug
-  }).exec(function (err, post) {
-    if (err) {
-      return callback(err.name + ': ' + err.message);
-    }
+      publishDate: year + '-' + month + '-' + day,
+      slug: slug
+    })
+    .lean()
+    .exec(function (err, post) {
+      if (err) {
+        return callback(err.name + ': ' + err.message);
+      }
 
-    callback(null, post)
-  });
+      callback(null, post)
+    });
 }
 
 postsSchema.statics.findText = function (searchText, pagination, callback) {
@@ -96,15 +113,25 @@ postsSchema.statics.findText = function (searchText, pagination, callback) {
       return callback(err.name + ': ' + err.message);
     }
 
-    _this.find(query, {}, options).sort({
-      publishDate: -1
-    }).exec(function (err, posts) {
-      if (err) {
-        return callback(err.name + ': ' + err.message);
-      }
+    _this.find(query, {
+        url: 1,
+        tags: 1,
+        authorId: 1,
+        thumbnailUrl: 1,
+        title: 1,
+        publishDate: 1,
+        summary: 1
+      }, options).sort({
+        publishDate: -1
+      })
+      .lean()
+      .exec(function (err, posts) {
+        if (err) {
+          return callback(err.name + ': ' + err.message);
+        }
 
-      callback(null, posts, totalCount)
-    })
+        callback(null, posts, totalCount)
+      })
   })
 }
 
