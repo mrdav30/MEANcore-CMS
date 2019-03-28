@@ -117,10 +117,7 @@ module.exports = {
       },{
         data: {
           name: 'Blog',
-          route: '/blog',
-          permissions: [{
-            name: 'default'
-          }]
+          route: '/blog'
         }
       },{
         data: {
@@ -140,8 +137,7 @@ module.exports = {
         }
       }, {
         data: {
-          name: 'user',
-          featurePermissions: ['blog:default']
+          name: 'user'
         }
       }]
     }, {
