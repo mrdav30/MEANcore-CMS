@@ -31,5 +31,5 @@ module.exports = function (app) {
   app.route('/api/blog/post/details/:year/:month/:day/:slug').get(blog.retrievePostByDetails);
 
   // page details route
-  app.route('/api/blog/page/:slug').get(blog.retrievePageDetails);
+  app.route('/api/page/:slug').get(blog.retrievePageDetails);
 };
