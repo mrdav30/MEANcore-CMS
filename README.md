@@ -28,6 +28,8 @@ HOST_SECURE=
 PROXY=
 
 APP_NAME='meancore-cms'
+APP_LOGO='assets/images/logo.png'
+APP_DEFAULT_ROUTE='home'
 APP_BASE_URL='/'
 API_BASE_URL='api'
 IMAGE_BASE_URL='/image-uploads'
