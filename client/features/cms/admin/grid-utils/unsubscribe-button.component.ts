@@ -4,7 +4,7 @@ import { ICellRendererAngularComp } from 'ag-grid-angular';
 @Component({
     moduleId: module.id,
     selector: 'app-unsubscribe-button',
-    template: `<button (click)="unsubscribe()" class="btn btn-danger btn-sm align-super"><i class="fas fa-user-minus"></i></button>`,
+    template: `<button (click)="unsubscribe()" class="btn btn-danger btn-sm align-super"><i class="icon-user-times"></i></button>`,
 })
 
 export class UnsubscribeButtonComponent implements ICellRendererAngularComp {

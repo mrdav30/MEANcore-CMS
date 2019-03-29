@@ -15,7 +15,7 @@ export class PageService {
     ) { }
 
     GetPage(pageSlug: string): Observable<{}> {
-        return this.http.get(environment.appBaseUrl + environment.apiBaseUrl + '/blog/page/' + pageSlug)
+        return this.http.get(environment.appBaseUrl + environment.apiBaseUrl + '/page/' + pageSlug)
             .pipe(
                 catchError(this.handleErrorService.handleError<any>('PageDetails'))
             );

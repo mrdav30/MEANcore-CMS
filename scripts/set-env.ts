@@ -5,12 +5,14 @@ const targetPath = `./client/environments/environment.ts`;
 
 // Load node modules
 const colors = require('colors');
-require('dotenv').load();
+require('dotenv').config();
 
 // Debug environment variables
 
 // `environment.ts` file structure that uses the environment variables
-const envConfigFile = `import { VERSION } from './version';
+const envConfigFile = `// IMPORTANT: THIS FILE IS AUTO GENERATED! DO NOT MANUALLY EDIT OR CHECKIN!
+/* tslint:disable */
+import { VERSION } from './version';
 
 export const environment = {
     production: '${process.env.PRODUCTION}',
@@ -19,12 +21,18 @@ export const environment = {
     apiBaseUrl: '${process.env.API_BASE_URL}',
     googleAnalyticsID: '${process.env.GOOGLE_ANALYTICS_ID}',
     recaptchaSiteKey: '${process.env.RECAPTCHA_SITE_KEY}',
+<<<<<<< HEAD:set-env.ts
     appName: '${process.env.APP_NAME}',
     appBaseUrl: '${process.env.APP_BASE_URL}',
     imageUploadUrl: '${process.env.IMAGE_UPLOAD_URL}',
     metaTitleSuffix: '${process.env.META_TITLE_SUFFIX}',
     twitterHandle: '${process.env.TWITTER_HANDLE}'
+=======
+    twitterHandle: '${process.env.TWITTER_HANDLE}',
+    metaTitleSuffix: '${process.env.META_TITLE_SUFFIX}'
+>>>>>>> meancore-cms-dev:scripts/set-env.ts
 };
+/* tslint:enable */
 `;
 
 console.log(colors.magenta('The file `environment.ts` will be written with the following content: \n'));

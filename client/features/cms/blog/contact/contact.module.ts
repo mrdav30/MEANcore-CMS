@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { UtilsModule } from '../../../utils';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { ContactComponent } from './contact.component';
 
@@ -14,7 +14,7 @@ import { ContactService } from '../services/contact.service';
         CommonModule,
         FormsModule,
         RouterModule,
-        UtilsModule
+        NgbCollapseModule
     ],
     declarations: [
         ContactComponent

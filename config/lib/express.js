@@ -92,13 +92,17 @@ var initSession = function (app, config, db) {
  * Initialize application middleware
  */
 var initMiddleware = function (app, config) {
-  //Compression is being handled at NGINX level?
-  //Should be placed before express.static
+ // Should be placed before express.static
   app.use(compress({
+<<<<<<< HEAD
     filter: function (req, res) {
       return (/json|text|javascript|css|font|svg/).test(res.getHeader('Content-Type'));
     },
     level: 9
+=======
+    level: 9,
+    memLevel: 9
+>>>>>>> meancore-cms-dev
   }));
 
   // Enable logger (morgan) if enabled in the configuration file
@@ -199,6 +203,7 @@ var initHelmetHeaders = function (app) {
     action: 'sameorigin'
   }));
   app.use(helmet.hidePoweredBy());
+  app.use(helmet.noCache());
   app.use(helmet.xssFilter());
   app.use(helmet.noSniff());
   app.use(helmet.ieNoOpen());
@@ -207,7 +212,11 @@ var initHelmetHeaders = function (app) {
     includeSubdomains: true,
     force: true
   }));
-  app.use(csp(config.cps));
+
+  // Disable cps during dev testing to prevent issues with ng-dev proxy
+  if (process.env.NODE_ENV === 'production') {
+    app.use(csp(config.cps));
+  }
 
   // POST any CSP violations
   app.use('/report-violation', (req, res) => {
@@ -233,20 +242,12 @@ var initClientRoutes = function (app, config) {
   app.use('/node_modules', express.static(path.resolve(config.staticFiles + '../../node_modules/'), {
     maxAge: '30d', // Cache node modules in development as well as they are not updated that frequantly.
     index: false,
-    setHeaders: function (res, path, stat) {
-      res.setHeader('Cache-Control', '');
-      res.setHeader('Pragma', '');
-    }
   }));
 
   // Setting the app router and static folder
   app.use('/', express.static(path.resolve(config.staticFiles), {
     maxAge: cacheTime,
     index: false,
-    setHeaders: function (res, path, stat) {
-      res.setHeader('Cache-Control', '');
-      res.setHeader('Pragma', '');
-    }
   }));
 };
 
@@ -310,8 +311,6 @@ var enableCORS = function (app) {
     if (req.method === 'OPTIONS') {
       res.status(204).end();
     } else {
-      res.setHeader('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
-      res.setHeader('Pragma', 'no-cache');
       next();
     }
   });

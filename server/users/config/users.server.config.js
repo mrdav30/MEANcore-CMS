@@ -25,8 +25,38 @@ module.exports = function (app) {
 	  })
 	  // Only retrieve values required for auth
       .select('username displayName email appName provider roles knownIPAddresses password salt')
+      .lean()
       .exec(function (err, user) {
+<<<<<<< HEAD
         done(err, user);
+=======
+        if (err || !user) {
+          var message = !user ? 'User not found!' : err;
+          done(message);
+        }
+        // Get users role info based on assigned roles
+        Roles.find({
+            _id: {
+              $in: _.map(user.roles, (id) => {
+                return new mongoose.Types.ObjectId(id);
+              })
+            }
+          })
+          .select('name featurePermissions')
+          .lean()
+          .exec((err, roles) => {
+            if (err) {
+              return done(err);
+            }
+
+            // if user has no roles, provide user role by default
+            user.roles = roles && roles.length ? roles : [{
+              name: 'user'
+            }];
+
+            done(null, user);
+          })
+>>>>>>> meancore-cms-dev
       });
   });
 

@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { Router } from '@angular/router';
+
 import * as CustomEditor from '../_content/ckeditor-custom/ckeditor';
-import * as _ from 'lodash';
+import { merge } from 'lodash';
 
 import { AccountService } from '../services/account.service';
 import { Account } from './account';
@@ -42,7 +43,7 @@ export class AccountFormComponent implements OnInit {
         this.accountService.GetCurrent()
             .subscribe((data: any) => {
                 if (data && data.account) {
-                    this.account = _.merge(new Account(), data.account) as Account;
+                    this.account = merge(new Account(), data.account) as Account;
                 }
             }, (error) => {
                 alert('Error loading page');
@@ -75,9 +76,5 @@ export class AccountFormComponent implements OnInit {
             alert('Error updating account');
             this.router.navigate(['/admin']);
         });
-    }
-
-    clear(): void {
-        this.account.avatarUrl = '';
     }
 }

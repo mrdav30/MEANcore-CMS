@@ -9,7 +9,12 @@ var async = require('async'),
   mongoose = require('mongoose'),
   passport = require('passport'),
   User = mongoose.model('User'),
+<<<<<<< HEAD
   userValidation = require('./users.validation.server');
+=======
+  Roles = mongoose.model('Roles'),
+  userValidation = require('./users.validation.service');
+>>>>>>> meancore-cms-dev
 
 exports.validateUser = function (req, res) {
   var usernameOrEmail = String(req.body.usernameOrEmail).toLowerCase();
@@ -109,14 +114,23 @@ exports.signIn = function (req, res, next) {
     } else {
       async.series([
         function (done) {
+<<<<<<< HEAD
           // Set last known IP of a successful login to prevent logins from unknown IPs.
           var knownIPAddresses = user.get('knownIPAddresses') ? user.get('knownIPAddresses') : [];
           if (!knownIPAddresses.includes(req.connection.remoteAddress)) {
             user.knownIPAddresses.push(req.connection.remoteAddress);
             user.updateOne({
               _id: mongoose.Types.ObjectId(user.get('_id'))
+=======
+          var userIPAddresses = user.knownIPAddresses ? user.knownIPAddresses : [];
+          if (!userIPAddresses.includes(req.connection.remoteAddress)) {
+            User.updateOne({
+              _id: mongoose.Types.ObjectId(user._id)
+>>>>>>> meancore-cms-dev
             }, {
-              $set: _.omit(user, '_id')
+              $addToSet: {
+                knownIPAddresses: req.connection.remoteAddress
+              }
             }, function (err) {
               done(err);
             });

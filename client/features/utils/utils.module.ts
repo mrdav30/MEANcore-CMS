@@ -2,21 +2,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  NgbDatepickerModule,
-  NgbTooltipModule,
-  NgbAlertModule,
-  NgbCollapseModule,
-  NgbProgressbarModule,
-  NgbTabsetModule,
-  NgbPaginationModule
-} from '@ng-bootstrap/ng-bootstrap';
 
 import { ImageUploadModule } from './image-upload/image-upload.module';
+<<<<<<< HEAD
+=======
+import { DynamicFormsModule } from './dynamic-forms/dynamic-forms.module';
+import { PasswordValidatorModule } from './password-validator/password-validator.module';
+>>>>>>> meancore-cms-dev
 
 import { LoadingComponent } from './loading/loading.component';
 import { MessagingComponent } from './messaging/messaging.component';
-import { PasswordValidatorComponent } from './password-validator/password-validator.component';
 
 import { TooltipDirective } from './directives/tooltip.directive';
 import { EqualValidatorDirective } from './directives/equal-validator.directive';
@@ -25,6 +20,7 @@ import { AnimatedLabelDirective } from './directives/animated-label.directive';
 import { SplitDirective } from './directives/split.directive';
 import { ReCaptchaDirective } from './directives/recaptcha.directive';
 import { InputRestrictionDirective } from './directives/input-restriction.directive';
+import { DeferLoadDirective } from './directives/defer-load.directive';
 
 import { CsvPipe } from './pipes/csv.pipe';
 import { SlugifyPipe } from './pipes/slugify.pipe';
@@ -62,11 +58,11 @@ export { CanDeactivateGuard } from './services/can-deactivate-guard.service';
 
 const components = [
   MessagingComponent,
-  LoadingComponent,
-  PasswordValidatorComponent
+  LoadingComponent
 ];
 
 const modules = [
+<<<<<<< HEAD
   NgbDatepickerModule,
   NgbTooltipModule,
   NgbAlertModule,
@@ -75,6 +71,11 @@ const modules = [
   NgbProgressbarModule,
   NgbPaginationModule,
   ImageUploadModule
+=======
+  ImageUploadModule,
+  DynamicFormsModule,
+  PasswordValidatorModule
+>>>>>>> meancore-cms-dev
 ];
 
 const directives = [
@@ -84,7 +85,8 @@ const directives = [
   AnimatedLabelDirective,
   SplitDirective,
   ReCaptchaDirective,
-  InputRestrictionDirective
+  InputRestrictionDirective,
+  DeferLoadDirective
 ];
 
 const pipes = [

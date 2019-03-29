@@ -1,9 +1,9 @@
 #!/bin/bash
 
-if [ ! -e server.js ]
+if [ ! -e ./server.js ]
 then
 	echo "Error: could not find main application server.js file"
-	echo "You should run the generate-ssl-certs.sh script from the main MEANcore application root directory"
+	echo "You should run the generate-ssl-certs.sh script from the root MEANcore application directory"
 	echo "i.e: bash generate-ssl-certs.sh"
 	exit -1
 fi

@@ -1,112 +1,36 @@
 'use strict';
 
-var _ = require('lodash'),
-    mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+var mongoose = require('mongoose'),
+  Schema = mongoose.Schema;
 
 var redirectsSchema = new Schema({
-    from: {
-        type: String,
-        trim: true
-    },
-    to: {
-        type: String,
-        trim: true
-    },
+  from: {
+    type: String,
+    trim: true
+  },
+  to: {
+    type: String,
+    trim: true
+  },
 }, {
-    strict: false
+  strict: false
 });
-var Redirects = mongoose.model('Redirects', redirectsSchema);
 
-var service = {};
 
-service.getAll = getAll;
-service.getById = getById;
-service.getByFrom = getByFrom;
-service.create = create;
-service.update = update;
-service.delete = _delete;
+redirectsSchema.statics.getByFrom = function (from, callback) {
+  var _this = this;
 
-module.exports = service;
+  _this.findOne({
+      from: from
+    })
+    .lean()
+    .exec(function (err, redirect) {
+      if (err) {
+        return callback(err.name + ': ' + err.message)
+      }
 
-function getAll(callback) {
-    Redirects.find().exec(function (err, redirects) {
-        if (err) {
-            return callback(err.name + ': ' + err.message)
-        }
-
-        callback(null, redirects);
+      callback(null, redirect);
     });
 }
 
-function getById(_id, callback) {
-    Redirects.findById(_id).exec(function (err, redirect) {
-        if (err) {
-            return callback(err.name + ': ' + err.message)
-        }
-
-        callback(null, redirect);
-    });
-}
-
-function getByFrom(from, callback) {
-
-    Redirects.findOne({
-        from: from
-    }).exec(function (err, redirect) {
-        if (err) {
-            return callback(err.name + ': ' + err.message)
-        }
-
-        callback(null, redirect);
-    });
-}
-
-function create(redirectParam, callback) {
-    // ensure to and from are lowercase
-    redirectParam.from = redirectParam.from.toLowerCase();
-    redirectParam.to = redirectParam.to.toLowerCase();
-
-    Redirects(redirectParam).save(function (err, doc) {
-        if (err) {
-            return callback(err.name + ': ' + err.message)
-        }
-
-        callback(null);
-    });
-}
-
-function update(_id, redirectParam, callback) {
-    // ensure to and from are lowercase
-    redirectParam.from = redirectParam.from.toLowerCase();
-    redirectParam.to = redirectParam.to.toLowerCase();
-
-    // fields to update
-    var set = _.omit(redirectParam, '_id');
-
-    Redirects.updateOne({
-            _id: mongoose.Types.ObjectId(_id)
-        }, {
-            $set: set
-        },
-        function (err, doc) {
-            if (err) {
-                return callback(err.name + ': ' + err.message)
-            }
-
-            callback(null);
-        });
-}
-
-function _delete(_id, callback) {
-    Redirects.deleteOne({
-            _id: mongoose.Types.ObjectId(_id)
-        },
-        function (err) {
-            if (err) {
-                return callback(err.name + ': ' + err.message)
-            }
-
-            callback(null);
-        });
-}
+mongoose.model('Redirects', redirectsSchema);

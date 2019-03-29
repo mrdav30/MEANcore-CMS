@@ -30,9 +30,16 @@ PROXY=
 APP_NAME='meancore-cms'
 APP_BASE_URL='/'
 API_BASE_URL='api'
+<<<<<<< HEAD
 APP_DEFAULT_ROUTE='home'
 IMAGE_UPLOAD_URL='/admin/upload'
 TWITTER_HANDLE=
+=======
+IMAGE_BASE_URL='/image-uploads'
+IMAGE_STORAGE='./_content/image-uploads/'
+TWITTER_HANDLE=''
+META_TITLE_SUFFIX=' | The MEANcore Blog'
+>>>>>>> meancore-cms-dev
 
 SESSION_SECRET='MEANCORE-CMS'
 SESSION_KEY='meancore-cms-key'
@@ -63,6 +70,22 @@ MAILER_TEST=true
  ```bash
  npm start:dev
  ```
+
+4. Run the MongoDB Seed
+To have the default menu feature(s), role(s), and/or user account(s) at runtime:
+```bash
+npm run seed
+```
+This will try to seed the features, roles, and users based on the defined NODE_ENV in your env config. You have to copy the user passwords from the console and store it somewhere safe.
+
+5. Running with TLS (Optional)
+The application will start by default with the secuire configuration (SSL mode) turned off and listen on port 3000.  To run your application in a secure manner, you'll need to use OpenSSL and generate a set of self-signed certificates.  Unix-based users can use the following command:
+```bash
+npm run generate-ssl-certs
+```
+Windows users can follow the instructions found [here](https://support.citrix.com/article/CTX128656).  After you've generated the key and certificate, ensure they are placed in the config/sslcerts folder.
+
+To enable/disable SSL mode in a production environment, set the HOST_SECURE variable in your env config.
 
 ## Contributing
 We welcome pull requests from the community! Just be sure to read the [contributing](https://github.com/mrdav30/MEANcore-CMS/blob/meancore-cms/CONTRIBUTING.MD) doc to get started.

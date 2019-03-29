@@ -1,9 +1,9 @@
 <div *ngIf="account && account" class="container">
-  <h1>Account Details</h1>
+  <h3>Account Details</h3>
   <hr />
   <form name="accountForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
     <div class="form-group row">
-      <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
+      <label for="firstName" class="col-sm-2"><strong>First Name</strong></label>
       <div class="col-sm-4">
         <input type="text" id="firstName" name="firstName" class="form-control" [(ngModel)]="account.firstName"
           #firstName="ngModel" spellcheck="false" />
@@ -11,22 +11,22 @@
       <div class="col-sm-6"></div>
     </div>
     <div class="form-group row">
-      <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
+      <label for="lastName" class="col-sm-2"><strong>Last Name</strong></label>
       <div class="col-sm-4">
-        <input type="text" id="lastName" name="lastName" class="form-control" [(ngModel)]="account.lastName" #lastName="ngModel"
-          spellcheck="false" />
+        <input type="text" id="lastName" name="lastName" class="form-control" [(ngModel)]="account.lastName"
+          #lastName="ngModel" spellcheck="false" />
       </div>
       <div class="col-sm-6"></div>
     </div>
     <div class="form-group row">
-      <label for="username" class="col-sm-2 col-form-label">Username</label>
+      <label for="username" class="col-sm-2"><strong>Username</strong></label>
       <div class="col-sm-4">
-        <input type="text" id="username" name="username" class="form-control" [(ngModel)]="account.username" #username="ngModel"
-          spellcheck="false" required />
+        <input type="text" id="username" name="username" class="form-control" [(ngModel)]="account.username"
+          #username="ngModel" spellcheck="false" required />
         <div *ngIf="f.submitted && username.invalid" class="alert alert-danger">
-          <div *ngIf="username.errors.required"><i class="fas fa-exclamation mr-2"></i>Username is required</div>
+          <div *ngIf="username.errors.required"><i class="icon-exclamation mr-2"></i>Username is required</div>
           <div *ngIf="username.errors.alreadyused">
-            <i class="fas fa-exclamation mr-2"></i>Username already in use
+            <i class="icon-exclamation mr-2"></i>Username already in use
           </div>
           <div *ngIf="username.errors.alreadyused">Available: {{possibleUsername}}</div>
         </div>
@@ -34,29 +34,30 @@
       <div class="col-sm-6"></div>
     </div>
     <div class="form-group row">
-      <label for="email" class="col-sm-2 col-form-label">Email</label>
+      <label for="email" class="col-sm-2"><strong>Email</strong></label>
       <div class="col-sm-4">
         <input type="email" id="email" name="email" class="form-control" [(ngModel)]="account.email" #email="ngModel"
           spellcheck="false" required pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$" />
         <div *ngIf="f.submitted && email.invalid" class="alert alert-danger">
-          <div *ngIf="email.errors.required"><i class="fas fa-exclamation mr-2"></i>Email is required</div>
+          <div *ngIf="email.errors.required"><i class="icon-exclamation mr-2"></i>Email is required</div>
           <div *ngIf="email.errors.pattern">
-            <i class="fas fa-exclamation mr-2"></i>Email must be a valid email address
+            <i class="icon-exclamation mr-2"></i>Email must be a valid email address
           </div>
         </div>
       </div>
       <div class="col-sm-6"></div>
     </div>
     <div class="form-group row">
-      <label for="password" class="col-sm-2 col-form-label">Password</label>
+      <label for="password" class="col-sm-2"><strong>Password</strong></label>
       <div class="col-sm-4">
         <div>
           <input type="password" id="password" name="password" type="password" class="form-control inline-control"
-            [(ngModel)]="account.password" #password="ngModel" spellcheck="false" appPasswordToggle ngbTooltip="{{passwordTooltip}}" />
+            [(ngModel)]="account.password" #password="ngModel" spellcheck="false" appPasswordToggle
+            ngbTooltip="{{passwordTooltip}}" />
         </div>
         <div *ngIf="f.submitted && password.invalid">
           <div *ngFor="let passwordError of passwordErrors" class="alert alert-danger">
-            <i class="fas fa-exclamation mr-2"></i>{{passwordError}}
+            <i class="icon-exclamation mr-2"></i>{{passwordError}}
           </div>
         </div>
         <app-password-validator [hidden]="!account.password.length" [passwordToCheck]="account.password"
@@ -65,7 +66,7 @@
       <div class="col-sm-6"></div>
     </div>
     <div class="form-group row">
-      <label for="workplace" class="col-sm-2 col-form-label">Workplace</label>
+      <label for="workplace" class="col-sm-2"><strong>Workplace</strong></label>
       <div class="col-sm-4">
         <input type="text" id="workplace" name="workplace" class="form-control" [(ngModel)]="account.workplace"
           spellcheck="false" />
@@ -73,14 +74,15 @@
       <div class="col-sm-6"></div>
     </div>
     <div class="form-group row">
-      <label for="location" class="col-sm-2 col-form-label">Location</label>
+      <label for="location" class="col-sm-2"><strong>Location</strong></label>
       <div class="col-sm-4">
-        <input type="text" id="location" name="location" class="form-control" [(ngModel)]="account.location" spellcheck="false" />
+        <input type="text" id="location" name="location" class="form-control" [(ngModel)]="account.location"
+          spellcheck="false" />
       </div>
       <div class="col-sm-6"></div>
     </div>
     <div class="form-group row">
-      <label for="education" class="col-sm-2 col-form-label">Education</label>
+      <label for="education" class="col-sm-2"><strong>Education</strong></label>
       <div class="col-sm-4">
         <input type="text" id="education" name="education" class="form-control" [(ngModel)]="account.education"
           spellcheck="false" />
@@ -88,13 +90,14 @@
       <div class="col-sm-6"></div>
     </div>
     <div class="form-group row">
-      <label for="about" class="col-sm-2 col-form-label">About Me</label>
+      <label for="about" class="col-sm-2"><strong>About Me</strong></label>
       <div class="col-sm-10">
-        <ckeditor id="about" name="about" [config]="editorOptions" [editor]="editor" [(ngModel)]="account.about"></ckeditor>
+        <ckeditor id="about" name="about" [config]="editorOptions" [editor]="editor" [(ngModel)]="account.about">
+        </ckeditor>
       </div>
     </div>
     <div class="form-group row">
-      <label for="about" class="col-sm-2 col-form-label">Avatar</label>
+      <label for="about" class="col-sm-2"><strong>Avatar</strong></label>
       <div class="col-sm-10">
         <p>
           Your Gravatar will be automatically retrieved based on your email. However, you can also upload a
@@ -105,67 +108,62 @@
     <div class="form-group row">
       <div class="col-sm-2"></div>
       <div class="col-sm-4">
-        <app-image-upload [currentUrl]="account.avatarUrl" [imageWidth]="300" [imageHeight]="300" (urlChange)="account.avatarUrl=$event"></app-image-upload>
+        <app-image-upload [currentUrl]="account.avatarUrl" [uploadType]="'profile'" [imageWidth]="300" [imageHeight]="300"
+          (urlChange)="account.avatarUrl=$event"></app-image-upload>
       </div>
       <div class="col-sm-6">
         <img ngxGravatar [(email)]="account.email" [(src)]="account.avatarUrl" class="bio-avatar">
       </div>
     </div>
     <div class="form-group row">
-      <div class="col-sm-2"></div>
-      <div class="col-sm-10">
-        <button type="button" class="btn btn-secondary" (click)="clear()">Clear</button>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="about" class="col-sm-2 col-form-label">Social Links</label>
+      <label for="about" class="col-sm-2"><strong>Social Links</strong></label>
       <div class="col-sm-10">
         <div class="row">
-          <label for="twitterUrl" class="col-sm-2 col-form-label">Twitter</label>
+          <label for="twitterUrl" class="col-sm-2"><strong>Twitter</strong></label>
           <div class="col-md-10">
             <input type="text" id="twitterUrl" name="tw;itterUrl" class="form-control" [(ngModel)]="account.twitterUrl"
               spellcheck="false" />
           </div>
         </div>
         <div class="row">
-          <label for="facebookUrl" class="col-sm-2 col-form-label">Facebook</label>
+          <label for="facebookUrl" class="col-sm-2"><strong>Facebook</strong></label>
           <div class="col-md-10">
-            <input type="text" id="facebookUrl" name="facebookUrl" class="form-control" [(ngModel)]="account.facebookUrl"
-              spellcheck="false" />
+            <input type="text" id="facebookUrl" name="facebookUrl" class="form-control"
+              [(ngModel)]="account.facebookUrl" spellcheck="false" />
           </div>
         </div>
         <div class="row">
-          <label for="githubUrl" class="col-sm-2 col-form-label">Github</label>
+          <label for="githubUrl" class="col-sm-2"><strong>Github</strong></label>
           <div class="col-md-10">
             <input type="text" id="githubUrl" name="githubUrl" class="form-control" [(ngModel)]="account.githubUrl"
               spellcheck="false" />
           </div>
         </div>
         <div class="row">
-          <label for="linkedinUrl" class="col-sm-2 col-form-label">LinkedIn</label>
+          <label for="linkedinUrl" class="col-sm-2"><strong>LinkedIn</strong></label>
           <div class="col-md-10">
-            <input type="text" id="linkedinUrl" name="linkedinUrl" class="form-control" [(ngModel)]="account.linkedinUrl"
-              spellcheck="false" />
+            <input type="text" id="linkedinUrl" name="linkedinUrl" class="form-control"
+              [(ngModel)]="account.linkedinUrl" spellcheck="false" />
           </div>
         </div>
         <div class="row">
-          <label for="stackOverflowUrl" class="col-sm-2 col-form-label">Stack Overflow</label>
+          <label for="stackOverflowUrl" class="col-sm-2"><strong>Stack Overflow</strong></label>
           <div class="col-md-10">
-            <input type="text" id="stackOverflowUrl" name="stackOverflowUrl" class="form-control" [(ngModel)]="account.stackOverflowUrl"
-              spellcheck="false" />
+            <input type="text" id="stackOverflowUrl" name="stackOverflowUrl" class="form-control"
+              [(ngModel)]="account.stackOverflowUrl" spellcheck="false" />
           </div>
         </div>
         <div class="row">
-          <label for="personalUrl" class="col-sm-2 col-form-label">Personal Site</label>
+          <label for="personalUrl" class="col-sm-2"><strong>Personal Site</strong></label>
           <div class="col-md-10">
-            <input type="text" id="personalUrl" name="personalUrl" class="form-control" [(ngModel)]="account.personalUrl"
-              spellcheck="false" />
+            <input type="text" id="personalUrl" name="personalUrl" class="form-control"
+              [(ngModel)]="account.personalUrl" spellcheck="false" />
           </div>
         </div>
       </div>
     </div>
     <div class="form-group row">
-      <label for="created" class="col-sm-2">Joined</label>
+      <label for="created" class="col-sm-2"><strong>Joined</strong></label>
       <div class="col-sm-10">
         <span id="created" name="created">{{account.created | date}}</span>
       </div>

@@ -1,7 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
 
+import { split } from 'lodash';
+
 import { environment } from '../../../environments/environment';
+
+import { ImageUploadService } from './image-upload.service';
 
 @Component({
     moduleId: module.id,
@@ -12,6 +16,7 @@ import { environment } from '../../../environments/environment';
 export class ImageUploadComponent implements OnInit {
     public uploader: FileUploader;
     public hasDragOver = false;
+    public endPointBase = environment.appBaseUrl + environment.apiBaseUrl + environment.imageBaseUrl;
 
     @Input()
     public imageWidth = 200;
@@ -22,16 +27,40 @@ export class ImageUploadComponent implements OnInit {
     @Input()
     public currentUrl = '';
 
+    // Set to true to clear the current image from the view after each upload
+    @Input()
+    public clearCurrent = true;
+
+    // Set to true to replace the current image before each upload
+    @Input()
+    public replaceCurrent = false;
+
     @Output()
     public urlChange = new EventEmitter();
 
+<<<<<<< HEAD
     constructor() {
         this.uploader = new FileUploader({
             url: environment.appBaseUrl + environment.apiBaseUrl + environment.imageUploadUrl,
+=======
+    constructor(
+        private imageUploadService: ImageUploadService
+    ) { }
+
+    ngOnInit(): void {
+        this.uploader = new FileUploader({
+            url: this.endPointBase + '?upload=' + this.uploadType,
+>>>>>>> meancore-cms-dev
             disableMultipart: false,
             autoUpload: true,
             itemAlias: 'upload'
         });
+
+        this.uploader.onBeforeUploadItem = async () => {
+            if (this.replaceCurrent && this.currentUrl.length) {
+                await this.clearImage();
+            }
+        };
 
         this.uploader.response.subscribe((res) => {
             res = JSON.parse(res);
@@ -49,5 +78,18 @@ export class ImageUploadComponent implements OnInit {
 
     public fileOver(e: any): void {
         this.hasDragOver = e;
+    }
+
+    public async clearImage(): Promise<void> {
+        if (this.currentUrl.length) {
+            // Split the image url and return only the relate image path
+            const imagePath = split(this.currentUrl, this.endPointBase)[1];
+            this.imageUploadService.removeImage(imagePath)
+                .then(() => {
+                    if (this.clearCurrent) {
+                        this.currentUrl = '';
+                    }
+                });
+        }
     }
 }

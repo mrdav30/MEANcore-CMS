@@ -1,11 +1,10 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../utils';
-import * as _ from 'lodash';
+import { filter, intersection, map } from 'lodash';
 
 import { environment } from '../../environments/environment';
-
-export class MenuConfig { label: string; route: string; roles: string[]; permission: string[]; visible: boolean; }
+import { ConfigService, MenuConfig } from '../utils';
 
 @Component({
   moduleId: module.id,
@@ -15,26 +14,12 @@ export class MenuConfig { label: string; route: string; roles: string[]; permiss
 })
 
 export class AppMenuComponent implements OnInit {
-  public appHome: string = environment.appDefaultRoute;
-  public appBase: string;
-  public appLogo = 'assets/images/logo.png';
+  public appHome = environment.appDefaultRoute;
+  public appLogo = environment.appLogo;
   //  UI Config
-  public menus: MenuConfig[] = [{
-    label: 'Blog',
-    route: '/blog',
-    roles: ['user', 'admin'],
-    permission: null,
-    visible: true
-  },
-  {
-    label: 'Admin',
-    route: '/admin',
-    roles: ['admin'],
-    permission: null,
-    visible: true
-  }];
+  public menus: MenuConfig[];
   public visibleMenus: MenuConfig[] = [];
-  public showLoginNav = false;
+  public showLoginNav = true;
   public showSearchNav = true;
   // used to toggle search input
   public isSearchVisible = false;
@@ -45,10 +30,12 @@ export class AppMenuComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private configService: ConfigService
   ) { }
 
   ngOnInit(): void {
+    this.menus = this.configService.config.menuConfig ? this.configService.config.menuConfig : [];
     this.authService.userChange$.subscribe(user => {
       this.onSetUser(user);
     });
@@ -69,14 +56,16 @@ export class AppMenuComponent implements OnInit {
   }
 
   setMenuUI(): void {
-    let userRoles = this.user && this.user.roles ? this.user.roles : ['user'];
+    // if user has no roles defined, assign to default user role
+    let userRoles = this.user && this.user.roles ? map(this.user.roles, (role) => {
+      return role.name;
+    }) : ['user'];
     if (!Array.isArray(userRoles)) {
       userRoles = [userRoles];
     }
-    const userPermissions = this.user && this.user.permissions ? this.user.permissions : ['user'];
-    this.visibleMenus = _.filter(this.menus, (menu) => {
-      return _.intersection(userRoles, menu.roles).length ||
-        _.includes(userPermissions, _.toLower(menu.permission));
+    this.visibleMenus = filter(this.menus, (menu) => {
+      return !menu.roles ||
+        intersection(userRoles, menu.roles).length ? true : false;
     });
   }
 

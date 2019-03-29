@@ -110,6 +110,5 @@ Thumbs.db
 config/env/local.js
 config/env/local-*.js
 _content/
-client/assets/install.json
 .env
 config/sslcerts/

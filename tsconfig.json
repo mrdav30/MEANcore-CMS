@@ -7,6 +7,7 @@
     "declaration": false,
     "module": "es2015",
     "moduleResolution": "node",
+    "esModuleInterop": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
@@ -19,8 +20,13 @@
       "dom"
     ],
     "paths": {
+<<<<<<< HEAD
       "@app/*": ["app/*"],
       "@env/*": ["environments/*"]
+=======
+      "@env/*": ["environments/*"],
+      "core-js/es6/*": ["../node_modules/core-js/es/*"]
+>>>>>>> meancore-cms-dev
     }
   }
 }

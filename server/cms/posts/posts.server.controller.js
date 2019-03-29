@@ -1,71 +1,95 @@
 'use strict';
 
 var _ = require('lodash'),
-    postsModel = require('./posts.server.model');
+  slugify = require('../../helpers'),
+  mongoose = require('mongoose'),
+  Posts = mongoose.model('Posts');
 
 exports.getAll = function (req, res) {
-    // retrieve all posts
-    postsModel.getAll({}, null, function (err, posts) {
-        if (err) {
-            return res.status(400).send({
-                message: err
-            });
-        }
+  Posts.find({}).sort({
+    publishDate: -1
+  }).exec(function (err, posts) {
+    if (err) {
+      return res.status(400).send({
+        message: err
+      });
+    }
 
-        res.send({
-            posts: posts
-        });
+    res.send({
+      posts: posts
     });
+  });
 }
 
 exports.getById = function (req, res) {
-    postsModel.getById(req.params._id, function (err, post) {
-        if (err) {
-            return res.status(400).send({
-                message: err
-            });
-        }
+  Posts.findById(req.params._id).exec(function (err, post) {
+    if (err) {
+      return res.status(400).send({
+        message: err
+      });
+    }
 
-        res.send({
-            post: post
-        });
+    res.send({
+      post: post
     });
+  });
 }
 
 exports.create = function (req, res) {
-    // set author as current user
-    req.body.authorId = req.user.get('_id');
-    postsModel.create(req.body, function (err) {
-        if (err) {
-            return res.status(400).send({
-                message: err
-            });
-        }
+  var postParam = req.body;
+  // set author as current user
+  postParam.authorId = req.user._id;
+  // generate slug from title if empty
+  postParam.slug = postParam.slug || slugify(postParam.title);
 
-        res.status(200).send();
+  Posts(postParam)
+    .save(function (err) {
+      if (err) {
+        return res.status(400).send({
+          message: err
+        });
+      }
+
+      res.status(200).send();
     });
 }
 
 exports.update = function (req, res) {
-    postsModel.update(req.params._id, req.body, function (err) {
-        if (err) {
-            return res.status(400).send({
-                message: err
-            });
-        }
+  var postParam = req.body;
+  // generate slug from title if empty
+  postParam.slug = postParam.slug || slugify(postParam.title);
+  postParam.updated = Date.now();
 
-        res.status(200).send();
+  // fields to update
+  var set = _.omit(postParam, '_id');
+
+  Posts.updateOne({
+      _id: mongoose.Types.ObjectId(req.params._id)
+    }, {
+      $set: set
+    },
+    function (err) {
+      if (err) {
+        return res.status(400).send({
+          message: err
+        });
+      }
+
+      res.status(200).send();
     });
 }
 
 exports._delete = function (req, res) {
-    postsModel.delete(req.params._id, function (err) {
-        if (err) {
-            return res.status(400).send({
-                message: err
-            });
-        }
+  Posts.deleteOne({
+      _id: mongoose.Types.ObjectId(req.params._id)
+    },
+    function (err) {
+      if (err) {
+        return res.status(400).send({
+          message: err
+        });
+      }
 
-        res.status(200).send();
+      res.status(200).send();
     });
 }

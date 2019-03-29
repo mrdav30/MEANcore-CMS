@@ -3,8 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { FileUploadModule } from 'ng2-file-upload/ng2-file-upload';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { ImageUploadComponent } from './image-upload.component';
+import { ImageUploadService } from './image-upload.service';
 
 @NgModule({
     declarations: [
@@ -13,7 +15,11 @@ import { ImageUploadComponent } from './image-upload.component';
     imports: [
         CommonModule,
         FormsModule,
-        FileUploadModule
+        FileUploadModule,
+        NgbTooltipModule
+    ],
+    providers: [
+        ImageUploadService
     ],
     exports: [
         ImageUploadComponent
