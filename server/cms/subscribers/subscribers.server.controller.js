@@ -1,14 +1,15 @@
 'use strict';
 
-var path = require('path'),
+var async = require('async'),
+  path = require('path'),
   config = config = require(path.resolve('./config/config')),
   moment = require('moment'),
   errorHandler = require(path.resolve('./server/errors.server.controller')),
   emailService = config.services.emailService,
   transferService = config.services.transferService,
-  subscribersModel = require('./subscribers.server.model'),
   crypto = require('crypto'),
-  async = require('async');
+  mongoose = require('mongoose'),
+  Subscribers = mongoose.model('Subscribers');
 
 exports.sendConfirmation = function (req, res) {
   async.waterfall([
@@ -21,7 +22,9 @@ exports.sendConfirmation = function (req, res) {
     },
     function (token, done) {
       //ensure email isn't already subscribed
-      subscribersModel.getByEmail(req.body.email, function (err, subscriber) {
+      Subscribers.findOne({
+        email: req.body.email
+      }).exec(function (err, subscriber) {
         if (err) {
           return done(err);
         } else if (subscriber) {
@@ -63,7 +66,7 @@ exports.sendConfirmation = function (req, res) {
         subscriptionConfirmExpires: Date.now() + 3600000 // 1 hour
       };
 
-      subscribersModel.create(subscriber, function (err) {
+      Subscribers(subscriber).save(function (err) {
         if (err) {
           return done(err);
         }
@@ -90,7 +93,12 @@ exports.sendConfirmation = function (req, res) {
  * Confirm subscription GET from email token
  */
 exports.validateSubscriptionToken = function (req, res) {
-  subscribersModel.getByConfirmToken(req.params.token, function (err, subscriber) {
+  Subscribers.findOne({
+    subscriptionConfirmToken: req.params.token,
+    subscriptionConfirmExpires: {
+      $gt: Date.now()
+    }
+  }, function (err, subscriber) {
     if (!subscriber) {
       return res.redirect(req.baseUrl + '/subscribe/validate/invalid');
     }
@@ -100,7 +108,9 @@ exports.validateSubscriptionToken = function (req, res) {
 };
 
 exports.getAll = function (req, res) {
-  subscribersModel.getAll(function (err, subscribers) {
+  Subscribers.find({
+    optIn: 1
+  }).exec(function (err, subscribers) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -114,7 +124,12 @@ exports.getAll = function (req, res) {
 }
 
 exports.validateSubscription = function (req, res) {
-  subscribersModel.getByConfirmToken(req.body.token, function (err, subscriber) {
+  Subscribers.findOne({
+    subscriptionConfirmToken: req.body.token,
+    subscriptionConfirmExpires: {
+      $gt: Date.now()
+    }
+  }, function (err, subscriber) {
     if (!subscriber) {
       return res.status(200).send({
         message: err,
@@ -143,30 +158,42 @@ exports.validateSubscription = function (req, res) {
 }
 
 exports.update = function (req, res) {
-  subscribersModel.update(req.params._id, req.body, function (err) {
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    }
+  var subscribersParam = req.body;
 
-    res.status(200).send();
-  })
+  var set = _.omit(subscribersParam, '_id');
+
+  Subscribers.updateOne({
+      _id: mongoose.Types.ObjectId(req.params._id)
+    }, {
+      $set: set
+    },
+    function (err) {
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      }
+
+      res.status(200).send();
+    })
 }
 
 exports._delete = function (req, res) {
-  subscribersModel.delete(req.params._id, function (err) {
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    }
+  Subscribers.deleteOne({
+      _id: mongoose.Types.ObjectId(req.params._id)
+    },
+    function (err) {
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      }
 
-    res.status(200).send({
-      message: 'You are now unsubscribed',
-      unsubscribed: true
-    });
-  })
+      res.status(200).send({
+        message: 'Unsubscribe success',
+        unsubscribed: true
+      });
+    })
 }
 
 exports.getContact = function (req, res) {
