@@ -38,11 +38,6 @@ export class ImageUploadComponent implements OnInit {
     @Output()
     public urlChange = new EventEmitter();
 
-<<<<<<< HEAD
-    constructor() {
-        this.uploader = new FileUploader({
-            url: environment.appBaseUrl + environment.apiBaseUrl + environment.imageUploadUrl,
-=======
     constructor(
         private imageUploadService: ImageUploadService
     ) { }
@@ -50,7 +45,6 @@ export class ImageUploadComponent implements OnInit {
     ngOnInit(): void {
         this.uploader = new FileUploader({
             url: this.endPointBase + '?upload=' + this.uploadType,
->>>>>>> meancore-cms-dev
             disableMultipart: false,
             autoUpload: true,
             itemAlias: 'upload'

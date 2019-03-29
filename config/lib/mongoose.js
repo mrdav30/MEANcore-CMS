@@ -40,17 +40,8 @@ module.exports.connect = function (callback) {
 };
 
 module.exports.disconnect = function (cb) {
-<<<<<<< HEAD
-    mongoose.connection.db
-        .close(function (err) {
-            console.info(chalk.yellow('Disconnected from MongoDB.'));
-            return cb(err);
-        });
-};
-=======
   mongoose.connection.close(function (err) {
       console.info(chalk.yellow('Disconnected from MongoDB.'));
       return cb(err);
     });
 };
->>>>>>> meancore-cms-dev

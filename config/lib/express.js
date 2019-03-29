@@ -94,15 +94,8 @@ var initSession = function (app, config, db) {
 var initMiddleware = function (app, config) {
  // Should be placed before express.static
   app.use(compress({
-<<<<<<< HEAD
-    filter: function (req, res) {
-      return (/json|text|javascript|css|font|svg/).test(res.getHeader('Content-Type'));
-    },
-    level: 9
-=======
     level: 9,
     memLevel: 9
->>>>>>> meancore-cms-dev
   }));
 
   // Enable logger (morgan) if enabled in the configuration file

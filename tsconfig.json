@@ -20,13 +20,8 @@
       "dom"
     ],
     "paths": {
-<<<<<<< HEAD
-      "@app/*": ["app/*"],
-      "@env/*": ["environments/*"]
-=======
       "@env/*": ["environments/*"],
       "core-js/es6/*": ["../node_modules/core-js/es/*"]
->>>>>>> meancore-cms-dev
     }
   }
 }

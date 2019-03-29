@@ -3,11 +3,6 @@
 /**
  * Module dependencies.
  */
-<<<<<<< HEAD
-var mongoose = require('mongoose'),
-    Schema = mongoose.Schema,
-    crypto = require('crypto');
-=======
 var async = require('async'),
   _ = require('lodash'),
   mongoose = require('mongoose'),
@@ -18,7 +13,6 @@ var async = require('async'),
   owasp = require('owasp-password-strength-test'),
   generatePassword = require('generate-password'),
   chalk = require('chalk');
->>>>>>> meancore-cms-dev
 
 /**
  * A Validation function for local strategy properties
@@ -56,78 +50,6 @@ var validateUsername = function (username) {
  * User Schema
  */
 var UserSchema = new Schema({
-<<<<<<< HEAD
-    firstName: {
-        type: String,
-        trim: true,
-        default: ''
-    },
-    lastName: {
-        type: String,
-        trim: true,
-        default: ''
-    },
-    displayName: {
-        type: String,
-        trim: true
-    },
-    email: {
-        type: String,
-        trim: true,
-        default: '',
-        validate: [validateLocalStrategyProperty, 'Please fill in your email'],
-        match: [/.+\@.+\..+/, 'Please fill a valid email address']
-    },
-    username: {
-        type: String,
-        unique: 'testing error message',
-        required: 'Please fill in a username',
-        trim: true
-    },
-    password: {
-        type: String,
-        default: '',
-        validate: [validateLocalStrategyPassword, 'Password should be longer']
-    },
-    salt: {
-        type: String
-    },
-    provider: {
-        type: String,
-        required: 'Provider is required'
-    },
-    providerData: {},
-    additionalProvidersData: {},
-    appName: String,
-    roles: {
-        type: [{
-            type: String,
-            enum: ['user', 'admin']
-        }],
-        default: ['user']
-    },
-    updated: {
-        type: Date
-    },
-    created: {
-        type: Date,
-        default: Date.now
-    },
-    /* for security validation to prevent hack attempts */
-    knownIPAddresses: {
-        type: [String],
-        default: [],
-    },
-    /* For reset password */
-    resetPasswordToken: {
-        type: String
-    },
-    resetPasswordExpires: {
-        type: Date
-    }
-}, {
-    strict: false  //set to strict to allow modules to override user schema for account settings
-=======
   firstName: {
     type: String,
     trim: true,
@@ -197,7 +119,6 @@ var UserSchema = new Schema({
   }
 }, {
   strict: false //set to strict to allow modules to override user schema for account settings
->>>>>>> meancore-cms-dev
 });
 
 /**
@@ -266,9 +187,6 @@ UserSchema.statics.findUniqueUsername = function (username, suffix, callback) {
     });
 };
 
-<<<<<<< HEAD
-mongoose.model('User', UserSchema);
-=======
 /**
  * Generates a random passphrase that passes the owasp test
  * Returns a promise that resolves with the generated passphrase, or rejects with an error if something goes wrong.
@@ -428,4 +346,3 @@ UserSchema.statics.seed = function (doc, options) {
 }
 
 mongoose.model('User', UserSchema);
->>>>>>> meancore-cms-dev

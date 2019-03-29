@@ -106,15 +106,6 @@ module.exports = {
     }
   },
   uploads: {
-<<<<<<< HEAD
-    // Storage can be 'local' or 's3'
-    storage: process.env.UPLOADS_STORAGE || 'local',
-    profile: {
-      image: {
-        dest: './modules/users/client/img/profile/uploads/',
-        limits: {
-          fileSize: 1 * 1024 * 1024 // Max file size in bytes (1 MB)
-=======
     images: {
       baseUrl: process.env.IMAGE_BASE_URL || '/image-uploads',
       uploadRepository: process.env.IMAGE_STORAGE || './_content/image-uploads/',
@@ -136,7 +127,6 @@ module.exports = {
           finalDest: 'pages',
           maxAge: (24 * 60 * 60 * 30) * 1000, // 30 days in milliseconds
           index: false
->>>>>>> meancore-cms-dev
         }
       }
     }

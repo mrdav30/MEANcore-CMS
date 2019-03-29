@@ -21,16 +21,8 @@ export const environment = {
     apiBaseUrl: '${process.env.API_BASE_URL}',
     googleAnalyticsID: '${process.env.GOOGLE_ANALYTICS_ID}',
     recaptchaSiteKey: '${process.env.RECAPTCHA_SITE_KEY}',
-<<<<<<< HEAD:set-env.ts
-    appName: '${process.env.APP_NAME}',
-    appBaseUrl: '${process.env.APP_BASE_URL}',
-    imageUploadUrl: '${process.env.IMAGE_UPLOAD_URL}',
-    metaTitleSuffix: '${process.env.META_TITLE_SUFFIX}',
-    twitterHandle: '${process.env.TWITTER_HANDLE}'
-=======
     twitterHandle: '${process.env.TWITTER_HANDLE}',
     metaTitleSuffix: '${process.env.META_TITLE_SUFFIX}'
->>>>>>> meancore-cms-dev:scripts/set-env.ts
 };
 /* tslint:enable */
 `;

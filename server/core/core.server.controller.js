@@ -4,12 +4,7 @@ var path = require('path'),
   _ = require('lodash'),
   config = require(path.resolve('./config/config')),
   isBot = config.helpers.isBot,
-<<<<<<< HEAD
   ssrService = config.services.ssrService;
-=======
-  ssrService = config.services.ssrService,
-  uacController = require('../user-access-control/user-access-control.server.controller');
->>>>>>> meancore-cms-dev
 
 /**
  * Get extention from path
@@ -34,10 +29,6 @@ exports.prerender = async function (req, res, next) {
   if (!isBot(req.headers['user-agent'])) {
     return next();
   } else {
-<<<<<<< HEAD
-
-=======
->>>>>>> meancore-cms-dev
     if (req.query.prerender) {
       return next();
     } else {
@@ -49,10 +40,6 @@ exports.prerender = async function (req, res, next) {
       res.set('Server-Timing', `Prerender;dur=${ttRenderMs};desc="Headless render time (ms)"`);
       return res.status(200).send(html + '<!-- SSR -->'); // Serve prerendered page as response.
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> meancore-cms-dev
   };
 }
 

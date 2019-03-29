@@ -18,7 +18,7 @@ Or you can checkout [Techievor](https://techievor.com) for a full rundown on [ho
 
 # Getting started
 
-1. Go to project folder and create a .env file to setup your environment 
+1. Go to project folder and create a .env file to setup your environment
 ```
 NODE_ENV='development'
 PRODUCTION=false
@@ -30,16 +30,10 @@ PROXY=
 APP_NAME='meancore-cms'
 APP_BASE_URL='/'
 API_BASE_URL='api'
-<<<<<<< HEAD
-APP_DEFAULT_ROUTE='home'
-IMAGE_UPLOAD_URL='/admin/upload'
-TWITTER_HANDLE=
-=======
 IMAGE_BASE_URL='/image-uploads'
 IMAGE_STORAGE='./_content/image-uploads/'
 TWITTER_HANDLE=''
 META_TITLE_SUFFIX=' | The MEANcore Blog'
->>>>>>> meancore-cms-dev
 
 SESSION_SECRET='MEANCORE-CMS'
 SESSION_KEY='meancore-cms-key'
@@ -92,4 +86,4 @@ We welcome pull requests from the community! Just be sure to read the [contribut
 
 # Licence
 
-[License](https://github.com/mrdav30/MEANcore-CMS/blob/meancore-cms/LICENSE.MD) 
+[License](https://github.com/mrdav30/MEANcore-CMS/blob/meancore-cms/LICENSE.MD)

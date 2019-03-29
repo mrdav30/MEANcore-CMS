@@ -4,11 +4,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { ImageUploadModule } from './image-upload/image-upload.module';
-<<<<<<< HEAD
-=======
 import { DynamicFormsModule } from './dynamic-forms/dynamic-forms.module';
 import { PasswordValidatorModule } from './password-validator/password-validator.module';
->>>>>>> meancore-cms-dev
 
 import { LoadingComponent } from './loading/loading.component';
 import { MessagingComponent } from './messaging/messaging.component';
@@ -62,20 +59,9 @@ const components = [
 ];
 
 const modules = [
-<<<<<<< HEAD
-  NgbDatepickerModule,
-  NgbTooltipModule,
-  NgbAlertModule,
-  NgbCollapseModule,
-  NgbTabsetModule,
-  NgbProgressbarModule,
-  NgbPaginationModule,
-  ImageUploadModule
-=======
   ImageUploadModule,
   DynamicFormsModule,
   PasswordValidatorModule
->>>>>>> meancore-cms-dev
 ];
 
 const directives = [

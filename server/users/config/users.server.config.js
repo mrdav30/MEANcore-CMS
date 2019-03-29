@@ -27,9 +27,6 @@ module.exports = function (app) {
       .select('username displayName email appName provider roles knownIPAddresses password salt')
       .lean()
       .exec(function (err, user) {
-<<<<<<< HEAD
-        done(err, user);
-=======
         if (err || !user) {
           var message = !user ? 'User not found!' : err;
           done(message);
@@ -56,7 +53,6 @@ module.exports = function (app) {
 
             done(null, user);
           })
->>>>>>> meancore-cms-dev
       });
   });
 

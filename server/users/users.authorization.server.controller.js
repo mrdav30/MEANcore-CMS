@@ -28,19 +28,11 @@ exports.userByID = function (req, res, next, id) {
 /**
  * Require login routing middleware
  */
-<<<<<<< HEAD
-exports.requiresLogin = function (req, res, appBase, next) {
-	if (!req.isAuthenticated() && !req.apiAuthed) {
-		var redirectUrl = appBase ? appBase + 'sign-in' : '/sign-in';
-		return res.redirect(redirectUrl);
-	}
-=======
 exports.requiresLogin = function (req, res, appBaseUrl, next) {
   if (!req.isAuthenticated() && !req.apiAuthed) {
     var redirectUrl = appBaseUrl ? appBaseUrl + 'sign-in' : '/sign-in';
     return res.redirect(redirectUrl);
   }
->>>>>>> meancore-cms-dev
 
   next();
 };
@@ -48,23 +40,6 @@ exports.requiresLogin = function (req, res, appBaseUrl, next) {
 /**
  * User authorizations routing middleware
  */
-<<<<<<< HEAD
-exports.hasAuthorization = function (roles, appBase) {
-	var _this = this;
-
-	return function (req, res, next) {
-		_this.requiresLogin(req, res, appBase, function () {
-			if (_.intersection(req.user.get('roles'), roles).length) {
-				return next();
-			} else {
-				var redirectUrl = appBase ? appBase : '/';
-				req.flash('unauthorizedMsg', 'User is not authorized');
-				return res.redirect(redirectUrl);
-			}
-		});
-	};
-};
-=======
 exports.hasAuthorization = function (roles, appBaseUrl) {
   var _this = this;
 
@@ -83,4 +58,3 @@ exports.hasAuthorization = function (roles, appBaseUrl) {
     });
   };
 };
->>>>>>> meancore-cms-dev
