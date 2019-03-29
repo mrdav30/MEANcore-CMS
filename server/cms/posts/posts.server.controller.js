@@ -2,7 +2,8 @@
 
 var _ = require('lodash'),
   slugify = require('../../helpers'),
-  Posts = require('mongoose').model('Posts');
+  mongoose = require('mongoose'),
+  Posts = mongoose.model('Posts');
 
 exports.getAll = function (req, res) {
   Posts.find({}).sort({
@@ -37,7 +38,7 @@ exports.getById = function (req, res) {
 exports.create = function (req, res) {
   var postParam = req.body;
   // set author as current user
-  postParam.authorId = req.user.get('_id');
+  postParam.authorId = req.user._id;
   // generate slug from title if empty
   postParam.slug = postParam.slug || slugify(postParam.title);
 

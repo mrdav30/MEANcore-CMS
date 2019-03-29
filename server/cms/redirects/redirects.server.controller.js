@@ -1,7 +1,8 @@
 'use strict';
 
 var _ = require('lodash'),
-  Redirects = require('mongoose').model('Redirects');
+  mongoose = require('mongoose'),
+  Redirects = mongoose.model('Redirects');
 
 exports.getAll = function (req, res) {
   Redirects.find().exec(function (err, redirects) {

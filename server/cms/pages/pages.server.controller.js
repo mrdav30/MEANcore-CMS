@@ -2,7 +2,8 @@
 
 var _ = require('lodash'),
   slugify = require('../../helpers'),
-  Pages = require('mongoose').model('Pages');
+  mongoose = require('mongoose'),
+  Pages = mongoose.model('Pages');
 
 exports.getAll = function (req, res) {
   Pages.find().exec(function (err, pages) {
@@ -35,7 +36,7 @@ exports.getById = function (req, res) {
 exports.create = function (req, res) {
   var pageParam = req.body;
   // set author as current user
-  pageParam.authorId = req.user.get('_id');
+  pageParam.authorId = req.user._id;
   // generate slug from title if empty
   pageParam.slug = pageParam.slug || slugify(pageParam.title);
 
