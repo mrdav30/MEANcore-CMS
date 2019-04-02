@@ -4,8 +4,11 @@
  * Module dependencies.
  */
 var passport = require('passport'),
-  User = require('mongoose').model('User'),
-  path = require('path');
+  path = require('path'),
+  _ = require('lodash'),
+  mongoose = require('mongoose'),
+  User = mongoose.model('User'),
+  Roles = mongoose.model('Roles');
 
 /**
  * Module init function.
@@ -22,8 +25,8 @@ module.exports = function (app) {
   passport.deserializeUser(function (id, done) {
     User.findOne({
         _id: id
-	  })
-	  // Only retrieve values required for auth
+      })
+      // Only retrieve values required for auth
       .select('username displayName email appName provider roles knownIPAddresses password salt')
       .lean()
       .exec(function (err, user) {

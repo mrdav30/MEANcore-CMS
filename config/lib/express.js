@@ -9,6 +9,7 @@ var config = require('../config'),
   logger = require('./logger'),
   bodyParser = require('body-parser'),
   session = require('express-session'),
+  mongoose = require('./mongoose'),
   mongoStore = require('connect-mongo')({
     session: session
   }),
@@ -23,17 +24,11 @@ var config = require('../config'),
   _ = require('lodash'),
   vhost = require('vhost');
 
-// Auth servers may not have valid SSL
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
 /**
  * Configure the models
  */
-var initServerModels = function (config) {
-  // Globbing routing files
-  config.files.server.models.forEach(function (modelPath) {
-    require(path.resolve(modelPath));
-  });
+var initServerModels = function () {
+  mongoose.loadModels();
 };
 
 /**
@@ -53,7 +48,7 @@ var initLocalVariables = function (app, config) {
   // Passing entire config to app locals
   app.locals.config = config;
 
-  // if behind a proxy
+  // if behind a proxy, such as nginx...
   if (config.proxy) {
     app.set('trust proxy', 'loopback');
   }
@@ -166,15 +161,24 @@ var initHandlebars = function () {
  * Configure view engine
  */
 var initViewEngine = function (app, config) {
+  var serverViewPath = path.resolve(config.serverViewPath ? config.serverViewPath : './');
+  app.set('views', [serverViewPath, config.staticFiles]);
+
+  // server side html
   app.engine('server.view.html', hbs.express4({
     extname: '.server.view.html'
   }));
   app.set('view engine', 'server.view.html');
+
+  //client side html
+  app.engine('html', hbs.express4({
+    extname: 'html'
+  }));
+  app.set('view engine', 'html');
+
   app.engine('js', hbs.express4({
     extname: '.js'
   }));
-  var viewDir = path.resolve(config.appViewPath ? config.appViewPath : './');
-  app.set('views', viewDir);
 };
 
 /**
@@ -214,9 +218,9 @@ var initHelmetHeaders = function (app) {
   // POST any CSP violations
   app.use('/report-violation', (req, res) => {
     if (req.body) {
-      console.error('CSP Violation: ', req.body);
+      console.log('CSP Violation: ', req.body);
     } else {
-      console.error('CSP Violation: No data received!');
+      console.log('CSP Violation: No data received!');
     }
     res.status(204).end();
   });
@@ -233,7 +237,7 @@ var initClientRoutes = function (app, config) {
 
   // in development mode files are loaded from node_modules
   app.use('/node_modules', express.static(path.resolve(config.staticFiles + '../../node_modules/'), {
-    maxAge: '30d', // Cache node modules in development as well as they are not updated that frequantly.
+    maxAge: '30d', // Cache node modules in development as well as they are not updated that frequently.
     index: false,
   }));
 
@@ -242,6 +246,16 @@ var initClientRoutes = function (app, config) {
     maxAge: cacheTime,
     index: false,
   }));
+
+  // Setting the app router and static folder for image paths
+  let imageOptions = _.map(config.uploads.images.options),
+    defaultRoute = config.app.appBaseUrl + config.app.apiBaseUrl + config.uploads.images.baseUrl;
+  _.forEach(imageOptions, (option) => {
+    app.use(defaultRoute + '/' + option.finalDest, express.static(path.resolve(config.uploads.images.uploadRepository + option.finalDest), {
+      maxAge: option.maxAge,
+      index: option.index
+    }));
+  })
 };
 
 /**
@@ -268,8 +282,8 @@ var initErrorRoutes = function (app, config) {
     console.error(err.stack);
 
     // Redirect to error page
-    let appBase = config.appBase || '/';
-    res.redirect(appBase + 'server-error');
+    let appBaseUrl = config.appBaseUrl || '/';
+    res.redirect(appBaseUrl + 'server-error');
   });
 };
 
@@ -284,18 +298,9 @@ var configureSocketIO = function (app, db) {
   return server;
 };
 
-/**
- * Connect to all required databases
- *
- **/
-var initDatabases = function (cb) {
-  //uncomment to prepare oracle db connections set in config
-  // oracleQueryService.prepareService(cb);
-  return cb();
-};
-
 var enableCORS = function (app) {
   app.use(function (req, res, next) {
+    //res.header('Access-Control-Allow-Headers', 'content-type,devicetoken,usertoken');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
     res.header('Access-Control-Allow-Origin', '*');
@@ -319,9 +324,6 @@ var init = function (config, db) {
   // Initialize local variables
   initLocalVariables(app, config);
 
-  // Initialize Express session
-  initSession(app, config, db);
-
   // Initialize Express middleware
   initMiddleware(app, config);
 
@@ -340,11 +342,11 @@ var init = function (config, db) {
   // Initialize modules static client routes, before session!
   initClientRoutes(app, config);
 
-  //  Configure mongodb models
-  initServerModels(config);
+  // Initialize Express session
+  initSession(app, config, db);
 
-  // // Initialize Express session
-  // initSession(app, config, db);
+  //  Configure mongodb models
+  initServerModels();
 
   // Initialize Modules configuration
   initServerConfiguration(app, config);
@@ -370,13 +372,13 @@ var initApps = function (db) {
   config.helpers = require(path.resolve('./server/helpers.js'));
 
   // set up view
-  config.appViewPath = '/server';
+  config.serverViewPath = 'server';
 
   // set up static file location
   config.staticFiles = 'dist/' + config.app.name + '/';
 
-  if (config.app.appBase) {
-    rootApp.use(config.app.appBase, init(config, db));
+  if (config.app.appBaseUrl) {
+    rootApp.use(config.app.appBaseUrl, init(config, db));
   } else if (config.app.domainPattern) {
     rootApp.use(vhost(config.app.domainPattern, init(config, db)));
   }
@@ -387,11 +389,8 @@ var initApps = function (db) {
 };
 
 module.exports.initAllApps = function (db, callback) {
-  // Initialize databases using query service will be shared accross various modules;
-  initDatabases(function () {
-    var rootApp = initApps(db);
-    if (callback) {
-      callback(rootApp);
-    }
-  });
+  var rootApp = initApps(db);
+  if (callback) {
+    callback(rootApp);
+  }
 };

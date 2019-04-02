@@ -6,10 +6,9 @@ module.exports = {
     name: process.env.APP_NAME || 'meancore-cms',
     description: 'Applications running on mean stack',
     keywords: 'mongodb, express, angular2+, typescript, node.js, mongoose, passport',
-    appBase: process.env.APP_BASE_URL || '/',
-    defaultPage: 'index.html',
-    logo: '/assets/images/logo.png',
-    favicon: '/favicon.ico'
+    appBaseUrl: process.env.APP_BASE_URL || '/',
+    apiBaseUrl: process.env.API_BASE_URL || 'api',
+    defaultPage: 'index.html'
   },
   // Config required for Google Analytics
   GOOGLE_CLIENT_EMAIL: process.env.GOOGLE_CLIENT_EMAIL || '',
@@ -96,7 +95,7 @@ module.exports = {
       workerSrc: false // This is not set.
     }
   },
-  illegalUsernames: ['meancore', 'administrator', 'password', 'admin', 'user',
+  illegalUsernames: ['meancore', 'meancorecms', 'administrator', 'password', 'admin', 'user',
     'unknown', 'anonymous', 'null', 'undefined', 'api'
   ],
   aws: {

@@ -10,7 +10,6 @@ import { PasswordValidatorModule } from './password-validator/password-validator
 import { LoadingComponent } from './loading/loading.component';
 import { MessagingComponent } from './messaging/messaging.component';
 
-import { TooltipDirective } from './directives/tooltip.directive';
 import { EqualValidatorDirective } from './directives/equal-validator.directive';
 import { PasswordToggleDirective } from './directives/password-toggle.directive';
 import { AnimatedLabelDirective } from './directives/animated-label.directive';
@@ -48,6 +47,8 @@ export * from './services/cached-data.service';
 export * from './services/seo.service';
 export * from './services/script-injector.service';
 
+export { dynamicQuestionClasses } from './dynamic-forms/dynamic-forms.module';
+
 export { LoadingInterceptor } from './services/loading.interceptor';
 export { MessagingInterceptor } from './services/messaging.interceptor';
 
@@ -65,7 +66,6 @@ const modules = [
 ];
 
 const directives = [
-  TooltipDirective,
   EqualValidatorDirective,
   PasswordToggleDirective,
   AnimatedLabelDirective,

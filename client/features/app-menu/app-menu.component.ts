@@ -23,7 +23,7 @@ export class AppMenuComponent implements OnInit {
   public showSearchNav = true;
   // used to toggle search input
   public isSearchVisible = false;
-  public appSearchRoute = '/blog/posts/search/';
+  public appSearchRoute = '';
   public searchQuery: string;
   public isNavbarCollapsed = true;
   public user: any = false;

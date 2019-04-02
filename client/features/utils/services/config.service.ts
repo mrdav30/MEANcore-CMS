@@ -3,7 +3,12 @@
 
 import { Injectable } from '@angular/core';
 
+export interface MenuConfig { name: string; route: string; roles: string[]; permission: string; visible: boolean; }
+
 @Injectable()
 export class ConfigService {
   user: any; // if page is refreshed while user is logged in, we pass user information to application bootsrap so authService get user
+  config: {
+    menuConfig: MenuConfig[];
+  };
 }

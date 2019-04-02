@@ -24,6 +24,11 @@ export class ImageUploadComponent implements OnInit {
     @Input()
     public imageHeight = 200;
 
+    // Type of input that matches
+    // Should match to option under config.uploads.images.options
+    @Input()
+    public uploadType = '';
+
     @Input()
     public currentUrl = '';
 
@@ -64,10 +69,6 @@ export class ImageUploadComponent implements OnInit {
         }, (error) => {
             alert('Error uploading image!');
         });
-    }
-
-    // tslint:disable-next-line
-    ngOnInit() {
     }
 
     public fileOver(e: any): void {

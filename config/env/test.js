@@ -56,12 +56,11 @@ module.exports = {
     }
   },
   uploads: {
-    profile: {
-      image: {
-        dest: './modules/users/client/img/profile/uploads/',
-        limits: {
-          fileSize: 100000 // Limit filesize (100kb) for testing purposes
-        }
+    images: {
+      baseUrl: process.env.IMAGE_BASE_URL || '/image-uploads',
+      uploadRepository: process.env.IMAGE_STORAGE || './_content/image-uploads/',
+      limits: {
+        fileSize: 100000 // Limit filesize (100kb) for testing purposes
       }
     }
   },
