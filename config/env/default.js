@@ -75,6 +75,7 @@ module.exports = {
       ],
       fontSrc: [
         "'self'",
+        'data:',
         'https://fonts.gstatic.com/s/montserrat/'
       ],
       childSrc: [
@@ -130,9 +131,5 @@ module.exports = {
         }
       }
     }
-  },
-  //CMS specific config
-  imageUploadRepository: './_content/meancore-cms/uploads/img',
-  adminContentRepository: './_content/meancore-cms/admin',
-  blogContentRepository: './_content/meancore-cms/blog'
+  }
 };
