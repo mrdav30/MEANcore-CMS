@@ -4,7 +4,7 @@ module.exports = {
   app: {
     title: 'MEANcore-CMS - MeanStack CMS!',
     name: process.env.APP_NAME || 'meancore-cms',
-    description: 'Applications runing on mean stack',
+    description: 'Applications running on mean stack',
     keywords: 'mongodb, express, angular2+, typescript, node.js, mongoose, passport',
     appBase: process.env.APP_BASE_URL || '/',
     defaultPage: 'index.html',
