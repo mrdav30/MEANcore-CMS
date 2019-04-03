@@ -96,4 +96,8 @@ export class PostDetailsComponent implements OnInit {
             resolve();
         });
     }
+
+    onNavigate(url: string) {
+        window.open(url, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
+    }
 }
