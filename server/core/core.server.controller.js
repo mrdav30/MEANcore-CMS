@@ -17,8 +17,8 @@ function getExtention(url) {
  * Render the server not found responses
  */
 var renderNotFound = function (req, res) {
-  res.status(404).json({
-    error: 'Path not found'
+  res.status(404).send({
+    message: 'Path not found'
   });
 };
 exports.renderNotFound = renderNotFound;
@@ -54,9 +54,9 @@ exports.renderIndex = async function (req, res) {
   if (!config.app.defaultPage || ~exts.indexOf(ext)) { // if not in extentions give 404
     renderNotFound(req, res); // We know its not found
   } else {
-    var rootDir = path.normalize(config.staticFiles);
-    res.sendFile(config.app.defaultPage, {
-      root: rootDir
+    var indexPath = path.normalize(config.app.defaultPage);
+    res.render(indexPath, config.app, function (err, indexHtml) {
+      res.status(200).send(indexHtml);
     });
   }
 };
