@@ -90,9 +90,10 @@ function refreshPostViews(callback) {
     runTimeConfig = {};
   }
 
-  var lastRefreshDate = !runTimeConfig.VIEWS_LAST_REFRESHED ? new Date() : Date(runTimeConfig.VIEWS_LAST_REFRESHED);
+  var lastRefreshDate = !runTimeConfig.VIEWS_LAST_REFRESHED ? new Date() : new Date(runTimeConfig.VIEWS_LAST_REFRESHED);
   var ONE_HOUR = 60 * 60 * 1000; /* ms */ ;
-  if (((new Date) - lastRefreshDate) < ONE_HOUR) {
+  // Check if one hour has passed since last refresh
+  if ((Date.parse(new Date()) - Date.parse(lastRefreshDate)) > ONE_HOUR) {
     async.waterfall([
       function (done) {
         // retrieve google analytics for posts
