@@ -7,7 +7,7 @@
 
 # MEANcore-CMS
 
-MEANcore-CMS is a blogging platform built using [MEANcore](https://github.com/mrdav30/MEANcore). MEANcore-CMS has been designed with developers in mind, to be easily extensible and customisable throughout the code base.
+MEANcore-CMS is an open source MEAN stack CMS and blogging platform built upon [MEANcore](https://github.com/mrdav30/MEANcore). MEANcore-CMS has been designed with developers in mind, to be easily extensible and customisable throughout the code base.
 
 Check out the platform in action by visiting our blog powered by MEANcore-CMS, [Techievor](https://techievor.com).
 
