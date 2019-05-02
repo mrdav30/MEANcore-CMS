@@ -84,9 +84,9 @@ exports.retrieveSharedData = function (req, res, next) {
 
 function refreshPostViews(callback) {
   var runTimeConfig;
-  try{
+  try {
     runTimeConfig = JSON.parse(fs.readFileSync(path.resolve('./_content/blog_runtime_config.json')));
-  } catch(e){
+  } catch (e) {
     runTimeConfig = {};
   }
 
@@ -442,7 +442,11 @@ function retrieveViewModel(vm, query, callback) {
               });
             }
 
-            done(null, posts, totalCount);
+            if (vm.pagination) {
+              vm.pagination.collectionSize = totalCount;
+            }
+
+            done(null, posts);
           });
         } else {
           var options = {};
