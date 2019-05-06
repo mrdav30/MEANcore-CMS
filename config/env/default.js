@@ -6,6 +6,7 @@ module.exports = {
     name: process.env.APP_NAME || 'meancore-cms',
     description: 'Applications running on mean stack',
     keywords: 'mongodb, express, angular2+, typescript, node.js, mongoose, passport',
+    logo: process.env.APP_LOGO || '',
     appBaseUrl: process.env.APP_BASE_URL || '/',
     apiBaseUrl: process.env.API_BASE_URL || 'api',
     defaultPage: 'index.html'
