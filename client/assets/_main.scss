@@ -34,12 +34,6 @@ body {
   font-weight: 900;
 }
 
-/*ck editor override*/
-.ck-editor pre {
-  background-color: #7b7b7b;
-  color: #000;
-}
-
 /*ag-grid override*/
 
 .center-btn-cell {
@@ -206,8 +200,18 @@ label textarea {
 
 /* end font awesome override */
 
-/*Toggle switch*/
+/* hljs override */
 
+pre.nohighlight {
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #abb2bf;
+  background: #282c34;
+}
+
+/* end hljs override */
+
+/*Toggle switch*/
 
 /* The switch - the box around the slider */
 
@@ -218,7 +222,6 @@ label textarea {
   height: 15px;
   vertical-align: middle;
 }
-
 
 /* Hide default HTML checkbox */
 

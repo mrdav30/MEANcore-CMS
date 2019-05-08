@@ -14,10 +14,11 @@ export class PageService {
         private handleErrorService: HandleErrorService
     ) { }
 
-    GetPage(pageSlug: string): Observable<{}> {
+    GetPage(pageSlug: string): Promise<any> {
         return this.http.get(environment.appBaseUrl + environment.apiBaseUrl + '/page/' + pageSlug)
             .pipe(
                 catchError(this.handleErrorService.handleError<any>('PageDetails'))
-            );
+            )
+            .toPromise();
     }
 }

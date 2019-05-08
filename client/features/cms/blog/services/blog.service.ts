@@ -56,12 +56,13 @@ export class BlogService {
             );
     }
 
-    GetPost(postParams: any): Observable<{}> {
+    GetPost(postParams: any): Promise<any> {
         return this.http.get(environment.appBaseUrl + environment.apiBaseUrl +
             '/blog/post/details/' + postParams.year + '/' + postParams.month
             + '/' + postParams.day + '/' + postParams.slug)
             .pipe(
                 catchError(this.handleErrorService.handleError<any>('BlogPostDetails'))
-            );
+            )
+            .toPromise();
     }
 }
