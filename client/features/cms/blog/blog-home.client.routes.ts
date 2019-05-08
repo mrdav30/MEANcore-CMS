@@ -1,7 +1,6 @@
 import { Route } from '@angular/router';
 
 import { BlogHomeComponent } from './blog-home.component';
-import { BlogFooterComponent } from './blog-footer/blog-footer.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 
@@ -14,11 +13,6 @@ export const BlogHomeRoutes: Route[] = [
     {
         path: '',
         children: [
-            {
-                path: '',
-                component: BlogFooterComponent,
-                outlet: 'appfooter'
-            },
             {
                 path: 'home',
                 component: BlogHomeComponent

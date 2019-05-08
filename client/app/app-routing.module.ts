@@ -14,12 +14,18 @@ import { UserAccessControlRoutes } from '../features/user-access-control/uac-das
 import { UnauthorizedComponent } from '../features/unauthorized/unauthorized.component';
 
 import { CMSRoutes } from '../features/cms/cms.module';
+import { BlogFooterComponent } from '../features/cms/cms.module';
 
 export const AppRoutes: Routes = [
   {
     path: '',
     redirectTo: environment.appDefaultRoute,
     pathMatch: 'full'
+  },
+  {
+    path: '',
+    component: BlogFooterComponent,
+    outlet: 'appfooter'
   },
   ...SignInRoutes,
   ...RecoverPasswordRoutes,

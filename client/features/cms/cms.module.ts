@@ -7,6 +7,8 @@ import { BlogHomeModule } from './blog/blog-home.module';
 import { AdminHomeRoutes } from './admin/admin-home.client.routes';
 import { BlogHomeRoutes } from './blog/blog-home.client.routes';
 
+export { BlogFooterComponent } from './blog/blog-footer/blog-footer.component';
+
 @NgModule({
   imports: [
     AdminHomeModule,
