@@ -1,0 +1,17 @@
+.ck-content .image {
+  clear: both;
+  text-align: center;
+  margin: 1em 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.ck-content .image>img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+.ck-content .media>oembed {
+  margin: 0 auto;
+}

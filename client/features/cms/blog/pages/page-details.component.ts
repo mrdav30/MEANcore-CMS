@@ -15,6 +15,9 @@ import { SeoService, ScriptInjectorService } from '../../../utils';
     moduleId: module.id,
     selector: 'app-page-details-selector',
     templateUrl: `./page-details.component.html`,
+    styleUrls: [
+        `./page-details.component.css`
+    ],
     encapsulation: ViewEncapsulation.None // required to style innerHtml
 })
 
@@ -22,6 +25,8 @@ export class PageDetailsComponent implements OnInit, AfterViewChecked {
     public disqusShortname = environment.appName;
     public pageSlug: string;
     public vm: any = {};
+    public domLoaded = false;
+    public domFormatted = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -56,6 +61,9 @@ export class PageDetailsComponent implements OnInit, AfterViewChecked {
                     })
                     .then(() => {
                         this.scriptInjectorService.load('embedly')
+                            .then(() => {
+                                this.domLoaded = true;
+                            })
                             .catch(error => {
                                 console.log(error);
                             });
@@ -65,21 +73,24 @@ export class PageDetailsComponent implements OnInit, AfterViewChecked {
 
     // not elegant, but need to ensure DOM is loaded before applying hljs formatting
     ngAfterViewChecked(): void {
-        forEach(document.querySelectorAll('pre'), (block) => {
-            highlightBlock(block);
-        });
+        if (this.domLoaded && !this.domFormatted) {
+            forEach(document.querySelectorAll('pre'), (block) => {
+                highlightBlock(block);
+            });
 
-        forEach(document.querySelectorAll('oembed[url]'), (element) => {
-            // Create the <a href="..." class="embedly-card"></a> element that Embedly uses
-            // to discover the media.
-            const anchor = document.createElement('a');
+            forEach(document.querySelectorAll('oembed[url]'), (element) => {
+                // Create the <a href="..." class="embedly-card"></a> element that Embedly uses
+                // to discover the media.
+                const anchor = document.createElement('a');
 
-            anchor.setAttribute('href', element.getAttribute('url'));
-            anchor.className = 'embedly-card';
+                anchor.setAttribute('href', element.getAttribute('url'));
+                anchor.className = 'embedly-card';
 
-            element.appendChild(anchor);
-        });
+                element.appendChild(anchor);
+            });
 
-        this.ref.detectChanges();
+            this.domFormatted = true;
+            this.ref.detectChanges();
+        }
     }
 }

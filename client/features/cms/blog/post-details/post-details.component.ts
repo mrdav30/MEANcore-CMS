@@ -23,6 +23,8 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
     public disqusShortname = environment.appName;
     public postParams: any;
     public vm: any = {};
+    public domLoaded = false;
+    public domFormatted = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -66,6 +68,9 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
                     })
                     .then(() => {
                         this.scriptInjectorService.load('embedly')
+                            .then(() => {
+                                this.domLoaded = true;
+                            })
                             .catch(error => {
                                 console.log(error);
                             });
@@ -75,22 +80,25 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
 
     // not elegant, but need to ensure DOM is loaded before applying hljs formatting
     ngAfterViewChecked(): void {
-        forEach(document.querySelectorAll('pre'), (block) => {
-            highlightBlock(block);
-        });
+        if (this.domLoaded && !this.domFormatted) {
+            forEach(document.querySelectorAll('pre'), (block) => {
+                highlightBlock(block);
+            });
 
-        forEach(document.querySelectorAll('oembed[url]'), (element) => {
-            // Create the <a href="..." class="embedly-card"></a> element that Embedly uses
-            // to discover the media.
-            const anchor = document.createElement('a');
+            forEach(document.querySelectorAll('oembed[url]'), (element) => {
+                // Create the <a href="..." class="embedly-card"></a> element that Embedly uses
+                // to discover the media.
+                const anchor = document.createElement('a');
 
-            anchor.setAttribute('href', element.getAttribute('url'));
-            anchor.className = 'embedly-card';
+                anchor.setAttribute('href', element.getAttribute('url'));
+                anchor.className = 'embedly-card';
 
-            element.appendChild(anchor);
-        });
+                element.appendChild(anchor);
+            });
 
-        this.ref.detectChanges();
+            this.domFormatted = true;
+            this.ref.detectChanges();
+        }
     }
 
     onNavigate(url: string) {
