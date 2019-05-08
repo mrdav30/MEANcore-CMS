@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 
-import { AdminHomeComponent } from './admin-home.component';
+import { AdminConsoleComponent } from './admin-console.component';
 
 import { PagesRoutes } from './pages/pages.client.routes';
 import { PostsRoutes } from './posts/posts.client.routes';
@@ -17,7 +17,7 @@ export const AdminHomeRoutes: Route[] = [
         children: [
             {
                 path: '',
-                component: AdminHomeComponent
+                component: AdminConsoleComponent
             },
             ...PagesRoutes,
             ...PostsRoutes,

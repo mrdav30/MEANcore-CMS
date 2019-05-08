@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { UtilsModule } from '../../utils';
 import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { AdminHomeComponent } from './admin-home.component';
+import { AdminConsoleComponent } from './admin-console.component';
 
 import { AdminPagesModule } from './pages/pages.module';
 import { AdminPostsModule } from './posts/posts.module';
@@ -26,8 +26,8 @@ import { AdminSubscribersModule } from './subscribers/subscribers.module';
         AdminSubscribersModule
     ],
     declarations: [
-        AdminHomeComponent
+        AdminConsoleComponent
     ]
 })
 
-export class AdminHomeModule { }
+export class AdminConsoleModule { }

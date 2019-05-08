@@ -12,7 +12,7 @@ import { UnauthorizedComponent } from '../features/unauthorized/unauthorized.com
 import { PageNotFoundComponent } from '../features/page-not-found/page-not-found.component';
 
 import { AppMenuModule } from '../features/app-menu/app-menu.module';
-import { UsersModule } from '..features/users/users.module';
+import { UsersModule } from '../features/users/users.module';
 import { UserAccessControlModule } from '../features/user-access-control/uac-dashboard.module';
 
 import { CMSModule } from '../features/cms/cms.module';

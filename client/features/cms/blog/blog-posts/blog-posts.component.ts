@@ -8,12 +8,12 @@ import { SeoService } from '../../../utils';
 
 @Component({
     moduleId: module.id,
-    selector: 'app-main-blog-selector',
-    templateUrl: `./blog-main.component.html`,
-    styleUrls: [`./blog-main.component.css`]
+    selector: 'app-blog-posts-selector',
+    templateUrl: `./blog-posts.component.html`,
+    styleUrls: [`./blog-posts.component.css`]
 })
 
-export class BlogMainComponent implements OnInit {
+export class BlogPostsComponent implements OnInit {
     public postParams: any;
     public pageNumber = 1;
     public vm: any = {};

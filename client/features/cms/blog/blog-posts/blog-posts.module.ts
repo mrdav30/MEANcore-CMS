@@ -8,7 +8,7 @@ import { GravatarModule } from 'ngx-gravatar';
 import { UtilsModule } from '../../../utils';
 import { NgbPaginationModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { BlogMainComponent } from './blog-main.component';
+import { BlogPostsComponent } from './blog-posts.component';
 
 import { BlogService } from '../services/blog.service';
 
@@ -23,11 +23,11 @@ import { BlogService } from '../services/blog.service';
         NgbTooltipModule
     ],
     declarations: [
-        BlogMainComponent
+        BlogPostsComponent
     ],
     providers: [
         BlogService
     ]
 })
 
-export class BlogMainModule { }
+export class BlogPostsModule { }

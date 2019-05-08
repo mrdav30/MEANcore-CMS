@@ -3,11 +3,11 @@ import { Title } from '@angular/platform-browser';
 
 @Component({
     moduleId: module.id,
-    selector: 'app-admin-selector',
-    templateUrl: `./admin-home.component.html`
+    selector: 'app-admin-console-selector',
+    templateUrl: `./admin-console.component.html`
 })
 
-export class AdminHomeComponent implements OnInit {
+export class AdminConsoleComponent implements OnInit {
     constructor(
         private titleService: Title
     ) { }

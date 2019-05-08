@@ -6,9 +6,9 @@ import { RouterModule } from '@angular/router';
 import { UtilsModule, CachedDataService } from '../../utils';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { BlogHomeComponent } from './blog-home.component';
+import { BlogComponent } from './blog.component';
 import { BlogAboutModule } from './about/about.module';
-import { BlogMainModule } from './blog-main/blog-main.module';
+import { BlogPostsModule } from './blog-posts/blog-posts.module';
 import { BlogPostDetailsModule } from './post-details/post-details.module';
 import { BlogFooterModule } from './blog-footer/blog-footer.module';
 import { BlogContactModule } from './contact/contact.module';
@@ -25,7 +25,7 @@ import { BlogFooterService } from './services/blog-footer.service';
         RouterModule,
         UtilsModule,
         NgbTooltipModule,
-        BlogMainModule,
+        BlogPostsModule,
         BlogPostDetailsModule,
         BlogFooterModule,
         BlogContactModule,
@@ -34,7 +34,7 @@ import { BlogFooterService } from './services/blog-footer.service';
         BlogPageDetailsModule
     ],
     declarations: [
-        BlogHomeComponent
+        BlogComponent
     ],
     providers: [
         BlogService,
@@ -43,4 +43,4 @@ import { BlogFooterService } from './services/blog-footer.service';
     ]
 })
 
-export class BlogHomeModule { }
+export class BlogModule { }

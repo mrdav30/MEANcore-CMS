@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes } from '@angular/router';
 
-import { AdminHomeModule } from './admin/admin-home.module';
-import { BlogHomeModule } from './blog/blog-home.module';
+import { AdminConsoleModule } from './admin-console/admin-console.module';
+import { BlogModule } from './blog/blog.module';
 
-import { AdminHomeRoutes } from './admin/admin-home.client.routes';
-import { BlogHomeRoutes } from './blog/blog-home.client.routes';
+import { AdminHomeRoutes } from './admin-console/admin-console.client.routes';
+import { BlogRoutes } from './blog/blog.client.routes';
 
 export { BlogFooterComponent } from './blog/blog-footer/blog-footer.component';
 
 @NgModule({
   imports: [
-    AdminHomeModule,
-    BlogHomeModule
+    AdminConsoleModule,
+    BlogModule
   ]
 })
 
@@ -20,5 +20,5 @@ export class CMSModule { }
 
 export const CMSRoutes: Routes = [
   ...AdminHomeRoutes,
-  ...BlogHomeRoutes
+  ...BlogRoutes
 ];

@@ -4,7 +4,7 @@ import { BlogFooterService } from '../services/blog-footer.service';
 
 @Component({
     moduleId: module.id,
-    selector: 'blog-footer-selector',
+    selector: 'app-blog-footer-selector',
     templateUrl: `./blog-footer.component.html`,
     styleUrls: [`./blog-footer.component.css`]
 })

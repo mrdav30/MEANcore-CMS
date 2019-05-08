@@ -1,13 +1,11 @@
 import { Route } from '@angular/router';
 
-import { BlogMainComponent } from './blog-main.component';
+import { BlogPostsComponent } from './blog-posts.component';
 
-import { PostDetailsRoutes } from '../post-details/post-details.client.routes';
-
-export const BlogMainRoutes: Route[] = [
+export const BlogPostsRoutes: Route[] = [
     {
         path: 'blog',
-        component: BlogMainComponent
+        component: BlogPostsComponent
     },
     {
         path: 'blog/posts',
@@ -19,19 +17,19 @@ export const BlogMainRoutes: Route[] = [
             },
             {
                 path: 'tag/:tag',
-                component: BlogMainComponent
+                component: BlogPostsComponent
             },
             {
                 path: 'author/:authorId',
-                component: BlogMainComponent
+                component: BlogPostsComponent
             },
             {
                 path: 'search/:searchQuery',
-                component: BlogMainComponent
+                component: BlogPostsComponent
             },
             {
                 path: 'date/:year/:month',
-                component: BlogMainComponent
+                component: BlogPostsComponent
             }
         ]
     },

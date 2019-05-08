@@ -5,12 +5,12 @@ import { SeoService } from '../../utils';
 
 @Component({
     moduleId: module.id,
-    selector: 'app-home-blog-selector',
-    templateUrl: `./blog-home.component.html`,
-    styleUrls: [`./blog-home.component.css`]
+    selector: 'app-blog-selector',
+    templateUrl: `./blog.component.html`,
+    styleUrls: [`./blog.component.css`]
 })
 
-export class BlogHomeComponent implements OnInit {
+export class BlogComponent implements OnInit {
     public vm: any = {};
 
     constructor(
