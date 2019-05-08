@@ -5,12 +5,10 @@
 .blog-footer h3,
 .blog-footer p {
   color: #fff;
-  font-weight: 900;
 }
 
 .blog-footer a {
   color: #b70e0c;
-  font-weight: 600;
 }
 
 .blog-footer a:hover {
@@ -36,6 +34,7 @@
   padding-left: 20px
 }
 
+.about-list
 .month-list,
 .tag-list {
   color: #fff;

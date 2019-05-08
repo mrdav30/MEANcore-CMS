@@ -71,7 +71,9 @@
           </a>
         </div>
         <div class="card-body post-body">
-          <a class="post-title" routerLink="{{post.url}}">{{post.title}}</a>
+          <h4>
+              <a class="post-title" routerLink="{{post.url}}">{{post.title}}</a>
+          </h4>
           <div class="d-flex flex-row meta">
             <span class="post-date mr-2"><i class="icon-clock mr-2"></i>{{post.publishDate | date}}</span>
             <span class="mr-2">
@@ -85,7 +87,7 @@
           <hr />
           <div class="post-middle">
             <a *ngFor="let tag of post.slugTags" [routerLink]="'/blog/posts/tag/' + tag.slug"
-              class="btn btn-light btn-sm mr-2">#{{tag.text}}</a>
+              class="btn btn-light btn-sm mr-2 mb-2">#{{tag.text}}</a>
             <div class="float-right">
               <a routerLink="{{post.url}}" class="view-btn btn btn-light btn-outline-dark" placement="top"
                 ngbTooltip="Read more">

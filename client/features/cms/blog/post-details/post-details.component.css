@@ -1,10 +1,15 @@
-.post-author {
+.post-details-author {
   color: #b70e0c
 }
 
-.post-author:hover {
+.post-details-author:hover {
   color: #7b7b7b;
   text-decoration: none;
+}
+
+.post-details-image {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+  border-radius: 10px;
 }
 
 .title-avatar {
