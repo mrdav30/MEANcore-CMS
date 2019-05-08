@@ -4,7 +4,7 @@ import { SeoService } from '../../../utils';
 
 @Component({
     moduleId: module.id,
-    selector: 'about-selector',
+    selector: 'app-about-selector',
     templateUrl: `./about.component.html`
 })
 
