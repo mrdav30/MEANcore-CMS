@@ -6,12 +6,12 @@ import { RouterModule } from '@angular/router';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { GravatarModule } from 'ngx-gravatar';
 
-import { UtilsModule } from '../../../utils';
+import { UtilsModule } from '../../utils';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { AccountFormComponent } from './account-form.component';
+import { ProfileFormComponent } from './profile-form.component';
 
-import { AccountService } from '../services/account.service';
+import { ProfileService } from '../../utils/services/profile.service';
 
 @NgModule({
     imports: [
@@ -24,14 +24,14 @@ import { AccountService } from '../services/account.service';
         UtilsModule
     ],
     exports: [
-        AccountFormComponent
+        ProfileFormComponent
     ],
     declarations: [
-        AccountFormComponent
+        ProfileFormComponent
     ],
     providers: [
-        AccountService
+        ProfileService
     ]
 })
 
-export class AdminAccountModule { }
+export class ProfileModule { }

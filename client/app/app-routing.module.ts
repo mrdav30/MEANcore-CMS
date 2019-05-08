@@ -9,6 +9,7 @@ import { SignInRoutes } from '../features/users/sign-in/sign-in.routes';
 import { RecoverPasswordRoutes } from '../features/users/password/recover/recover-password.routes';
 import { ResetPasswordRoutes } from '../features/users/password/reset/reset-password.routes';
 import { SignUpRoutes } from '../features/users/sign-up/sign-up.routes';
+import { ProfileRoutes } from '../features/users/profile/profile.routes';
 import { UserAccessControlRoutes } from '../features/user-access-control/uac-dashboard.routes';
 import { UnauthorizedComponent } from '../features/unauthorized/unauthorized.component';
 
@@ -24,6 +25,7 @@ export const AppRoutes: Routes = [
   ...RecoverPasswordRoutes,
   ...ResetPasswordRoutes,
   ...SignUpRoutes,
+  ...ProfileRoutes,
   ...UserAccessControlRoutes,
   ...CMSRoutes,
   {
