@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
+import { environment } from '../../../environments/environment';
+
 @Component({
     moduleId: module.id,
     selector: 'app-admin-console-selector',
@@ -13,6 +15,6 @@ export class AdminConsoleComponent implements OnInit {
     ) { }
     // tslint:disable-next-line
     ngOnInit() {
-        this.titleService.setTitle('Admin | The MEANcore Blog');
+        this.titleService.setTitle('Admin' + environment.metaTitleSuffix);
     }
 }

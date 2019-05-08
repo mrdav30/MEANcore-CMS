@@ -46,7 +46,7 @@ export class PagesFormComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.titleService.setTitle('Pages | The MEANcore Blog');
+        this.titleService.setTitle('Pages' + environment.metaTitleSuffix);
         this.page = new Page();
         this.route.params
             .subscribe(params => {

@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { NgModel } from '@angular/forms';
 import { Router } from '@angular/router';
+
+import { environment } from '../../../environments/environment';
 
 import * as CustomEditor from '../../../assets/ckeditor-custom/ckeditor';
 import { merge } from 'lodash';
@@ -33,7 +36,8 @@ export class ProfileFormComponent implements OnInit {
     constructor(
         private router: Router,
         private cdr: ChangeDetectorRef,
-        private profileService: ProfileService
+        private profileService: ProfileService,
+        private titleService: Title
     ) {
         // set options for ckeditor
         this.editorOptions = {
@@ -44,6 +48,7 @@ export class ProfileFormComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.titleService.setTitle('Profile' + environment.metaTitleSuffix);
         this.profile = new Profile();
         this.profileService.GetCurrent()
             .subscribe((data: any) => {

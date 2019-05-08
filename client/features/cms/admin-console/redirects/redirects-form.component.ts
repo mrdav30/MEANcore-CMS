@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
+import { environment } from '../../../../environments/environment';
+
 import { merge } from 'lodash';
 
 import { RedirectsService } from '../services/redirects.service';
@@ -25,7 +27,7 @@ export class RedirectsFormComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.titleService.setTitle('Redirects | The MEANcore Blog');
+        this.titleService.setTitle('Redirects' + environment.metaTitleSuffix);
         this.redirect = new Redirect();
         this.route.params
             .subscribe(params => {

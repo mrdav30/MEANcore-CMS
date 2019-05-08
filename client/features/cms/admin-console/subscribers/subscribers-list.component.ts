@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
 import { fromEvent, Observable, Subscription } from 'rxjs';
 
 import { filter, map } from 'lodash';
@@ -38,7 +37,6 @@ export class SubscribersListComponent implements OnInit, OnDestroy {
     private resizeSubscription$: Subscription;
 
     constructor(
-        private router: Router,
         private subscribersService: SubscribersService
     ) {
         this.context = { componentParent: this };

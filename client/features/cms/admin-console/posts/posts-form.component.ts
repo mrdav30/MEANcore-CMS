@@ -49,7 +49,7 @@ export class PostsFormComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.titleService.setTitle('Posts | The MEANcore Blog');
+        this.titleService.setTitle('Posts' + environment.metaTitleSuffix);
         this.post = new Post();
         this.route.params
             .subscribe(params => {
