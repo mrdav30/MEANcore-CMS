@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import * as CustomEditor from '../_content/ckeditor-custom/ckeditor';
+import * as CustomEditor from '../../../../assets/ckeditor-custom/ckeditor';
 import { merge } from 'lodash';
 
 import { environment } from '../../../../environments/environment';
@@ -16,6 +16,10 @@ import { SlugifyPipe } from '../../../utils';
     moduleId: module.id,
     selector: 'app-pages-form-selector',
     templateUrl: `./pages-form.component.html`,
+    styleUrls: [
+        `../../../../assets/ckeditor-custom/ckeditor-styles-override.css`,
+        `../../../../assets/ckeditor-custom/ckeditor-styles.css`
+    ],
     encapsulation: ViewEncapsulation.None // required to style innerHtml
 })
 

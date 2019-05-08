@@ -13,7 +13,7 @@ import { PublishRendererComponent } from '../grid-utils/publish-render.component
     moduleId: module.id,
     selector: 'app-posts-list-selector',
     templateUrl: `./posts-list.component.html`,
-    styleUrls: [`./posts-list.component.css`, `../grid-utils/grid-utils.css`],
+    styleUrls: [`../grid-utils/grid-utils.css`],
     encapsulation: ViewEncapsulation.None // required to style innerHtml
 })
 

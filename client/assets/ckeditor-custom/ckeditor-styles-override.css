@@ -1,11 +1,11 @@
 .ck-media__wrapper {
-  width: 50%
+  width: 50% !important;
 }
 
 .ck.ck-editor__main>.ck-editor__editable {
-  max-height: 500px
+  max-height: 500px !important;
 }
 
 .ck.ck-dropdown .ck-button.ck-dropdown__button .ck-button__label {
-  width: 8em;
+  width: 8em !important;
 }
