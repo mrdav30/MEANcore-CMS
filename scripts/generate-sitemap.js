@@ -2,18 +2,11 @@ const path = require('path');
 const SitemapGenerator = require('advanced-sitemap-generator');
 
 // create generator
-const generator = SitemapGenerator('https://techievor.com', {
+const generator = SitemapGenerator('https://meancore-cms.com', {
   stripQuerystring: false,
   ignoreHreflang: false,
   filepath: path.join(process.cwd(), 'sitemap.xml'),
-  excludeUrls: [
-    'https://www.facebook.com/techievor',
-    'https://twitter.com/techievor',
-    'https://www.patreon.com/techievor',
-    'https://github.com/mrdav30/MEANcore-CMS',
-    'https://www.linkedin.com',
-    'https://api.addthis.com'
-  ]
+  excludeUrls: []
 });
 
 generator.on('add', (url) => {
