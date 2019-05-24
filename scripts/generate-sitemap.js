@@ -1,0 +1,41 @@
+const path = require('path');
+const SitemapGenerator = require('advanced-sitemap-generator');
+
+// create generator
+const generator = SitemapGenerator('https://techievor.com', {
+  stripQuerystring: false,
+  ignoreHreflang: false,
+  filepath: path.join(process.cwd(), 'sitemap.xml'),
+  excludeUrls: [
+    'https://www.facebook.com/techievor',
+    'https://twitter.com/techievor',
+    'https://www.patreon.com/techievor',
+    'https://github.com/mrdav30/MEANcore-CMS',
+    'https://www.linkedin.com',
+    'https://api.addthis.com'
+  ]
+});
+
+generator.on('add', (url) => {
+  // log url
+  console.log('Successfully added URL ' + url);
+});
+
+generator.on('ignore', (url) => {
+  // log ignored url
+  console.log('Ignoring URL ' + url);
+});
+
+// register event listeners
+generator.on('done', () => {
+  // sitemaps created
+  console.log('Successfully created sitemap')
+});
+
+generator.on('error', (error) => {
+  console.log(error);
+  // => { code: 404, message: 'Not found.', url: 'http://example.com/foo' }
+});
+
+// start the crawler
+generator.start();
