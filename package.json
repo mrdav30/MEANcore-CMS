@@ -46,6 +46,7 @@
     "@ckeditor/ckeditor5-angular": "^1.0.1",
     "@ckeditor/ckeditor5-build-classic": "^12.0.0",
     "@ng-bootstrap/ng-bootstrap": "^4.0.1",
+    "advanced-sitemap-generator": "^1.6.6",
     "ag-grid-angular": "^20.0.0",
     "ag-grid-community": "^20.0.0",
     "async": "^2.6.2",
