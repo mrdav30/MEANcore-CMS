@@ -99,9 +99,7 @@ function refreshPostViews(callback) {
         // retrieve google analytics for posts
         googleAnalytics.getData('2005-01-01', 'today', 'ga:pagePath', 'ga:pageviews', 'ga:pagePath=@/blog/post/', function (err, analytics) {
           if (err) {
-            return done({
-              message: errorHandler.getErrorMessage(err)
-            });
+            return done(err);
           }
 
           done(null, analytics)
@@ -140,7 +138,8 @@ function refreshPostViews(callback) {
       }
     ], (err) => {
       if (err) {
-        return callback(err);
+        // don't fail on error
+        console.error(err);
       }
 
       callback(null);
