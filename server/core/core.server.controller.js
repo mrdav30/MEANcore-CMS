@@ -4,7 +4,10 @@ var path = require('path'),
   _ = require('lodash'),
   config = require(path.resolve('./config/config')),
   isBot = config.helpers.isBot,
+  puppeteer = require('puppeteer'),
   ssrService = config.services.ssrService;
+
+let browserWSEndpoint = null;
 
 /**
  * Get extention from path
@@ -32,10 +35,15 @@ exports.prerender = async function (req, res, next) {
     if (req.query.prerender) {
       return next();
     } else {
+      if (!browserWSEndpoint) {
+        const browser = await puppeteer.launch();
+        browserWSEndpoint = await browser.wsEndpoint();
+      };
+
       const {
         html,
         ttRenderMs
-      } = await ssrService.ssr(`${req.protocol}://${req.get('host')}${req.url}?prerender=true`);
+      } = await ssrService.ssr(`${req.protocol}://${req.get('host')}${req.url}?prerender=true`, browserWSEndpoint);
       // Add Server-Timing! See https://w3c.github.io/server-timing/.
       res.set('Server-Timing', `Prerender;dur=${ttRenderMs};desc="Headless render time (ms)"`);
       return res.status(200).send(html + '<!-- SSR -->'); // Serve prerendered page as response.
