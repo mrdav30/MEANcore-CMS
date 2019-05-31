@@ -4,7 +4,7 @@ import { Routes } from '@angular/router';
 import { AdminConsoleModule } from './admin-console/admin-console.module';
 import { BlogModule } from './blog/blog.module';
 
-import { AdminHomeRoutes } from './admin-console/admin-console.client.routes';
+import { AdminConsoleRoutes } from './admin-console/admin-console.client.routes';
 import { BlogRoutes } from './blog/blog.client.routes';
 
 export { BlogFooterComponent } from './blog/blog-footer/blog-footer.component';
@@ -19,6 +19,6 @@ export { BlogFooterComponent } from './blog/blog-footer/blog-footer.component';
 export class CMSModule { }
 
 export const CMSRoutes: Routes = [
-  ...AdminHomeRoutes,
+  ...AdminConsoleRoutes,
   ...BlogRoutes
 ];
