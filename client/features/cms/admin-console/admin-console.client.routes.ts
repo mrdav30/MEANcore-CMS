@@ -8,7 +8,7 @@ import { RedirectsRoutes } from './redirects/redirects.client.routes';
 
 import { AuthGuard } from '../../utils';
 
-export const AdminHomeRoutes: Route[] = [
+export const AdminConsoleRoutes: Route[] = [
     {
         path: 'admin',
         data: { roles: ['admin'] },
