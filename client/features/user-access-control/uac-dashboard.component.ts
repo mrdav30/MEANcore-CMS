@@ -29,10 +29,10 @@ enum DashboardState {
 export class UserAccessControlComponent implements OnInit {
     message: string = null;
     dashState: DashboardState = DashboardState.ShowingRoles;
-    roles: Role[];
-    users: User[];
-    features: Feature[];
-    permissions: Permission[];
+    roles: Role[] = [];
+    users: User[] = [];
+    features: Feature[] = [];
+    permissions: Permission[] = [];
     selectedRole: Role = null;
     featuresSelected = false;
     usersSelected = false;

@@ -3,13 +3,11 @@ import { Router, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { distinctUntilChanged } from 'rxjs/operators';
 
-import { includes } from 'lodash';
-
 import { environment } from '../environments/environment';
 
 import { ScriptInjectorService } from '../features/utils';
 
-declare var gtag: (type: string, googleAnalyticsID: string, pageProperties: any) => void;
+declare const gtag: (type: string, googleAnalyticsID: string, pageProperties: any) => void;
 
 @Component({
   moduleId: module.id,

@@ -86,6 +86,6 @@ To enable/disable SSL mode in a production environment, set the HOST_SECURE vari
 ## Contributing
 We welcome pull requests from the community! Just be sure to read the [contributing](https://github.com/mrdav30/MEANcore-CMS/blob/meancore-cms/CONTRIBUTING.MD) doc to get started.
 
-# Licence
+# License
 
 [License](https://github.com/mrdav30/MEANcore-CMS/blob/meancore-cms/LICENSE.MD)
