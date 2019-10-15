@@ -2,6 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "src",
+    "downlevelIteration": true,
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -21,7 +22,8 @@
     ],
     "paths": {
       "@env/*": ["environments/*"],
-      "core-js/es6/*": ["../node_modules/core-js/es/*"]
+      "core-js/es6/*": ["../node_modules/core-js/es/*"],
+      "core-js/es7/*": ["../node_modules/core-js/es/*"]
     }
   }
 }

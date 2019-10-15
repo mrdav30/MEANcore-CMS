@@ -1,6 +1,5 @@
 import { Injectable, Component, Input, OnInit, Inject } from '@angular/core';
-import { Location } from '@angular/common';
-import { DOCUMENT } from '@angular/platform-browser';
+import { Location, DOCUMENT } from '@angular/common';
 import { WINDOW, DisqusMockWindow } from './disqus-window';
 
 @Component({
