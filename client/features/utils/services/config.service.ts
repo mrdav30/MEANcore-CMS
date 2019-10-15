@@ -7,7 +7,7 @@ export interface MenuConfig { name: string; route: string; roles: string[]; perm
 
 @Injectable()
 export class ConfigService {
-   // if page is refreshed while user is logged in, we pass user information to application bootsrap so authService get user
+  // if page is refreshed while user is logged in, we pass user information to application bootsrap so authService get user
   user: any = false;
   config: {
     menuConfig: MenuConfig[];

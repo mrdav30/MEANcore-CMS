@@ -84,7 +84,7 @@ Windows users can follow the instructions found [here](https://support.citrix.co
 To enable/disable SSL mode in a production environment, set the HOST_SECURE variable in your env config.
 
 ## Contributing
-We welcome pull requests from the community! Just be sure to read the [contributing](https://github.com/mrdav30/MEANcore-CMS/blob/meancore-cms/CONTRIBUTING.MD) doc to get started.
+Pull requests are welcome from the community! Just be sure to read the [contributing](https://github.com/mrdav30/MEANcore-CMS/blob/meancore-cms/CONTRIBUTING.MD) doc to get started.
 
 # License
 

@@ -7,18 +7,9 @@ import { environment } from '../../environments/environment';
 import { dynamicQuestionClasses } from '../utils';
 
 import { Role, Permission, User, Feature } from './index';
+import { DashboardState } from './enums/uac-dashboard-state.enum';
 
 import { UserAccessControlService } from './services/user-access-control.service';
-
-enum DashboardState {
-    ShowingRoles = 1,
-    ShowingRolesExpanded,
-    ShowingPermissions,
-    ShowingUsers,
-    ShowingUser,
-    ShowingFeatures,
-    ShowingPermissionAttributes
-}
 
 @Component({
     moduleId: module.id,
