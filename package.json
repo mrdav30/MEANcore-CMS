@@ -72,7 +72,7 @@
     "helmet": "^3.8.2",
     "helmet-csp": "^2.7.1",
     "https-proxy-agent": "^3.0.0",
-    "jimp": "^0.8.4",
+    "jimp": "^0.9.0",
     "jsonwebtoken": "^8.5.0",
     "lodash": "^4.17.15",
     "method-override": "^3.0.0",
