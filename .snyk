@@ -1,0 +1,24 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.14.1
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-567746:
+    - lodash:
+        patched: '2020-05-01T01:08:40.732Z'
+    - advanced-sitemap-generator > lodash:
+        patched: '2020-05-01T01:08:40.732Z'
+    - express-hbs > lodash:
+        patched: '2020-05-01T01:08:40.732Z'
+    - git-describe > lodash:
+        patched: '2020-05-01T01:08:40.732Z'
+    - advanced-sitemap-generator > cheerio > lodash:
+        patched: '2020-05-01T01:08:40.732Z'
+    - advanced-sitemap-generator > cherio > lodash:
+        patched: '2020-05-01T01:08:40.732Z'
+    - mongoose > async > lodash:
+        patched: '2020-05-01T01:08:40.732Z'
+    - request-promise > request-promise-core > lodash:
+        patched: '2020-05-01T01:08:40.732Z'
+    - winston > async > lodash:
+        patched: '2020-05-01T01:08:40.732Z'
