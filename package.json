@@ -74,7 +74,7 @@
     "https-proxy-agent": "^3.0.0",
     "jimp": "^0.8.4",
     "jsonwebtoken": "^8.5.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.16",
     "method-override": "^3.0.0",
     "mkdirp": "^0.5.1",
     "moment": "^2.24.0",
