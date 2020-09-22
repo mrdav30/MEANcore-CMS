@@ -1,0 +1,54 @@
+<div class="container p-3 form-group">
+
+  <div class="card">
+    <div class="card-body">
+      <span class="card-text">LATEST ARTICLES</span>
+    </div>
+  </div>
+
+  <div class="row post-list">
+    <div *ngFor="let post of vm.posts" class="col-sm-6 p-4">
+      <div class="card post mx-auto w-100">
+        <div class="card-img-top" (appDeferLoad)="post.showImage=true">
+          <a class="card-link" routerLink="{{post.url}}">
+            <img *ngIf="post.showImage" width="550" height="300" class="post-image" [src]="post.thumbnailUrl">
+          </a>
+        </div>
+        <div class="view-btn-container">
+          <a routerLink="{{post.url}}" class="view-btn btn btn-light btn-outline-dark" placement="top"
+            ngbTooltip="View">
+            <i class="icon-chevron-right"></i>
+          </a>
+        </div>
+        <div class="card-body post-body">
+          <div class="post-tag form-group">
+            <a *ngFor="let tag of post.slugTags" [routerLink]="'/blog/posts/tag/' + tag.slug"
+              class="btn btn-light btn-sm mr-2 mb-2">#{{tag.text}}</a>
+          </div>
+          <div class="d-flex flex-row meta">
+            <span class="post-date mr-2"><i class="icon-clock mr-2"></i>{{post.publishDate | date}}</span>
+            <span class="mr-2">
+              <i class="icon-user mr-2"></i>
+              <a class="post-author" [routerLink]="'/blog/posts/author/' + post.authorId" placement="top"
+                ngbTooltip="Posts by {{post.authorName}}">{{post.authorName}}</a>
+            </span>
+            <span [hidden]="!post.views" class="post-views">
+              <i class="icon-eye mr-2"></i>{{post.views}} VIEWS
+            </span>
+          </div>
+          <h4>
+            <a class="post-title" routerLink="{{post.url}}">{{post.title}}</a>
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4 d-block text-center">
+      <a routerLink="/blog/allposts" class="btn btn-outline-primary">View All Posts<i class="icon-chevron-right ml-1"></i></a>
+    </div>
+    <div class="col-sm-4"></div>
+  </div>
+</div>

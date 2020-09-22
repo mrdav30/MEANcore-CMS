@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="p-3">
+    <h3 class="header-inline">Subscribers</h3>
+    <button type="button" class="btn btn-primary float-right" (click)="exportSubscribers()">
+      <i class="icon-cloud-download mr-2"></i>Export
+    </button>
+  </div>
+  <div class="ag-grid-container">
+    <ag-grid-angular class="ag-theme-material" [ngStyle]="gridStyle" [hidden]="!subscribers" [rowHeight]="50"
+      [columnDefs]="subscribersColumnDef" [frameworkComponents]="frameworkComponents" [context]="context"
+      (gridReady)="onGridReady($event)" (firstDataRendered)="onFirstDataRendered()">
+    </ag-grid-angular>
+  </div>
+</div>
