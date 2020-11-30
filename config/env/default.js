@@ -3,14 +3,16 @@ export const app = {
   name: 'meancore-cms',
   description: 'Applications running on mean stack',
   keywords: 'mongodb, express, angular2+, typescript, node.js, mongoose, passport',
-  logo: process.env.APP_LOGO || '',
+  logo: process.env.APP_LOGO || 'assets/images/logo.png',
   appBaseUrl: process.env.APP_BASE_URL || '/',
   apiBaseUrl: process.env.API_BASE_URL || 'api',
-  defaultPage: 'index.html'
+  defaultPage: 'index.html',
+  defaultRoute: process.env.APP_DEFAULT_ROUTE || 'home',
+  metaTitleSuffix: process.env.META_TITLE_SUFFIX || ' | The MEANcore Blog'
 };
-export const sessionSecret = process.env.SESSION_SECRET || 'MEANcore-CMS';
-export const sessionKey = process.env.SESSION_KEY || 'sessionId-CMS';
-export const sessionCollection = process.env.SESSION_COLLECTION || 'sessions-cms';
+export const sessionSecret = process.env.SESSION_SECRET || 'MEANCORE-CMS';
+export const sessionKey = process.env.SESSION_KEY || 'meancore-cms-key';
+export const sessionCollection = process.env.SESSION_COLLECTION || 'meancore-cms-sessions';
 export const illegalUsernames = ['meancorecms', 'meancore-cms'];
 export const cps = {
   // Specify directives as normal.

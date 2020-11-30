@@ -1,0 +1,29 @@
+/*ck editor override*/
+.ck-editor pre {
+  background-color: #7b7b7b;
+  color: #000;
+}
+
+/*end ck editor override*/
+
+/*ag-grid override*/
+
+.center-btn-cell {
+  white-space: normal !important;
+  overflow: visible;
+  text-align: center;
+  padding-top: 5px;
+}
+
+/*end ag-grid overrride*/
+
+/* hljs override */
+
+pre.nohighlight {
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #abb2bf;
+  background: #282c34;
+}
+
+/* end hljs override */
