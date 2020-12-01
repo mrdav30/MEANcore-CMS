@@ -1,0 +1,25 @@
+#!/bin/sh
+export PATH=/usr/local/bin:$PATH
+
+script_dir=$(dirname $0)
+cd $script_dir
+cd ..
+
+echo >&2 "Unbundling development packages for commit".
+
+# Stash unstaged changes
+git stash -q --keep-index
+
+# Revert package
+bckupPkg=./mod.package.json
+curPkg=./package.json
+if test -f "$bckupPkg"; then
+	cp -f $bckupPkg $curPkg 
+
+# Stage updated files
+git add -u
+
+# Re-apply original unstaged changes
+git stash pop -q
+
+fi
