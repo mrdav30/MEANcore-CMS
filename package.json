@@ -15,10 +15,10 @@
   },
   "type": "module",
   "scripts": {
-    "preinstall": "git config core.hooksPath .githooks"
+    "init": "git config core.hooksPath .githooks"
   },
   "dependencies": {
-    "@ckeditor/ckeditor5-angular": "^1.1.2",
+    "@ckeditor/ckeditor5-angular": "^2.0.1",
     "ag-grid-angular": "^22.1.1",
     "ag-grid-community": "^22.1.1",
     "ngx-gravatar": "^8.0.0"

@@ -19,7 +19,6 @@ import { SlugifyPipe } from '@utils';
     selector: 'app-posts-form-selector',
     templateUrl: `./posts-form.component.html`,
     styleUrls: [
-        `../../../assets/ckeditor-custom/ckeditor-styles-override.css`,
         `../../../assets/ckeditor-custom/ckeditor-styles.css`
     ],
     encapsulation: ViewEncapsulation.None // required to style innerHtml

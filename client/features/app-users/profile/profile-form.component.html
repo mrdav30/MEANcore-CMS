@@ -90,13 +90,6 @@
       <div class="col-sm-6"></div>
     </div>
     <div class="form-group row">
-      <label for="about" class="col-sm-2"><strong>About Me</strong></label>
-      <div class="col-sm-10">
-        <ckeditor id="about" name="about" [config]="editorOptions" [editor]="editor" [(ngModel)]="profile.about">
-        </ckeditor>
-      </div>
-    </div>
-    <div class="form-group row">
       <label for="about" class="col-sm-2"><strong>Avatar</strong></label>
       <div class="col-sm-10">
         <p>
@@ -160,6 +153,13 @@
               [(ngModel)]="profile.personalUrl" spellcheck="false" />
           </div>
         </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="about" class="col-sm-2"><strong>About Me</strong></label>
+      <div class="col-sm-10">
+        <ckeditor id="about" name="about" [config]="editorOptions" [editor]="editor" [(ngModel)]="profile.about">
+        </ckeditor>
       </div>
     </div>
     <div class="form-group row">

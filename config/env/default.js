@@ -53,6 +53,12 @@ export const uploads = {
     }
   }
 };
+export const scriptStore = [{
+  // embedly required to render oembed content
+  name: 'embedly',
+  src: 'https://cdn.embedly.com/widgets/platform.js',
+  async: true
+}];
 export const agenda = {
   JOB_TYPES: 'remove-nonsubscribers',
   DEFAULT_JOBS: [{

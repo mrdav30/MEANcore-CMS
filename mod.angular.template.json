@@ -15,6 +15,8 @@
           "options": {
             "aot": true,
             "outputPath": "dist/{{mod}}",
+            "progress": true,
+            "preserveSymlinks": true,
             "index": "projects/{{mod}}/client/index.html",
             "main": "projects/{{mod}}/client/main.ts",
             "polyfills": "projects/{{mod}}/client/polyfills.ts",
@@ -38,6 +40,7 @@
           },
           "configurations": {
             "production": {
+              "progress": false,
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,

@@ -2,3 +2,11 @@
   width: 10em !important;
   height: 10em !important;
 }
+
+#about>.ck-editor {
+  min-height: 240px;
+}
+
+#about>.ck-editor>.ck-editor__main>.ck-editor__editable {
+  max-height: 150px;
+}
