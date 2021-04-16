@@ -1,9 +1,0 @@
-#!/bin/sh
-export PATH=/usr/local/bin:$PATH
-
-script_dir=$(dirname $0)
-cd $script_dir
-
-cd ../../..
-
-npm run bundle:packages
