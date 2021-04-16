@@ -3,7 +3,7 @@ import moment from 'moment';
 import {
   resolve
 } from 'path';
-import fse from 'fs-extra';
+import fs from 'fs';
 import _ from 'lodash';
 import mongoose from 'mongoose';
 const Pages = mongoose.model('Pages');
@@ -83,7 +83,7 @@ export const retrieveSharedData = (req, res) => {
 const refreshPostViews = (config, callback) =>  {
   let runTimeConfig;
   try {
-    runTimeConfig = JSON.parse(fse.readFileSync(resolve('./_content/blog_runtime_config.json')));
+    runTimeConfig = JSON.parse(fs.readFileSync(resolve('./_content/blog_runtime_config.json')));
   } catch (e) {
     runTimeConfig = {};
   }
@@ -131,7 +131,7 @@ const refreshPostViews = (config, callback) =>  {
       },
       (done) => {
         runTimeConfig.VIEWS_LAST_REFRESHED = new Date();
-        fse.writeFileSync(resolve('./_content/blog_runtime_config.json'), JSON.stringify(runTimeConfig));
+        fs.writeFileSync(resolve('./_content/blog_runtime_config.json'), JSON.stringify(runTimeConfig));
         done(null);
       }
     ], (err) => {
