@@ -15,7 +15,9 @@
   },
   "type": "module",
   "scripts": {
-    "init": "node ../../tools/init-core.js"
+    "init": "node ../../tools/init-core.js",
+    "bundle:packages": "node %npm_config_core_prj_root%/tools/bundle-packages.js",
+    "unbundle:packages": "node %npm_config_core_prj_root%/tools/unbundle-packages.js"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-angular": "^2.0.1",
