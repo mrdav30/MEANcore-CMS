@@ -15,7 +15,7 @@
   },
   "type": "module",
   "scripts": {
-    "init": "git config core.hooksPath .githooks"
+    "init": "node ../../tools/init-core.js"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-angular": "^2.0.1",
