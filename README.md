@@ -1,4 +1,4 @@
-[![MEANcore-CMS Logo](https://github.com/mrdav30/MEANcore-CMS/blob/meancore-cms/client/assets/images/logo.png)](https://github.com/mrdav30/MEANcore-CMS)
+[![MEANcore Logo](https://github.com/mrdav30/MEANcore/blob/master/client/assets/images/logo.png) MEANcore-CMS](https://github.com/mrdav30/MEANcore-CMS)
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/MEANcore-CMS/community)
 [![depencies status](https://img.shields.io/david/mrdav30/MEANcore-CMS.svg)](https://david-dm.org/mrdav30/MEANcore-CMS)
