@@ -1,0 +1,68 @@
+<div class="app-footer">
+  <div class="container p-3">
+    <div class="row">
+      <div class="col-sm-4">
+        <hr />
+        <h3>Techievor</h3>
+        <ul class="about-list">
+          <li>
+            <a routerLink="/about">About</a>
+          </li>
+          <li>
+            <a routerLink="/privacy">Privacy Policy</a>
+          </li>
+          <li>
+            <a routerLink="/terms">Terms and Conditions</a>
+          </li>
+          <li>
+            <a routerLink="/contact">Contact</a>
+          </li>
+          <li>
+            <a routerLink="/subscribe">Subscribe</a>
+          </li>
+          <li class="pt-3">
+            Find us on:
+            <a class="ml-2 mr-3" href="https://www.facebook.com/techievor" target="_blank" placement="bottom"
+              ngbTooltip="Find us on Facebook!">
+              <i class="icon-facebook-f"></i>
+            </a>
+            <a class="mr-2" href="https://twitter.com/techievor" target="_blank" placement="bottom"
+              ngbTooltip="Find us on Twitter!">
+              <i class="icon-twitter"></i>
+            </a>
+          </li>
+          <li>
+            Support us on <a href="https://www.patreon.com/techievor">Patreon</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-sm-4" [hidden]="!showBlogFooter">
+        <hr />
+        <h3>Months</h3>
+        <ul class="month-list">
+          <li *ngFor="let year of years; let $index=index" class="year"
+            (click)="expandedIndex = $index === expandedIndex ? -1 : $index">
+            {{year.value}}
+            <ul *ngIf="$index === expandedIndex" [id]="year.value">
+              <li *ngFor="let month of year.months">
+                <a [routerLink]="'/blog/posts/date/' + year.value + '/' + month.value">{{month.name}}</a>
+                ({{month.postCount}})
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="col-sm-4" [hidden]="!showBlogFooter">
+        <hr />
+        <h3>Tags</h3>
+        <ul class="tag-list">
+          <li *ngFor="let tag of tags" class="tag comma mr-2">
+            <a [routerLink]="'/blog/posts/tag/' + tag.slug">#{{tag.text}}</a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
