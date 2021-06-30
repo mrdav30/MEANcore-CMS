@@ -26,7 +26,7 @@ export const cps = {
       'https://disqus.com/next/',
       'https://c.disquscdn.com/next/embed/'
     ],
-    styleSrc: ['https://c.disquscdn.com/next/embed/styles/', ],
+    styleSrc: ['https://c.disquscdn.com/next/embed/styles/'],
     frameSrc: ['https://disqus.com'],
     imgSrc: [
       'https://referrer.disqus.com/juggler/',
