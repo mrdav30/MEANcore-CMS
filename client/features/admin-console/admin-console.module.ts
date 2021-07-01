@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { UtilsModule } from '@utils';
-import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AdminConsoleComponent } from './admin-console.component';
 
@@ -19,7 +19,7 @@ import { AdminSubscribersModule } from './subscribers/subscribers.module';
         FormsModule,
         RouterModule,
         UtilsModule,
-        NgbTabsetModule,
+        NgbNavModule,
         AdminPagesModule,
         AdminPostsModule,
         AdminRedirectsModule,

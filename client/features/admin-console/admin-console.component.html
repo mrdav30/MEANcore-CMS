@@ -1,27 +1,31 @@
 <div class="container p-3">
 
-  <ngb-tabset>
-    <ngb-tab title="Posts">
-      <ng-template ngbTabContent>
+  <ul ngbNav #nav="ngbNav">
+    <li ngbNavItem>
+      <a ngbNavLink>Posts</a>
+      <ng-template ngbNavContent>
         <app-posts-list-selector></app-posts-list-selector>
       </ng-template>
-    </ngb-tab>
-    <ngb-tab title="Pages">
-      <ng-template ngbTabContent>
+    </li>
+    <li ngbNavItem>
+      <a ngbNavLink>Pages</a>
+      <ng-template ngbNavContent>
         <app-pages-list-selector></app-pages-list-selector>
       </ng-template>
-    </ngb-tab>
-    <ngb-tab title="Redirects">
-      <ng-template ngbTabContent>
+    </li>
+    <li ngbNavItem>
+      <a ngbNavLink>Redirects</a>
+      <ng-template ngbNavContent>
         <app-redirects-list-selector></app-redirects-list-selector>
       </ng-template>
-    </ngb-tab>
-    <ngb-tab title="Subscribers">
-      <ng-template ngbTabContent>
+    </li>
+    <li ngbNavItem>
+      <a ngbNavLink>Subscribers</a>
+      <ng-template ngbNavContent>
         <app-subscribers-list-selector></app-subscribers-list-selector>
       </ng-template>
-    </ngb-tab>
-  </ngb-tabset>
+    </li>
+  </ul>
 
 
 </div>

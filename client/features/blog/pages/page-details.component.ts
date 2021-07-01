@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { forEach } from 'lodash';
-import { highlightBlock } from 'highlight.js';
+import hljs from 'highlight.js';
 
 import { environment } from '@env';
 
@@ -75,7 +75,7 @@ export class PageDetailsComponent implements OnInit, AfterViewChecked {
     ngAfterViewChecked(): void {
         if (this.domLoaded && !this.domFormatted) {
             forEach(document.querySelectorAll('pre'), (block) => {
-                highlightBlock(block);
+                hljs.highlightElement(block);
             });
 
             forEach(document.querySelectorAll('oembed[url]'), (element) => {
