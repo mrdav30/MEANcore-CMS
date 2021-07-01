@@ -1,26 +1,29 @@
 {
     "{{mod}}": {
-      "root": "",
-      "sourceRoot": "projects/{{mod}}/client",
       "projectType": "application",
-      "prefix": "app",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
         }
       },
+      "root": "",
+      "sourceRoot": "projects/{{mod}}/client",
+      "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "aot": true,
             "outputPath": "dist/{{mod}}",
-            "progress": true,
-            "preserveSymlinks": true,
             "index": "projects/{{mod}}/client/index.html",
             "main": "projects/{{mod}}/client/main.ts",
             "polyfills": "projects/{{mod}}/client/polyfills.ts",
             "tsConfig": "projects/{{mod}}/client/tsconfig.app.json",
+            "aot": true,
+            "progress": true,
+            "preserveSymlinks": true,
             "assets": [
               "projects/{{mod}}/client/favicon.ico",
               "projects/{{mod}}/client/robots.txt",
@@ -60,7 +63,16 @@
                   "maximumWarning": "6kb"
                 }
               ]
-            }
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            },
+            "defaultConfiguration": "production"
           }
         },
         "serve": {
@@ -72,6 +84,9 @@
           "configurations": {
             "production": {
               "browserTarget": "{{mod}}:build:production"
+            },
+            "development": {
+              "browserTarget": "core:build:development"
             },
             "test": {
               "browserTarget": "ng-configuration:build:test"

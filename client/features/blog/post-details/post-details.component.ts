@@ -101,7 +101,8 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
         }
     }
 
-    onNavigate(url: string) {
+    onNavigate(e: Event) {
+        const url = (e.target as HTMLLinkElement).href ;
         window.open(url, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
     }
 }

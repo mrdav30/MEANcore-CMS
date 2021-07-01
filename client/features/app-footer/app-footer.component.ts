@@ -18,7 +18,7 @@ import {
 })
 
 export class AppFooterComponent implements OnInit {
-  public expandedIndex: -1;
+  public expandedIndex: number;
   public years: any;
   public tags: any;
   public showBlogFooter = false;
@@ -29,6 +29,7 @@ export class AppFooterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.expandedIndex = -1;
     this.appFooterService.blogFooter$.subscribe((vm: any) => {
       this.years = vm.years;
       this.tags = vm.tags;

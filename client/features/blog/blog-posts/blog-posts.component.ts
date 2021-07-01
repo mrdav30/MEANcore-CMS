@@ -44,6 +44,11 @@ export class BlogPostsComponent implements OnInit {
             });
     }
 
+    public changePage(pageNumber: number): void {
+        this.pageNumber = pageNumber;
+        this.retrievePosts();
+    }
+
     private retrievePosts(): void {
         if (!this.postParams) {
             // default, load all published blogs
@@ -98,10 +103,5 @@ export class BlogPostsComponent implements OnInit {
         } else {
             this.router.navigate(['/blog']);
         }
-    }
-
-    private changePage(pageNumber: number): void {
-        this.pageNumber = pageNumber;
-        this.retrievePosts();
     }
 }
