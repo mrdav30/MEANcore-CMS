@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export class Post {
-    public _id: string;
+    public postId: string;
     public title: string;
     public slug: string;
     public summary: string;

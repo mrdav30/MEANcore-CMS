@@ -9,23 +9,23 @@
           <h5>{{vm.author.name}}</h5>
           <div [innerHtml]="vm.author.about"></div>
           <div class="author-social-links d-flex flex-row">
-            <a [hidden]="!vm.author.twitterUrl" class="mr-2" [href]="vm.author.twitterUrl" target="_blank"
+            <a [hidden]="!vm.author.twitterUrl" class="me-2" [href]="vm.author.twitterUrl" target="_blank"
               placement="top" ngbTooltip="Find me on Twitter">
               <i class="icon-twitter"></i>
             </a>
-            <a [hidden]="!vm.author.facebookUrl" class="mr-2" [href]="vm.author.facebookUrl" target="_blank"
+            <a [hidden]="!vm.author.facebookUrl" class="me-2" [href]="vm.author.facebookUrl" target="_blank"
               placement="top" ngbTooltip="Find me on Facebook">
               <i class="icon-facebook-f"></i>
             </a>
-            <a [hidden]="!vm.author.githubUrl" class="mr-2" [href]="vm.author.githubUrl" target="_blank" placement="top"
+            <a [hidden]="!vm.author.githubUrl" class="me-2" [href]="vm.author.githubUrl" target="_blank" placement="top"
               ngbTooltip="Find me on Github">
               <i class="icon-github"></i>
             </a>
-            <a [hidden]="!vm.author.linkedinUrl" class="mr-2" [href]="vm.author.linkedinUrl" target="_blank"
+            <a [hidden]="!vm.author.linkedinUrl" class="me-2" [href]="vm.author.linkedinUrl" target="_blank"
               placement="top" ngbTooltip="Find me on LinkedIn">
               <i class="icon-linkedin-in"></i>
             </a>
-            <a [hidden]="!vm.author.stackOverflowUrl" class="mr-2" [href]="vm.author.stackOverflowUrl" target="_blank"
+            <a [hidden]="!vm.author.stackOverflowUrl" class="me-2" [href]="vm.author.stackOverflowUrl" target="_blank"
               placement="top" ngbTooltip="Find me on StackOverflow">
               <i class="icon-stack-overflow"></i>
             </a>
@@ -37,19 +37,19 @@
         </div>
         <div class="col-sm-4 author-personal-info">
           <div [hidden]="!vm.author.workplace">
-            <label class="mr-2"><strong>Workplace -</strong></label>
+            <label class="me-2"><strong>Workplace -</strong></label>
             <span>{{vm.author.workplace}}</span>
           </div>
           <div [hidden]="!vm.author.location">
-            <label class="mr-2"><strong>Location -</strong></label>
+            <label class="me-2"><strong>Location -</strong></label>
             <span>{{vm.author.location}}</span>
           </div>
           <div [hidden]="!vm.author.education">
-            <label class="mr-2"><strong>Education -</strong></label>
+            <label class="me-2"><strong>Education -</strong></label>
             <span>{{vm.author.education}}</span>
           </div>
           <div [hidden]="!vm.author.created">
-            <label class="mr-2"><strong>Joined -</strong></label>
+            <label class="me-2"><strong>Joined -</strong></label>
             <span>{{vm.author.created | date}}</span>
           </div>
         </div>
@@ -75,20 +75,20 @@
             <a class="post-title" routerLink="{{post.url}}">{{post.title}}</a>
           </h4>
           <div class="d-flex flex-row meta">
-            <span class="post-date mr-2"><i class="icon-clock mr-2"></i>{{post.publishDate | date}}</span>
-            <span class="mr-2">
-              <i class="icon-user mr-2"></i>
+            <span class="post-date me-2"><i class="icon-clock me-2"></i>{{post.publishDate | date}}</span>
+            <span class="me-2">
+              <i class="icon-user me-2"></i>
               <a class="post-author" [routerLink]="'/blog/posts/author/' + post.authorId" placement="top"
                 ngbTooltip="Posts by {{post.authorName}}">{{post.authorName}}</a>
             </span>
             <span [hidden]="!post.views" class="post-views">
-              <i class="icon-eye mr-2"></i>{{post.views}} VIEWS</span>
+              <i class="icon-eye me-2"></i>{{post.views}} VIEWS</span>
           </div>
           <hr />
           <div class="post-middle">
             <a *ngFor="let tag of post.slugTags" [routerLink]="'/blog/posts/tag/' + tag.slug"
-              class="btn btn-light btn-sm mr-2 mb-2">#{{tag.text}}</a>
-            <div class="float-right">
+              class="btn btn-light btn-sm me-2 mb-2">#{{tag.text}}</a>
+            <div class="float-end">
               <a routerLink="{{post.url}}" class="view-btn btn btn-light btn-outline-dark" placement="top"
                 ngbTooltip="Read more">
                 <i class="icon-chevron-right"></i>

@@ -6,7 +6,7 @@
       <p>A blogging platform built with the MEAN Stack.</p>
     </div>
     <div class="card-footer">
-      <a routerLink="/subscribe" class="btn btn-secondary mr-2">Get started</a>
+      <a routerLink="/subscribe" class="btn btn-secondary me-2">Get started</a>
       <a routerLink="/about" class="btn btn-secondary">Learn more</a>
     </div>
   </div>
@@ -34,17 +34,17 @@
         <div class="card-body post-body">
           <div class="post-tag form-group">
             <a *ngFor="let tag of post.slugTags" [routerLink]="'/blog/posts/tag/' + tag.slug"
-              class="btn btn-light btn-sm mr-2 mb-2">#{{tag.text}}</a>
+              class="btn btn-light btn-sm me-2 mb-2">#{{tag.text}}</a>
           </div>
           <div class="d-flex flex-row meta">
-            <span class="post-date mr-2"><i class="icon-clock mr-2"></i>{{post.publishDate | date}}</span>
-            <span class="mr-2">
-              <i class="icon-user mr-2"></i>
+            <span class="post-date me-2"><i class="icon-clock me-2"></i>{{post.publishDate | date}}</span>
+            <span class="me-2">
+              <i class="icon-user me-2"></i>
               <a class="post-author" [routerLink]="'/blog/posts/author/' + post.authorId" placement="top"
                 ngbTooltip="Posts by {{post.authorName}}">{{post.authorName}}</a>
             </span>
             <span [hidden]="!post.views" class="post-views">
-              <i class="icon-eye mr-2"></i>{{post.views}} VIEWS
+              <i class="icon-eye me-2"></i>{{post.views}} VIEWS
             </span>
           </div>
           <h4>
@@ -58,7 +58,7 @@
   <div class="row">
     <div class="col-sm-4"></div>
     <div class="col-sm-4 d-block text-center">
-      <a routerLink="/blog/allposts" class="btn btn-outline-primary">View All Posts<i class="icon-chevron-right ml-1"></i></a>
+      <a routerLink="/blog/allposts" class="btn btn-outline-primary">View All Posts<i class="icon-chevron-right ms-1"></i></a>
     </div>
     <div class="col-sm-4"></div>
   </div>

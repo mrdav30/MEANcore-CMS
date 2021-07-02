@@ -5,7 +5,7 @@
       <form name="unsubscribeForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
         <div class="card">
           <div class="card-body">
-            <h4 class="form-group"><i class="icon-sad-cry mr-2"></i>Unsubscribe</h4>
+            <h4 class="form-group"><i class="icon-sad-cry me-2"></i>Unsubscribe</h4>
             <p>We're sorry to see you go!</p>
             <div class="form-group">
               <div>
@@ -16,17 +16,17 @@
               </div>
               <div *ngIf="f.submitted && email.invalid" class="alert alert-danger">
                 <div *ngIf="email.errors.required">
-                  <i class="icon-exclamation mr-2"></i>Email is required
+                  <i class="icon-exclamation me-2"></i>Email is required
                 </div>
                 <div *ngIf="email.errors.pattern">
-                  <i class="icon-exclamation mr-2"></i>Email must be a valid email address
+                  <i class="icon-exclamation me-2"></i>Email must be a valid email address
                 </div>
               </div>
             </div>
           </div>
           <div class="card-footer">
             <a routerLink="/blog" class="btn btn-primary">Nevermind</a>
-            <button type="submit" class="btn btn-danger float-right">Unsubscribe</button>
+            <button type="submit" class="btn btn-danger float-end">Unsubscribe</button>
           </div>
         </div>
       </form>

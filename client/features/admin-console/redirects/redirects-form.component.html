@@ -8,7 +8,7 @@
         <input type="text" id="from" name="from" class="form-control" [(ngModel)]="redirect.from" #from="ngModel"
           required />
         <div *ngIf="f.submitted && from.invalid" class="alert alert-danger">
-          <div *ngIf="from.errors.required"><i class="icon-exclamation mr-2n"></i>From URL is required</div>
+          <div *ngIf="from.errors.required"><i class="icon-exclamation me-2n"></i>From URL is required</div>
         </div>
       </div>
     </div>
@@ -17,7 +17,7 @@
       <div class="col-sm-9">
         <input type="text" id="to" name="from" class="form-control" [(ngModel)]="redirect.to" #to="ngModel" required />
         <div *ngIf="f.submitted && to.invalid" class="alert alert-danger">
-          <div *ngIf="to.errors.required"><i class="icon-exclamation mr-2"></i>To URL is required</div>
+          <div *ngIf="to.errors.required"><i class="icon-exclamation me-2"></i>To URL is required</div>
         </div>
       </div>
     </div>

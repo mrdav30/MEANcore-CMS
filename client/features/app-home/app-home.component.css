@@ -1,7 +1,7 @@
 .post-title,
 .post-author,
 .carousel-title {
-  color: #20b2aa
+  color: #b70e0c
 }
 
 .post-title:hover,
@@ -48,14 +48,14 @@
 }
 
 .btn-view-all {
-  color: #20b2aa;
-  border-color: #20b2aa;
+  color: #b70e0c;
+  border-color: #b70e0c;
 }
 
 .btn-view-all:hover {
   color: #fff;
-  background-color: #20b2aa;
-  border-color: #20b2aa;
+  background-color: #b70e0c;
+  border-color: #b70e0c;
 }
 
 .post .view-btn-container .view-btn {

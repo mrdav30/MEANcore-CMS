@@ -8,7 +8,7 @@
                 <input type="text" id="title" name="title" class="form-control" [(ngModel)]="page.title" #title="ngModel"
                     required />
                 <div *ngIf="f.submitted && title.invalid" class="alert alert-danger">
-                    <div *ngIf="title.errors.required"><i class="icon-exclamation mr-2"></i>Title is required</div>
+                    <div *ngIf="title.errors.required"><i class="icon-exclamation me-2"></i>Title is required</div>
                 </div>
             </div>
         </div>
@@ -39,7 +39,7 @@
                         <input type="checkbox" [(ngModel)]="page.publish" id="publish" name="publish">
                         <div class="slider round"></div>
                     </label>
-                    <span class="checkbox-label ml-2">Publish</span>
+                    <span class="checkbox-label ms-2">Publish</span>
                 </div>
             </div>
         </div>
