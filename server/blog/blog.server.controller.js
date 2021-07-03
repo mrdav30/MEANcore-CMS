@@ -88,6 +88,7 @@ const refreshPostViews = (config, callback) =>  {
     runTimeConfig = {};
   }
 
+
   const lastRefreshDate = !runTimeConfig.VIEWS_LAST_REFRESHED ? new Date() : new Date(runTimeConfig.VIEWS_LAST_REFRESHED);
   const ONE_HOUR = 60 * 60 * 1000; /* ms */
   // Check if one hour has passed since last refresh
@@ -95,7 +96,7 @@ const refreshPostViews = (config, callback) =>  {
     async.waterfall([
       (done) => {
         // retrieve google analytics for posts
-        config.services.googleAnalytics.getData(config, '2005-01-01', 'today', 'ga:pagePath', 'ga:pageviews', 'ga:pagePath=@/blog/post/', (err, analytics) => {
+        config.services.getData(config, '2005-01-01', 'today', 'ga:pagePath', 'ga:pageviews', 'ga:pagePath=@/blog/post/', (err, analytics) => {
           if (err) {
             return done(err);
           }
@@ -143,6 +144,12 @@ const refreshPostViews = (config, callback) =>  {
       callback(null);
     })
   } else {
+
+    if(runTimeConfig && Object.keys(runTimeConfig).length === 0 && runTimeConfig.constructor === Object){
+      runTimeConfig.VIEWS_LAST_REFRESHED = new Date();
+      fs.writeFileSync(resolve('./_content/blog_runtime_config.json'), JSON.stringify(runTimeConfig));
+    }
+
     callback(null);
   }
 }

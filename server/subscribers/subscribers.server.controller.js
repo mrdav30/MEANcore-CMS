@@ -46,7 +46,7 @@ export const sendConfirmation = (req, res) => {
         }
       };
 
-      config.services.emailService.sendEmail(req, res, mailOptions, (err) => {
+      config.services.sendEmail(req, res, mailOptions, (err) => {
         if (err) {
           return done(err);
         }
