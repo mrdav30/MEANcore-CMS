@@ -17,17 +17,33 @@ export const illegalUsernames = ['meancorecms', 'meancore-cms'];
 export const csp = {
   // Specify directives as normal.
   directives: {
-    connectSrc: [
-      'https://links.services.disqus.com/api/'
-    ],
-    scriptSrc: [
-      'https://cdn.embedly.com/',
-      'https://meancore-cms.disqus.com/',
+    defaultSrc: [
       'https://disqus.com/next/',
       'https://c.disquscdn.com/next/embed/'
     ],
-    styleSrc: ['https://c.disquscdn.com/next/embed/styles/'],
-    frameSrc: ['https://disqus.com'],
+    connectSrc: [
+      'http://api-cdn.embed.ly/',
+      'https://links.services.disqus.com/api/'
+    ],
+    scriptSrc: [
+      'http://cdn.embedly.com/js/',
+      'https://cdn.embedly.com/widgets/',
+      'https://techievor.disqus.com/',
+      'https://disqus.com/next/',
+      'https://c.disquscdn.com/next/embed/'
+    ],
+    styleSrc: [
+      'http://cdn.embedly.com/css/',
+      'https://c.disquscdn.com/next/embed/styles/'
+    ],
+    frameSrc: [
+      'https://disqus.com',
+      'platform.twitter.com',
+      'www.google.com',
+      '*.twitter.com',
+      '*.youtube.com',
+      'player.vimeo.com'
+    ],
     imgSrc: [
       'https://referrer.disqus.com/juggler/',
       'https://c.disquscdn.com/next/embed/assets/img/',
