@@ -1,11 +1,11 @@
-<div class="container p-3 form-group">
-  <div *ngIf="vm.author" class="card form-group">
+<div class="container p-3 mt-2">
+  <div *ngIf="vm.author" class="card mt-2">
     <div class="card-body">
       <div class="row">
         <div class="col-sm-2 text-center">
           <img ngxGravatar [(email)]="vm.author.email" [(src)]="vm.author.avatar" class="bio-avatar">
         </div>
-        <div class="col-sm-6 form-group">
+        <div class="col-sm-6 mt-2">
           <h5>{{vm.author.name}}</h5>
           <div [innerHtml]="vm.author.about"></div>
           <div class="author-social-links d-flex flex-row">
@@ -56,7 +56,7 @@
       </div>
     </div>
   </div>
-  <div *ngIf="vm.pageHeader" class="card form-group">
+  <div *ngIf="vm.pageHeader" class="card mt-2">
     <div class="view-title card-body">
       {{vm.pageHeader}}
     </div>

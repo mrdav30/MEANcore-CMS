@@ -19,7 +19,7 @@ import {
   environment
 } from '@env';
 
-import * as CustomEditor from '../../../assets/ckeditor-custom/ckeditor';
+import '../../../assets/ckeditor-custom/ckeditor';
 import {
   merge
 } from 'lodash';
@@ -35,10 +35,6 @@ import {
   moduleId: module.id,
   selector: 'app-profile-form-selector',
   templateUrl: `./profile-form.component.html`,
-  styleUrls: [
-    `./profile-form.component.css`,
-    `../../../assets/ckeditor-custom/ckeditor-styles.css`
-  ],
   encapsulation: ViewEncapsulation.None // required to style innerHtml
 })
 
@@ -49,7 +45,8 @@ export class ProfileFormComponent implements OnInit {
   @ViewChild('password', {
     static: false
   }) password: NgModel;
-  public editor = CustomEditor;
+  // eslint-disable-next-line @typescript-eslint/dot-notation
+  public editor = window['ClassicEditor'];
   public editorOptions: any;
   public profile: Profile;
   public possibleUsername: string;

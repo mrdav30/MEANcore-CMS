@@ -1,4 +1,4 @@
-<div class="container p-3 form-group">
+<div class="container p-3 mt-2">
 
   <div class="card">
     <div class="card-body">
@@ -8,7 +8,7 @@
 
   <div class="row post-list">
     <div *ngFor="let post of vm.posts" class="col-sm-6 p-4">
-      <div class="card post mx-auto w-100">
+      <div class="card post mx-auto">
         <div class="card-img-top" (appDeferLoad)="post.showImage=true">
           <a class="card-link" routerLink="{{post.url}}">
             <img *ngIf="post.showImage" width="550" height="300" class="post-image" [src]="post.thumbnailUrl">
@@ -21,7 +21,7 @@
           </a>
         </div>
         <div class="card-body post-body">
-          <div class="post-tag form-group">
+          <div class="post-tag mt-2">
             <a *ngFor="let tag of post.slugTags" [routerLink]="'/blog/posts/tag/' + tag.slug"
               class="btn btn-light btn-sm me-2 mb-2">#{{tag.text}}</a>
           </div>

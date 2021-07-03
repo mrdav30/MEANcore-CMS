@@ -10,7 +10,7 @@ import {
 import {
   Title
 } from '@angular/platform-browser';
-import * as CustomEditor from '../../../assets/ckeditor-custom/ckeditor';
+import '../../../assets/ckeditor-custom/ckeditor';
 
 import {
   merge
@@ -32,24 +32,16 @@ import {
   SlugifyPipe
 } from '@utils';
 
-class MyPlugin extends Plugin {
-  init() {
-    return;
-  }
-}
-
 @Component({
   moduleId: module.id,
   selector: 'app-posts-form-selector',
   templateUrl: `./posts-form.component.html`,
-  styleUrls: [
-    `../../../assets/ckeditor-custom/ckeditor-styles.css`
-  ],
   encapsulation: ViewEncapsulation.None // required to style innerHtml
 })
 
 export class PostsFormComponent implements OnInit {
-  public editor = CustomEditor;
+  // eslint-disable-next-line @typescript-eslint/dot-notation
+  public editor = window['ClassicEditor'];
   public editorOptions: any;
   public postID: string;
   public post: Post;
@@ -79,6 +71,8 @@ export class PostsFormComponent implements OnInit {
           'highlight',
           'fontColor',
           'fontSize',
+          'specialCharacters',
+          'horizontalLine',
           'removeFormat',
           '|',
           'alignment',
@@ -115,7 +109,9 @@ export class PostsFormComponent implements OnInit {
         contentToolbar: [
           'tableColumn',
           'tableRow',
-          'mergeTableCells'
+          'mergeTableCells',
+          'tableCellProperties',
+          'tableProperties'
         ]
       },
       simpleUpload: {

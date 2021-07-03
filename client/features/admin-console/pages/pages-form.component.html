@@ -2,7 +2,7 @@
     <h1>Page Details</h1>
     <hr />
     <form name="pageForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-        <div class="form-group row">
+        <div class="mt-2 row">
             <label for="title" class="col-sm-2"><strong>Title</strong></label>
             <div class="col-sm-10">
                 <input type="text" id="title" name="title" class="form-control" [(ngModel)]="page.title" #title="ngModel"
@@ -12,26 +12,26 @@
                 </div>
             </div>
         </div>
-        <div class="form-group row">
+        <div class="mt-2 row">
             <label for="slug" class="col-sm-2"><strong>Slug</strong></label>
             <div class="col-sm-10">
                 <input type="text" id="slug" name="slug" class="form-control" [(ngModel)]="page.slug" />
                 <button type="button" class="btn btn-link" (click)="slugifyTitle()">Generate from title</button>
             </div>
         </div>
-        <div class="form-group row">
+        <div class="mt-2 row">
             <label for="description" class="col-sm-2"><strong>Description</strong></label>
             <div class="col-sm-10">
                 <textarea id="description" name="description" class="form-control" rows="4" [(ngModel)]="page.description"></textarea>
             </div>
         </div>
-        <div class="form-group row">
+        <div class="mt-2 row">
             <label for="body" class="col-sm-2"><strong>Body</strong></label>
             <div class="col-sm-10">
                 <ckeditor id="body" name="body" [config]="editorOptions" [editor]="editor" [(ngModel)]="page.body"></ckeditor>
             </div>
         </div>
-        <div class="form-group row">
+        <div class="mt-2 row">
             <div class="col-sm-2"></div>
             <div class="col-sm-10">
                 <div class="checkbox">
@@ -44,7 +44,7 @@
             </div>
         </div>
         <hr />
-        <div class="form-group">
+        <div class="mt-2">
             <div *ngIf="f.submitted && f.form.invalid" class="alert alert-danger">
                 Please correct any errors trying to save.
             </div>

@@ -5,9 +5,9 @@
       <form name="unsubscribeForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
         <div class="card">
           <div class="card-body">
-            <h4 class="form-group"><i class="icon-sad-cry me-2"></i>Unsubscribe</h4>
+            <h4 class="mt-2"><i class="icon-sad-cry me-2"></i>Unsubscribe</h4>
             <p>We're sorry to see you go!</p>
-            <div class="form-group">
+            <div class="mt-2">
               <div>
                 <label for="subscriberEmail">Drop your email here</label>
                 <input id="subscriberEmail" name="subscriberEmail" type="email" [(ngModel)]="subscriberEmail"

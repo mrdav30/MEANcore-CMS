@@ -1,5 +1,5 @@
 <div class="container p-3">
-  <div class="card form-group">
+  <div class="card mt-2">
     <div class="card-body">
       <h1 class="post-title card-title">{{vm.post.title}}</h1>
       <div class="row">
@@ -49,11 +49,11 @@
     </div>
   </div>
 
-  <div class="form-group">
-    <div class="form-group text-center">
+  <div class="mt-2">
+    <div class="mt-2 text-center">
       <img width="700" height="400" class="post-details-image" [src]="vm.post.thumbnailUrl">
     </div>
-    <div [hidden]="!vm.post.summary" class="post-summary">
+    <div [hidden]="!vm.post.summary" class="post-summary mt-2">
       <strong>Summary : </strong>{{vm.post.summary}}
     </div>
     <hr />
@@ -65,8 +65,8 @@
   </div>
 
   <div *ngIf="vm" class="post-footer">
-    <div class="form-group">
-      <div class="card form-group">
+    <div class="mt-2">
+      <div class="card mt-2">
         <div class="card-body">
           <div class="row">
             <div class="col-sm-2 text-center">
@@ -128,12 +128,12 @@
           </div>
         </div>
       </div>
-      <div [hidden]="vm.post.slugTags && !vm.post.slugTags.length" class="post-tags form-group">
+      <div [hidden]="vm.post.slugTags && !vm.post.slugTags.length" class="post-tags mt-2">
         <strong class="me-2">Tags :</strong>
         <a *ngFor="let tag of vm.post.slugTags" [routerLink]="'/blog/posts/tag/' + tag.slug"
           class="comma me-2">#{{tag.text}}</a>
       </div>
-      <div class="social-share-buttons form-group text-center">
+      <div class="social-share-buttons mt-2 text-center">
         <div class="social-icons spinned">
           <a class="item facebook" [href]="'http://facebook.com/sharer.php?u=' + vm.post.perma_link"
             (click)="onNavigate($event);$event.preventDefault()" placement="bottom"

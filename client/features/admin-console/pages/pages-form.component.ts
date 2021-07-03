@@ -10,7 +10,7 @@ import {
 import {
   Title
 } from '@angular/platform-browser';
-import * as CustomEditor from '../../../assets/ckeditor-custom/ckeditor';
+import '../../../assets/ckeditor-custom/ckeditor';
 import {
   merge
 } from 'lodash';
@@ -34,14 +34,12 @@ import {
   moduleId: module.id,
   selector: 'app-pages-form-selector',
   templateUrl: `./pages-form.component.html`,
-  styleUrls: [
-    `../../../assets/ckeditor-custom/ckeditor-styles.css`
-  ],
   encapsulation: ViewEncapsulation.None // required to style innerHtml
 })
 
 export class PagesFormComponent implements OnInit {
-  public editor = CustomEditor;
+  // eslint-disable-next-line @typescript-eslint/dot-notation
+  public editor = window['ClassicEditor'];
   public editorOptions: any;
   public pageID: string;
   public page: Page;
@@ -69,6 +67,8 @@ export class PagesFormComponent implements OnInit {
           'highlight',
           'fontColor',
           'fontSize',
+          'specialCharacters',
+          'horizontalLine',
           'removeFormat',
           '|',
           'alignment',
@@ -104,7 +104,9 @@ export class PagesFormComponent implements OnInit {
         contentToolbar: [
           'tableColumn',
           'tableRow',
-          'mergeTableCells'
+          'mergeTableCells',
+          'tableCellProperties',
+          'tableProperties'
         ]
       },
       simpleUpload: {

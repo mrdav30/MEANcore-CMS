@@ -2,7 +2,7 @@
   <h3>Profile Details</h3>
   <hr />
   <form name="profileForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-    <div class="form-group row">
+    <div class="mt-2 row">
       <label for="firstName" class="col-sm-2"><strong>First Name</strong></label>
       <div class="col-sm-4">
         <input type="text" id="firstName" name="firstName" class="form-control" [(ngModel)]="profile.firstName"
@@ -10,7 +10,7 @@
       </div>
       <div class="col-sm-6"></div>
     </div>
-    <div class="form-group row">
+    <div class="mt-2 row">
       <label for="lastName" class="col-sm-2"><strong>Last Name</strong></label>
       <div class="col-sm-4">
         <input type="text" id="lastName" name="lastName" class="form-control" [(ngModel)]="profile.lastName"
@@ -18,7 +18,7 @@
       </div>
       <div class="col-sm-6"></div>
     </div>
-    <div class="form-group row">
+    <div class="mt-2 row">
       <label for="username" class="col-sm-2"><strong>Username</strong></label>
       <div class="col-sm-4">
         <input type="text" id="username" name="username" class="form-control" [(ngModel)]="profile.username"
@@ -33,7 +33,7 @@
       </div>
       <div class="col-sm-6"></div>
     </div>
-    <div class="form-group row">
+    <div class="mt-2 row">
       <label for="email" class="col-sm-2"><strong>Email</strong></label>
       <div class="col-sm-4">
         <input type="email" id="email" name="email" class="form-control" [(ngModel)]="profile.email" #email="ngModel"
@@ -47,7 +47,7 @@
       </div>
       <div class="col-sm-6"></div>
     </div>
-    <div class="form-group row">
+    <div class="mt-2 row">
       <label for="password" class="col-sm-2"><strong>Password</strong></label>
       <div class="col-sm-4">
         <div>
@@ -65,7 +65,7 @@
       </div>
       <div class="col-sm-6"></div>
     </div>
-    <div class="form-group row">
+    <div class="mt-2 row">
       <label for="workplace" class="col-sm-2"><strong>Workplace</strong></label>
       <div class="col-sm-4">
         <input type="text" id="workplace" name="workplace" class="form-control" [(ngModel)]="profile.workplace"
@@ -73,7 +73,7 @@
       </div>
       <div class="col-sm-6"></div>
     </div>
-    <div class="form-group row">
+    <div class="mt-2 row">
       <label for="location" class="col-sm-2"><strong>Location</strong></label>
       <div class="col-sm-4">
         <input type="text" id="location" name="location" class="form-control" [(ngModel)]="profile.location"
@@ -81,7 +81,7 @@
       </div>
       <div class="col-sm-6"></div>
     </div>
-    <div class="form-group row">
+    <div class="mt-2 row">
       <label for="education" class="col-sm-2"><strong>Education</strong></label>
       <div class="col-sm-4">
         <input type="text" id="education" name="education" class="form-control" [(ngModel)]="profile.education"
@@ -89,7 +89,7 @@
       </div>
       <div class="col-sm-6"></div>
     </div>
-    <div class="form-group row">
+    <div class="mt-2 row">
       <label for="about" class="col-sm-2"><strong>Avatar</strong></label>
       <div class="col-sm-10">
         <p>
@@ -98,17 +98,17 @@
         </p>
       </div>
     </div>
-    <div class="form-group row">
+    <div class="mt-2 row">
       <div class="col-sm-2"></div>
       <div class="col-sm-4">
         <app-image-upload [currentUrl]="profile.avatarUrl" [uploadType]="'profile'" [imageWidth]="300"
           [imageHeight]="300" (urlChange)="profile.avatarUrl=$event"></app-image-upload>
       </div>
       <div class="col-sm-6">
-        <img ngxGravatar [email]="profile.email" src="profile.avatarUrl" class="bio-avatar">
+        <img ngxGravatar [email]="profile.email" [src]="profile.avatarUrl" class="bio-avatar">
       </div>
     </div>
-    <div class="form-group row">
+    <div class="mt-2 row">
       <label for="about" class="col-sm-2"><strong>Social Links</strong></label>
       <div class="col-sm-10">
         <div class="row p-1">
@@ -155,22 +155,22 @@
         </div>
       </div>
     </div>
-    <div class="form-group row">
+    <div class="mt-2 row">
       <label for="about" class="col-sm-2"><strong>About Me</strong></label>
       <div class="col-sm-10">
         <ckeditor id="about" name="about" [config]="editorOptions" [editor]="editor" [(ngModel)]="profile.about">
         </ckeditor>
       </div>
     </div>
-    <div class="form-group row">
+    <div class="mt-2 row">
       <label for="created" class="col-sm-2"><strong>Joined</strong></label>
       <div class="col-sm-10">
         <span id="created" name="created">{{profile.created | date}}</span>
       </div>
     </div>
-    <app-profile-unsubscribe-selector *ngIf="profile.email" [subscriberEmail]="profile.email"></app-profile-unsubscribe-selector>
+    <app-profile-unsubscribe-selector class="mt-2" *ngIf="profile.email" [subscriberEmail]="profile.email"></app-profile-unsubscribe-selector>
     <hr />
-    <div class="form-group">
+    <div class="mt-2">
       <div *ngIf="f.submitted && f.form.invalid" class="alert alert-danger">
         Please correct any errors trying to save.
       </div>

@@ -5,8 +5,8 @@
       <form name="subscribeForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
         <div class="card">
           <div class="card-body">
-            <h4 class="form-group"><i class="icon-binoculars me-2"></i>Join Our Newsletter!</h4>
-            <div class="form-group">
+            <h4 class="mt-2"><i class="icon-binoculars me-2"></i>Join Our Newsletter!</h4>
+            <div class="mt-2">
               <div>
                 <label for="subscriberEmail">Drop your email here</label>
                 <input id="subscriberEmail" name="subscriberEmail" type="email" [(ngModel)]="subscriberEmail" #email="ngModel"

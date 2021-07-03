@@ -1,31 +1,31 @@
 <div class="container p-3">
 
   <ul ngbNav #nav="ngbNav" class="nav-tabs">
-    <li ngbNavItem>
+    <li ngbNavItem="posts">
       <a ngbNavLink>Posts</a>
       <ng-template ngbNavContent>
         <app-posts-list-selector></app-posts-list-selector>
       </ng-template>
     </li>
-    <li ngbNavItem>
+    <li ngbNavItem="pages">
       <a ngbNavLink>Pages</a>
       <ng-template ngbNavContent>
         <app-pages-list-selector></app-pages-list-selector>
       </ng-template>
     </li>
-    <li ngbNavItem>
+    <li ngbNavItem="redirects">
       <a ngbNavLink>Redirects</a>
       <ng-template ngbNavContent>
         <app-redirects-list-selector></app-redirects-list-selector>
       </ng-template>
     </li>
-    <li ngbNavItem>
+    <li ngbNavItem="subscribers">
       <a ngbNavLink>Subscribers</a>
       <ng-template ngbNavContent>
         <app-subscribers-list-selector></app-subscribers-list-selector>
       </ng-template>
     </li>
   </ul>
-
+  <div [ngbNavOutlet]="nav" class="mt-2"></div>
 
 </div>
