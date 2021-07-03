@@ -10,7 +10,7 @@ import { WINDOW, DisqusMockWindow } from './disqus-window';
 })
 
 @Injectable()
-export class DisqusThreadComponent implements OnInit {
+export class DisqusThreadComponent {
 
     // The unique identifier for the page
     @Input()
@@ -30,10 +30,12 @@ export class DisqusThreadComponent implements OnInit {
         @Inject(DOCUMENT) private document: any,
         @Inject(WINDOW) private window: DisqusMockWindow,
         private location: Location
-    ) { }
+    ) { 
+        this.init();
+    }
 
     //  Component on init
-    ngOnInit() {
+    init() {
         if (this.window.DISQUS === undefined) {
             this.addScriptTag();
         } else {
@@ -44,10 +46,10 @@ export class DisqusThreadComponent implements OnInit {
     // Get Disqus config
     // @return {Function}
     public getConfig(): () => void {
-        const _self = this;
+        const self = this;
         return function() {
-            this.page.url = _self.document.URL;
-            this.page.identifier = _self.identifier;
+            this.page.url = self.document.URL;
+            this.page.identifier = self.identifier;
             this.language = 'en';
         };
     }
