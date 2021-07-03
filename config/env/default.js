@@ -14,7 +14,7 @@ export const sessionSecret = process.env.SESSION_SECRET || 'MEANCORE-CMS';
 export const sessionKey = process.env.SESSION_KEY || 'meancore-cms-key';
 export const sessionCollection = process.env.SESSION_COLLECTION || 'meancore-cms-sessions';
 export const illegalUsernames = ['meancorecms', 'meancore-cms'];
-export const cps = {
+export const csp = {
   // Specify directives as normal.
   directives: {
     connectSrc: [
