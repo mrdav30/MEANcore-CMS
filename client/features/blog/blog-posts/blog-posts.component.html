@@ -9,28 +9,32 @@
           <h5>{{vm.author.name}}</h5>
           <div [innerHtml]="vm.author.about"></div>
           <div class="author-social-links d-flex flex-row">
-            <a [hidden]="!vm.author.twitterUrl" class="me-2" [href]="vm.author.twitterUrl" target="_blank"
-              placement="top" ngbTooltip="Find me on Twitter">
-              <i class="icon-twitter"></i>
-            </a>
-            <a [hidden]="!vm.author.facebookUrl" class="me-2" [href]="vm.author.facebookUrl" target="_blank"
-              placement="top" ngbTooltip="Find me on Facebook">
+            <a [hidden]="!vm.author.facebookUrl" class="me-2"
+              (click)="onFollowAuthor('facebook');$event.preventDefault()" placement="top"
+              ngbTooltip="Find me on Facebook">
               <i class="icon-facebook-f"></i>
             </a>
-            <a [hidden]="!vm.author.githubUrl" class="me-2" [href]="vm.author.githubUrl" target="_blank" placement="top"
-              ngbTooltip="Find me on Github">
-              <i class="icon-github"></i>
+            <a [hidden]="!vm.author.twitterUrl" class="me-2"
+              (click)="onFollowAuthor('twitter');$event.preventDefault()" placement="top"
+              ngbTooltip="Find me on Twitter">
+              <i class="icon-twitter"></i>
             </a>
-            <a [hidden]="!vm.author.linkedinUrl" class="me-2" [href]="vm.author.linkedinUrl" target="_blank"
-              placement="top" ngbTooltip="Find me on LinkedIn">
+            <a [hidden]="!vm.author.linkedinUrl" class="me-2"
+              (click)="onFollowAuthor('linkedin');$event.preventDefault()" placement="top"
+              ngbTooltip="Find me on LinkedIn">
               <i class="icon-linkedin-in"></i>
             </a>
-            <a [hidden]="!vm.author.stackOverflowUrl" class="me-2" [href]="vm.author.stackOverflowUrl" target="_blank"
-              placement="top" ngbTooltip="Find me on StackOverflow">
+            <a [hidden]="!vm.author.githubUrl" class="me-2"
+              (click)="onFollowAuthor('github');$event.preventDefault()" placement="top" ngbTooltip="Find me on Github">
+              <i class="icon-github"></i>
+            </a>
+            <a [hidden]="!vm.author.stackOverflowUrl" class="me-2"
+              (click)="onFollowAuthor('stackoverflow');$event.preventDefault()" placement="top"
+              ngbTooltip="Find me on StackOverflow">
               <i class="icon-stack-overflow"></i>
             </a>
-            <a [hidden]="!vm.author.personalUrl" [href]="vm.author.personalUrl" target="_blank" placement="top"
-              ngbTooltip="My personal site">
+            <a [hidden]="!vm.author.personalUrl" (click)="onFollowAuthor('personal');$event.preventDefault()"
+              placement="top" ngbTooltip="My personal site">
               <i class="icon-external-link"></i>
             </a>
           </div>

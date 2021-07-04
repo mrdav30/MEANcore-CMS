@@ -1,10 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+    Component,
+    OnInit
+} from '@angular/core';
+import {
+    ActivatedRoute,
+    Router
+} from '@angular/router';
 
-import { isEmpty } from 'lodash';
+import {
+    isEmpty
+} from 'lodash';
 
-import { BlogService } from '../services/blog.service';
-import { SeoService } from '@utils';
+import {
+    BlogService
+} from '../services/blog.service';
+import {
+    SeoService
+} from '@utils';
 
 @Component({
     moduleId: module.id,
@@ -23,7 +35,7 @@ export class BlogPostsComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private blogService: BlogService
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         this.route.params
@@ -47,6 +59,32 @@ export class BlogPostsComponent implements OnInit {
     public changePage(pageNumber: number): void {
         this.pageNumber = pageNumber;
         this.retrievePosts();
+    }
+
+    onFollowAuthor(target: string) {
+        let followLink: string;
+        switch (target) {
+            case 'facebook':
+                followLink = this.vm.author.facebookUrl;
+                break;
+            case 'twitter':
+                followLink = this.vm.author.twitterUrl;
+                break;
+            case 'linkedin':
+                followLink = this.vm.author.linkedinUrl;
+                break;
+            case 'github':
+                followLink = this.vm.author.githubUrl;
+                break;
+            case 'stackoverflow':
+                followLink = this.vm.author.stackOverflowUrl;
+                break;
+            case 'personal':
+                followLink = this.vm.author.personalUrl;
+                break;
+        }
+
+        window.open(followLink, '_blank');
     }
 
     private retrievePosts(): void {
