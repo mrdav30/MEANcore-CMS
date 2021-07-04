@@ -41,11 +41,9 @@
           </div>
         </form>
       </li>
-      <li *ngIf="!currentUser && showLoginNav" class="nav-item">
-        <div class="btn-group" role="group">
+      <li *ngIf="!currentUser && showLoginNav" class="nav-item p-1">
           <a routerLink="/sign-in" routerLinkActive="btn-secondary" rel="nofollow" class="btn btn-outline-dark">Login</a>
           <a routerLink="/sign-up" routerLinkActive="btn-secondary" rel="nofollow" class="btn btn-outline-dark me-2">Get Started</a>
-        </div>
       </li>
       <li *ngIf="currentUser" class="nav-item">
         <a routerLink="/profile" rel="nofollow" class="btn p-2 user-avatar">

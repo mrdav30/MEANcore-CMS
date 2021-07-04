@@ -13,7 +13,7 @@ import { DisqusThreadComponent } from './disqus-thread/disqus-thread.component';
 
 import { BlogService } from '../services/blog.service';
 
-import { DisqusWindowProvider } from './disqus-thread/disqus-window';
+import { disqusWindowProvider } from './disqus-thread/disqus-window';
 
 @NgModule({
     imports: [
@@ -30,7 +30,7 @@ import { DisqusWindowProvider } from './disqus-thread/disqus-window';
     ],
     providers: [
         BlogService,
-        DisqusWindowProvider
+        disqusWindowProvider
     ]
 })
 
