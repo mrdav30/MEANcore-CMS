@@ -1,12 +1,12 @@
 // Theme variables, must be included before the libraries to allow overriding defaults
 @import "theme/theme-variables";
 
-@import "./assets/ckeditor-custom/ckeditor-styles.scss";
-@import "./assets/ckeditor-custom/ckeditor-styles-override.scss";
-
 @import './assets/_font-styles.css';
 
 // 3rd party libraries
+
+// place ck before bootstrap, otherwise ck overrides
+@import "./assets/ckeditor-custom/ckeditor-styles.scss";
 @import "~bootstrap/scss/bootstrap";
 
 @import './assets/_main.scss';

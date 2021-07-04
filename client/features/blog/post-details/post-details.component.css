@@ -37,20 +37,16 @@ a:hover {
   color: #7b7b7b;
 }
 
-.ck-content .image {
-  clear: both;
-  text-align: center;
-  margin: 1em 0;
-  position: relative;
-  overflow: hidden;
+/* CKEditor override*/
+.ck-content pre{
+  background: #282c34;
 }
 
-.ck-content .image>img {
-  display: block;
-  margin: 0 auto;
-  max-width: 100%;
+.ck-content pre code{
+  background: #282c34;
 }
 
 .ck-content .media>oembed {
   margin: 0 auto;
 }
+/* end CKEditor override*/
