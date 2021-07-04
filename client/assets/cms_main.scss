@@ -4,6 +4,14 @@
   width: 50% !important;
 }
 
+.ck.ck-editor__main>.ck-editor__editable pre {
+  background: hsla(0, 0%, 78%, .3);
+}
+
+.ck.ck-editor__main>.ck-editor__editable pre code {
+  background: unset;
+}
+
 .ck.ck-editor__main>.ck-editor__editable {
   max-height: 500px !important;
 }

@@ -8,7 +8,7 @@
 
   <div class="row post-list">
     <div *ngFor="let post of vm.posts" class="col-sm-6 p-4">
-      <div class="card post mx-auto">
+      <div class="card post mx-auto w-100">
         <div class="card-img-top" (appDeferLoad)="post.showImage=true">
           <a class="card-link" routerLink="{{post.url}}">
             <img *ngIf="post.showImage" width="550" height="300" class="post-image" [src]="post.thumbnailUrl">
