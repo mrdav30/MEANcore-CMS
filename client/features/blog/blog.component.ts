@@ -20,7 +20,7 @@ export class BlogComponent implements OnInit {
 
     ngOnInit(): void {
         // home page doesn't require pagination
-        this.blogService.GetAll('Home', null)
+        this.blogService.getAll('Home', null)
             .subscribe((data: any) => {
                 if (data && data.vm) {
                     this.vm = data.vm;

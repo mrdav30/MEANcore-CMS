@@ -77,7 +77,7 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
           slug: params.slug ? params.slug : null
         };
 
-        this.blogService.GetPost(this.postParams)
+        this.blogService.getPost(this.postParams)
           .then((data: any) => {
             if (data && data.vm) {
               this.vm = data.vm;

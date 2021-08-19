@@ -16,7 +16,7 @@ export class BlogService {
         private handleErrorService: HandleErrorService
     ) { }
 
-    GetAll(view: string, pageNumber: number): Observable<{}> {
+    getAll(view: string, pageNumber: number): Observable<{}> {
         return this.http.get(environment.appBaseUrl + environment.apiBaseUrl + '/blog/posts/' + view +
             '?page_size=' + this.defaultPageSize + '&page_number=' + pageNumber)
             .pipe(
@@ -24,7 +24,7 @@ export class BlogService {
             );
     }
 
-    GetByTag(tag: string, pageNumber: number): Observable<{}> {
+    getByTag(tag: string, pageNumber: number): Observable<{}> {
         return this.http.get(environment.appBaseUrl + environment.apiBaseUrl + '/blog/posts/tag/' + tag +
             '?page_size=' + this.defaultPageSize + '&page_number=' + pageNumber)
             .pipe(
@@ -32,7 +32,7 @@ export class BlogService {
             );
     }
 
-    GetByMonth(year: string, month: string, pageNumber: number): Observable<{}> {
+    getByMonth(year: string, month: string, pageNumber: number): Observable<{}> {
         return this.http.get(environment.appBaseUrl + environment.apiBaseUrl + '/blog/posts/date/' + year + '/' + month +
             '?page_size=' + this.defaultPageSize + '&page_number=' + pageNumber)
             .pipe(
@@ -40,7 +40,7 @@ export class BlogService {
             );
     }
 
-    GetByAuthor(authorID: string, pageNumber: number): Observable<{}> {
+    getByAuthor(authorID: string, pageNumber: number): Observable<{}> {
         return this.http.get(environment.appBaseUrl + environment.apiBaseUrl + '/blog/posts/author/' + authorID +
             '?page_size=' + this.defaultPageSize + '&page_number=' + pageNumber)
             .pipe(
@@ -48,7 +48,7 @@ export class BlogService {
             );
     }
 
-    SearchByQuery(searchQuery: string, pageNumber: number): Observable<{}> {
+    searchByQuery(searchQuery: string, pageNumber: number): Observable<{}> {
         return this.http.get(environment.appBaseUrl + environment.apiBaseUrl + '/blog/posts/search/' + searchQuery +
             '?page_size=' + this.defaultPageSize + '&page_number=' + pageNumber)
             .pipe(
@@ -56,7 +56,7 @@ export class BlogService {
             );
     }
 
-    GetPost(postParams: any): Promise<any> {
+    getPost(postParams: any): Promise<any> {
         return this.http.get(environment.appBaseUrl + environment.apiBaseUrl +
             '/blog/post/details/' + postParams.year + '/' + postParams.month
             + '/' + postParams.day + '/' + postParams.slug)

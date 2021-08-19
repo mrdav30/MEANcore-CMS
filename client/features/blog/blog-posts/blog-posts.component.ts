@@ -90,12 +90,12 @@ export class BlogPostsComponent implements OnInit {
     private retrievePosts(): void {
         if (!this.postParams) {
             // default, load all published blogs
-            this.blogService.GetAll('Blog', this.pageNumber)
+            this.blogService.getAll('Blog', this.pageNumber)
                 .subscribe((data: any) => {
                     this.processPostResults(data);
                 });
         } else if (this.postParams.tag) {
-            this.blogService.GetByTag(this.postParams.tag, this.pageNumber)
+            this.blogService.getByTag(this.postParams.tag, this.pageNumber)
                 .subscribe((data: any) => {
                     this.processPostResults(data);
                 }, (error) => {
@@ -103,7 +103,7 @@ export class BlogPostsComponent implements OnInit {
                     this.router.navigate(['/blog']);
                 });
         } else if (this.postParams.year && this.postParams.month) {
-            this.blogService.GetByMonth(this.postParams.year, this.postParams.month, this.pageNumber)
+            this.blogService.getByMonth(this.postParams.year, this.postParams.month, this.pageNumber)
                 .subscribe((data: any) => {
                     this.processPostResults(data);
                 }, (error) => {
@@ -111,7 +111,7 @@ export class BlogPostsComponent implements OnInit {
                     this.router.navigate(['/blog']);
                 });
         } else if (this.postParams.authorId) {
-            this.blogService.GetByAuthor(this.postParams.authorId, this.pageNumber)
+            this.blogService.getByAuthor(this.postParams.authorId, this.pageNumber)
                 .subscribe((data: any) => {
                     this.processPostResults(data);
                 }, (error) => {
@@ -119,7 +119,7 @@ export class BlogPostsComponent implements OnInit {
                     this.router.navigate(['/blog']);
                 });
         } else if (this.postParams.searchQuery) {
-            this.blogService.SearchByQuery(this.postParams.searchQuery, this.pageNumber)
+            this.blogService.searchByQuery(this.postParams.searchQuery, this.pageNumber)
                 .subscribe((data: any) => {
                     this.processPostResults(data);
                 }, (error) => {
