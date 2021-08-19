@@ -46,6 +46,9 @@ const postsSchema = new Schema({
   },
   views: {
     type: Number
+  },
+  readTime: {
+    type: Number
   }
 }, {
   strict: false

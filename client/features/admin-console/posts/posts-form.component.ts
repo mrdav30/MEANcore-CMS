@@ -46,7 +46,9 @@ export class PostsFormComponent implements OnInit {
   public postID: string;
   public post: Post;
   public currentDateObj: any = {};
-  public postWordCount: string;
+  public postWordCount: number;
+
+  public wpm = 225;
 
   constructor(
     private route: ActivatedRoute,
@@ -120,6 +122,7 @@ export class PostsFormComponent implements OnInit {
       wordCount: {
         onUpdate: (stats) => {
           this.postWordCount = stats.words;
+          this.post.readTime = Math.ceil(this.postWordCount / this.wpm);
         }
       },
       allowedContent: true

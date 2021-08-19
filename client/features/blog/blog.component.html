@@ -32,6 +32,9 @@
               <a class="post-author" [routerLink]="'/blog/posts/author/' + post.authorId" placement="top"
                 ngbTooltip="Posts by {{post.authorName}}">{{post.authorName}}</a>
             </span>
+            <span class="me-2" *ngIf="post.readTime">
+              <a class="" placement="top">{{post.readTime}} min read</a>
+            </span>
             <span [hidden]="!post.views" class="post-views">
               <i class="icon-eye me-2"></i>{{post.views}} VIEWS
             </span>

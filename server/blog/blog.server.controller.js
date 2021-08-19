@@ -476,7 +476,8 @@ const retrieveViewModel = (config, vm, query, callback) => {
                 title: 1,
                 publishDate: 1,
                 summary: 1,
-                views: 1
+                views: 1,
+                readTime: 1
               }, options).sort({
                 publishDate: -1
               })

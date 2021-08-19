@@ -12,6 +12,7 @@ export class Post {
     public url: string;
     public publish: boolean;
     public authorId: string;
+    public readTime: number;
 
     constructor() {
         this.thumbnailUrl = '';

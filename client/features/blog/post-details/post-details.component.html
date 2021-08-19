@@ -12,6 +12,9 @@
             <a class="post-details-author me-2"
               [routerLink]="'/blog/posts/author/' + vm.post.authorId">{{vm.post.author.name}}</a>
             <span class="post-date me-2"><i class="icon-clock me-2"></i>{{vm.post.publishDate | date}}</span>
+            <span class="me-2" *ngIf="vm.post.readTime">
+              <a class="" placement="top"> - {{vm.post.readTime}} min read</a>
+            </span>
             <span [hidden]="!vm.post.views" class="post-views"><i class="icon-eye me-2"></i>{{vm.post.views}}
               VIEWS</span>
           </div>
