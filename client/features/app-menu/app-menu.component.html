@@ -20,17 +20,17 @@
       </ng-template>
     </ul>
     <ul class="navbar-nav ms-auto">
-      <li>
+      <li class="mt-auto mb-auto">
         <a class="p-2 social-share-icon" href="https://www.facebook.com/" rel="nofollow" target="_blank"
           placement="bottom" ngbTooltip="Find us on Facebook!">
-          <i class="icon-facebook-f align-bottom"></i>
+          <i class="icon-facebook-f"></i>
         </a>
         <a class="p-2 social-share-icon" href="https://twitter.com/" rel="nofollow" target="_blank" placement="bottom"
           ngbTooltip="Find us on Twitter!">
-          <i class="icon-twitter align-bottom"></i>
+          <i class="icon-twitter"></i>
         </a>
       </li>
-      <li *ngIf="showSearchNav" class="nav-item search-nav me-2">
+      <li *ngIf="showSearchNav" class="nav-item search-nav mt-auto mb-auto me-2">
         <form name="searchForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
           <div class="search-panel">
             <button type="button" class="btn btn-lg" (click)="isSearchVisible=isSearchVisible?false:true">
