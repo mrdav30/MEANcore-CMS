@@ -3,12 +3,12 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { environment } from '../../environments/environment';
+import { environment } from '@env';
 
-import { HandleErrorService, CachedDataService } from '../utils';
+import { HandleErrorService, CachedDataService } from '@utils';
 
-export interface PostsByYear { months: PostsByMonth[]; value: string; }
-export interface PostsByMonth { name: string; postCount: number; value: string; }
+export interface PostsByYear { months: PostsByMonth[]; value: string }
+export interface PostsByMonth { name: string; postCount: number; value: string }
 export class BlogFooter {
     tags?: string[];
     years?: PostsByYear[];

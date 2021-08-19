@@ -1,6 +1,7 @@
 import {
   Component,
-  OnInit
+  OnInit,
+  DoCheck
 } from '@angular/core';
 import {
   Router
@@ -17,7 +18,7 @@ import {
   styleUrls: [`./app-footer.component.css`]
 })
 
-export class AppFooterComponent implements OnInit {
+export class AppFooterComponent implements OnInit, DoCheck {
   public expandedIndex: number;
   public years: any;
   public tags: any;
@@ -33,12 +34,14 @@ export class AppFooterComponent implements OnInit {
     this.appFooterService.blogFooter$.subscribe((vm: any) => {
       this.years = vm.years;
       this.tags = vm.tags;
-
-      if (this.router.url.includes('/blog')) {
-        this.showBlogFooter = true;
-      } else {
-        this.showBlogFooter = false;
-      }
     });
+  }
+
+  ngDoCheck() {
+    if (this.router.url === '/' || this.router.url.includes('/home') || this.router.url.includes('/blog')) {
+      this.showBlogFooter = true;
+    } else {
+      this.showBlogFooter = false;
+    }
   }
 }
