@@ -38,15 +38,72 @@ a:hover {
 }
 
 /* CKEditor override*/
-.ck-content pre{
+.ck-content pre {
   background: #282c34;
 }
 
-.ck-content pre code{
+.ck-content pre code {
   background: #282c34;
 }
 
 .ck-content .media>oembed {
   margin: 0 auto;
 }
+
 /* end CKEditor override*/
+
+@media (min-width: 576px) {
+  .toc-content {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+}
+
+.toc-content a {
+  cursor: pointer;
+}
+
+.toc-content a:hover {
+  font-weight: 400;
+}
+
+.toc-content-pad {
+  padding-top: 0px;
+}
+
+@media (min-width: 576px) {
+  .toc-content-pad {
+    padding-top: 80px;
+  }
+}
+
+.toc-content ul {
+  font-size: .95em;
+  line-height: 25px;
+}
+
+.toc-content ul li {
+  list-style: none;
+}
+
+.toc-content ul li a {
+  overflow-wrap: break-word;
+}
+
+.toc-parent {
+  padding-left: 0em;
+}
+
+.toc-child,
+.toc-child ul {
+  padding-left: 1em;
+}
+
+.post-body *[id]:before {
+  display: block;
+  content: " ";
+  margin-top: -75px;
+  height: 75px;
+  visibility: hidden;
+}

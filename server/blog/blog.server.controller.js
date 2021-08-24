@@ -601,7 +601,7 @@ export const retrievePostByDetails = (req, res) => {
         }
 
         //  permalink used by disqus comment and social links
-        post.perma_link = hostDomain + '/api/blog/post?id=' + post._id;
+        post.permaLink = hostDomain + '/api/blog/post?id=' + post._id;
 
         post.url = hostDomain + post.url;
 

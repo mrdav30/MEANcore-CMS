@@ -7,7 +7,7 @@ export class PostDetails {
     public body: string;
     public tags: string[];
     public slugTags: string[];
-    public perma_link: string;
+    public permaLink: string;
     public publishDate: any;
     public publish: boolean;
     public url: string;

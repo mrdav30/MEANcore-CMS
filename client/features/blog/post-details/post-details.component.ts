@@ -64,7 +64,26 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
     private scriptInjectorService: ScriptInjectorService,
     private ref: ChangeDetectorRef,
     private blogService: BlogService
-  ) {}
+  ) {
+    window.addEventListener('hashchange', this.shiftWindow);
+
+    let checkScroll = true;
+    window.addEventListener('scroll', () => {
+      if (checkScroll) {
+        checkScroll = false;
+        const targetElement = document.getElementById('postToc');
+        if ((window.scrollY - 300) > (targetElement.offsetTop + targetElement.offsetHeight)) {
+          document.getElementById('postToc').classList.add('toc-content-pad');
+        } else {
+          document.getElementById('postToc').classList.remove('toc-content-pad');
+        }
+        setTimeout(() => {
+          checkScroll = true;
+        }, 500);
+      }
+
+    });
+  }
 
   ngOnInit(): void {
     this.vm.post = new PostDetails();
@@ -88,7 +107,7 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
                 description: this.vm.metaDescription,
                 author: this.vm.post.author.name,
                 keywords: map(this.vm.post.tags).join(', '),
-                url: this.vm.post.perma_link,
+                url: this.vm.post.permaLink,
                 image: this.vm.post.thumbnailUrl
               });
             }
@@ -127,8 +146,19 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
         element.appendChild(anchor);
       });
 
+      this.getToc();
+
       this.domFormatted = true;
       this.ref.detectChanges();
+
+      const anchorLink = this.router.url.substring(this.router.url.indexOf('#') + 1);
+      const testElement = document.getElementById(anchorLink);
+      if (location.hash) {
+        testElement.scrollIntoView({
+          behavior: 'smooth'
+        });
+        this.shiftWindow();
+      }
     }
 
     this.childrenDetector = this.disqusThread.changes;
@@ -137,6 +167,88 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
       this.disqusThread.first.identifier = this.vm.metaTitle;
       this.disqusThread.first.init();
     });
+  }
+
+  shiftWindow() {
+    scrollBy(0, -70);
+  };
+
+  getToc() {
+    let parentHeaderIndex = 1;
+
+    const tocContainer = document.createElement('div');
+    const tocHeader = tocContainer.appendChild(document.createElement('span'));
+    tocHeader.innerHTML = 'Contents';
+    const tocList = tocContainer.appendChild(document.createElement('ul'));
+    tocList.classList.add('toc-parent');
+
+    let tocHasContent = false;
+
+    // loop through the array of headlines
+    forEach(document.querySelectorAll('h2'), (header) => {
+      tocHasContent = true;
+      let pointer = tocList;
+
+      const parentHeaderIdentifier = parentHeaderIndex + ' - ' + header.innerText;
+      header.setAttribute('id', parentHeaderIdentifier.replace(/\s+/g, '_'));
+
+      const headerListElement = pointer.appendChild(document.createElement('li'));
+      const headerAnchor = this.router.url.split('#')[0] + '#' + parentHeaderIdentifier.replace(/\s+/g, '_');
+      headerListElement.innerHTML = '<a href="' + headerAnchor + '">' + parentHeaderIdentifier + '</a>';
+
+      let childHeaderIndex = 0;
+      let grandchildHeaderIndex = 0;
+      let nextElement = header.nextElementSibling;
+
+      let childPointer = pointer;
+      while (nextElement && nextElement.nodeName !== 'H2') {
+        let childHeaderIdentifier = '';
+        let target: HTMLUListElement;
+
+        //let grandChildPointer;
+        if (nextElement.nodeName === 'H3' || nextElement.nodeName === 'H4') {
+
+          if (nextElement.nodeName === 'H3') {
+            childHeaderIndex++;
+            childHeaderIdentifier = parentHeaderIndex + '.' + childHeaderIndex + ' - ' + nextElement.innerHTML;
+
+            // if we are at top level and we have detected a headline level 2
+            if (pointer === tocList) {
+              pointer = pointer.appendChild(document.createElement('ul'));
+              pointer.classList.add('toc-child');
+            }
+
+            target = pointer;
+          } else if (nextElement.nodeName === 'H4') {
+            grandchildHeaderIndex++;
+            childHeaderIdentifier = parentHeaderIndex + '.' + childHeaderIndex + '.' +
+              grandchildHeaderIndex + ' - ' + nextElement.innerHTML;
+
+            // if we are at headline level 2 and we have detected a headline level 3
+            if (childPointer !== pointer) {
+              childPointer = pointer.appendChild(document.createElement('ul'));
+            }
+
+            target = childPointer;
+          }
+
+          nextElement.setAttribute('id', childHeaderIdentifier.replace(/\s+/g, '_'));
+
+          // for each child headline, create a list item
+          const childListElement = target.appendChild(document.createElement('li'));
+          const childAnchor = this.router.url.split('#')[0] + '#' + childHeaderIdentifier.replace(/\s+/g, '_');
+          childListElement.innerHTML = '<a href="' + childAnchor + '">' + childHeaderIdentifier + '</a>';
+        }
+
+        nextElement = nextElement.nextElementSibling;
+      }
+
+      parentHeaderIndex++;
+    });
+
+    if (tocHasContent) {
+      document.getElementById('postToc').appendChild(tocContainer);
+    }
   }
 
   onFollowAuthor(target: string) {
@@ -169,17 +281,17 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
     let shareLink: string;
     switch (target) {
       case 'facebook':
-        shareLink = 'http://facebook.com/sharer.php?u=' + this.vm.post.perma_link;
+        shareLink = 'http://facebook.com/sharer.php?u=' + this.vm.post.permaLink;
         break;
       case 'twitter':
-        shareLink = 'http://twitter.com/intent/tweet?url=' + this.vm.post.perma_link + '&text=' + this.vm.metaTitle;
+        shareLink = 'http://twitter.com/intent/tweet?url=' + this.vm.post.permaLink + '&text=' + this.vm.metaTitle;
         break;
       case 'linkedin':
         shareLink = 'https://www.linkedin.com/shareArticle?mini=true&title=' + this.vm.metaTitle + '&url=' + this.vm.post.url;
         break;
       case 'email':
         // eslint-disable-next-line max-len
-        shareLink = 'https://api.addthis.com/oexchange/0.8/forward/email/offer?url=' + this.vm.post.perma_link + '&title=' + this.vm.metaTitle + '&ct=1';
+        shareLink = 'https://api.addthis.com/oexchange/0.8/forward/email/offer?url=' + this.vm.post.permaLink + '&title=' + this.vm.metaTitle + '&ct=1';
         break;
     }
 
