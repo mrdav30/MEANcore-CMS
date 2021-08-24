@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import mongoose from 'mongoose';
+import moment from 'moment';
 const Posts = mongoose.model('Posts');
 
 export const getAll = (req, res) => {
@@ -57,7 +58,7 @@ export const update = (req, res) => {
   const postParam = req.body;
   // generate slug from title if empty
   postParam.slug = postParam.slug || config.helers.slugify(postParam.title);
-  postParam.updated = Date.now();
+  postParam.updated = moment(Date.now()).format('YYYY-MM-DD');
 
   // fields to update
   const set = _.omit(postParam, '_id');

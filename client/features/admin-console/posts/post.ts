@@ -1,13 +1,14 @@
 import moment from 'moment';
 
 export class Post {
-    public postId: string;
+    public _id: string;
     public title: string;
     public slug: string;
     public summary: string;
     public body: string;
     public tags: string[];
     public publishDate: any;
+    public updated: any;
     public thumbnailUrl: string;
     public url: string;
     public publish: boolean;
@@ -18,6 +19,7 @@ export class Post {
         this.thumbnailUrl = '';
         this.body = null;
         this.publishDate = moment().format('YYYY-MM-DD');
+        this.updated = moment().format('YYYY-MM-DD');
         this.publish = true;
     }
 }

@@ -65,12 +65,16 @@ export class PostsListComponent implements OnDestroy {
       filter: 'agDateColumnFilter'
     },
     {
+      headerName: 'Last Updated',
+      field: 'updated',
+      filter: 'agDateColumnFilter'
+    },
+    {
       headerName: 'Published',
       field: 'publish',
       cellRenderer: 'publishRendererComponent',
       cellClass: 'center-btn-cell'
-    },
-    {
+    }, {
       headerName: 'Edit',
       field: 'ACTION',
       cellRenderer: 'actionButtonComponent',
