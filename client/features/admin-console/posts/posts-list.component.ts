@@ -101,7 +101,8 @@ export class PostsListComponent implements OnDestroy {
   }
 
   takeAction(post: any): void {
-    this.router.navigate(['admin/posts/edit', post._id]);
+    const id = post.unpublishedChanges ? post.childId : post._id;
+    this.router.navigate(['admin/posts/edit', id]);
   }
 
   // Ag Grid Related functions

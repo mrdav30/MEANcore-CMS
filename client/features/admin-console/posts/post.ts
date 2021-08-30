@@ -14,6 +14,10 @@ export class Post {
     public publish: boolean;
     public authorId: string;
     public readTime: number;
+    public unpublishedChanges: boolean;
+    public publishChanges: boolean;
+    public parentId: string;
+    public childId: string;
 
     constructor() {
         this.thumbnailUrl = '';

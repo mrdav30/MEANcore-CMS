@@ -1,13 +1,16 @@
 <div class="container p-3">
   <h1>Post Details</h1>
+  <div class="alert-danger p-1 text-center" *ngIf="post.unpublishedChanges">
+    <span>Draft - Unpublished Changes</span>
+  </div>
   <hr />
-  <form name="postForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+  <form name="postForm" (ngSubmit)="postForm.form.valid && onSubmit(false)" #postForm="ngForm" novalidate>
     <div class="mt-2 row">
       <label for="title" class="col-sm-2"><strong>Title</strong></label>
       <div class="col-sm-10">
         <input type="text" id="title" name="title" class="form-control" [(ngModel)]="post.title" #title="ngModel"
           required />
-        <div *ngIf="f.submitted && title.invalid" class="alert alert-danger">
+        <div *ngIf="postForm.submitted && title.invalid" class="alert alert-danger">
           <div *ngIf="title.errors.required"><i class="icon-exclamation me-2"></i>Title is required</div>
         </div>
       </div>
@@ -16,7 +19,8 @@
       <label for="slug" class="col-sm-2"><strong>Slug</strong></label>
       <div class="col-sm-10">
         <input type="text" id="slug" name="slug" class="form-control" [(ngModel)]="post.slug" />
-        <button type="button" class="btn btn-link" (click)="slugifyTitle()"><strong>Generate from title</strong></button>
+        <button type="button" class="btn btn-link" (click)="slugifyTitle()"><strong>Generate from
+            title</strong></button>
       </div>
     </div>
     <div class="mt-2 row">
@@ -24,6 +28,8 @@
       <div class="col-sm-10">
         <app-image-upload [currentUrl]="post.thumbnailUrl" [uploadType]="'posts'" [imageWidth]="700" [imageHeight]="400"
           (urlChange)="post.thumbnailUrl=$event"></app-image-upload>
+        <input type="text" id="thumbnailUrl" name="thumbnailUrl" class="form-control" [(ngModel)]="post.thumbnailUrl"
+          class="invisible" />
       </div>
     </div>
     <div class="mt-2 row">
@@ -36,7 +42,7 @@
       <div class="col-sm-2">
         <label for="body"><strong>Body</strong></label>
         <div>
-          <strong>Word Count - {{postWordCount}}</strong><br/>
+          <strong>Word Count - {{postWordCount}}</strong><br />
           <strong>{{post.readTime}} min read</strong>
         </div>
       </div>
@@ -49,7 +55,7 @@
       <div class="col-sm-10">
         <input type="text" id="tags" name="tags" class="form-control" [(ngModel)]="post.tags" #tags="ngModel"
           appSplitControl required />
-        <div *ngIf="f.submitted && tags.invalid" class="alert alert-danger">
+        <div *ngIf="postForm.submitted && tags.invalid" class="alert alert-danger">
           <div *ngIf="tags.errors.required"><i class="icon-exclamation me-2"></i>Tags are required</div>
         </div>
       </div>
@@ -63,7 +69,7 @@
             [ngModelOptions]="{standalone: true}" #postDate="ngModel" ngbDatepicker #dp="ngbDatepicker"
             (focus)="dp.toggle()" (dateSelect)="onDateSelect($event)" required />
         </div>
-        <div *ngIf="f.submitted && postDate.invalid" class="alert alert-danger">
+        <div *ngIf="postForm.submitted && postDate.invalid" class="alert alert-danger">
           <div *ngIf="postDate.errors.required">
             <i class="icon-exclamation me-2"></i>Publish date is required
           </div>
@@ -81,15 +87,23 @@
           </label>
           <span class="checkbox-label ms-2">Publish</span>
         </div>
+        <div class="checkbox" *ngIf="post.unpublishedChanges">
+          <label class="switch" for="publishChanges">
+            <input type="checkbox" [(ngModel)]="post.publishChanges" id="publishChanges" name="publishChanges">
+            <div class="slider round"></div>
+          </label>
+          <span class="checkbox-label ms-2">Publish Changes</span>
+        </div>
       </div>
     </div>
     <hr />
     <div class="mt-2">
-      <div *ngIf="f.submitted && f.form.invalid" class="alert alert-danger">
+      <div *ngIf="postForm.submitted && postForm.form.invalid" class="alert alert-danger">
         Please correct any errors trying to save.
       </div>
       <div class="btn-group">
         <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" (click)="onSubmit(true)" class="btn btn-info">Preview</button>
         <a class="btn btn-secondary" [routerLink]="['/admin']">Cancel</a>
         <button type="button" class="btn btn-danger" (click)="deletePost()" *ngIf="post._id">Delete</button>
       </div>

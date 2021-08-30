@@ -1,6 +1,9 @@
+/* eslint-disable no-underscore-dangle */
 import {
+  AfterViewInit,
   Component,
   OnInit,
+  ViewChild,
   ViewEncapsulation
 } from '@angular/core';
 import {
@@ -13,7 +16,11 @@ import {
 import '../../../assets/ckeditor-custom/ckeditor';
 
 import {
-  merge
+  clone,
+  isEqual,
+  merge,
+  omit,
+  reduce
 } from 'lodash';
 import moment from 'moment';
 
@@ -31,6 +38,9 @@ import {
 import {
   SlugifyPipe
 } from '@utils';
+import {
+  pairwise
+} from 'rxjs/operators';
 
 @Component({
   moduleId: module.id,
@@ -39,15 +49,16 @@ import {
   encapsulation: ViewEncapsulation.None // required to style innerHtml
 })
 
-export class PostsFormComponent implements OnInit {
+export class PostsFormComponent implements OnInit, AfterViewInit {
+  @ViewChild('postForm') postForm: any;
   // eslint-disable-next-line @typescript-eslint/dot-notation
   public editor = window['ClassicEditor'];
   public editorOptions: any;
   public postID: string;
   public post: Post;
+  public untouchedPost: Post;
   public currentDateObj: any = {};
   public postWordCount: number;
-
   public wpm = 225;
 
   constructor(
@@ -131,16 +142,20 @@ export class PostsFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle('Posts' + environment.metaTitleSuffix);
+
     this.post = new Post();
-    this.route.params
-      .subscribe(params => {
-        this.postID = params.id ? params.id : null;
+    this.route.paramMap
+      .subscribe(paramMap => {
+        this.postID = paramMap.get('id');
 
         if (this.postID) {
           this.postsService.GetById(this.postID)
             .subscribe((data: any) => {
               if (data && data.post) {
                 this.post = merge(this.post, data.post) as Post;
+                this.untouchedPost = clone(this.post) as Post;
+                delete this.untouchedPost.publishChanges;
+                delete this.untouchedPost.unpublishedChanges;
                 this.setDate();
               }
             }, (error) => {
@@ -152,6 +167,41 @@ export class PostsFormComponent implements OnInit {
           this.setDate();
         }
       });
+  }
+
+  ngAfterViewInit(): void {
+    this.postForm.valueChanges
+      .pipe(pairwise())
+      .subscribe(
+        ([prev, next]) => {
+          if (this.post.parentId) {
+            this.post.unpublishedChanges = true;
+          } else {
+            if (this.post._id && this.untouchedPost.publish && next.publish) {
+              if (!this.postForm.form.pristine) {
+                const formCheck = {
+                  ...this.post,
+                  ...next
+                };
+                delete formCheck.publish;
+                delete formCheck.publishChanges;
+                delete formCheck.unpublishedChanges;
+                const edited = reduce(omit(formCheck, 'publish'), (result, value, key) =>
+                  isEqual(value, this.untouchedPost[key]) ? result : result.concat({
+                    [key]: value
+                  }), []);
+                if (edited.length) {
+                  this.post.unpublishedChanges = true;
+                } else {
+                  this.post.unpublishedChanges = false;
+                  this.post.publishChanges = false;
+                }
+              }
+            } else {
+              this.post.unpublishedChanges = false;
+            }
+          }
+        });
   }
 
   // format date for ngb datepicker
@@ -175,11 +225,15 @@ export class PostsFormComponent implements OnInit {
     this.post.slug = slugifyPipe.transform(this.post.title);
   }
 
-  onSubmit(): void {
+  onSubmit(isPreview: boolean): void {
     this.post.url = '/blog/post/' + moment(this.post.publishDate).format('YYYY/MM/DD') + '/' + this.post.slug;
     this.postsService.Save(this.post)
       .subscribe(() => {
-        this.router.navigate(['/admin']);
+        if (!isPreview) {
+          this.router.navigate(['/admin']);
+        } else {
+          this.router.navigate(['/admin' + this.post.url + '?isPreview=true']);
+        }
       });
   }
 
