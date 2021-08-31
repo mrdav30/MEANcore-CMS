@@ -53,8 +53,10 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
   public vm: any = {};
   public domLoaded = false;
   public domFormatted = false;
+  public hasTocContent: boolean;
+  public isPreview: boolean;
 
-  childrenDetector: Observable < any > ;
+  private childrenDetector: Observable < any > ;
 
   constructor(
     private route: ActivatedRoute,
@@ -69,32 +71,35 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
 
     let checkScroll = true;
     window.addEventListener('scroll', () => {
-      if (checkScroll) {
-        checkScroll = false;
-        const targetElement = document.getElementById('postToc');
-        if ((window.scrollY - 300) > (targetElement.offsetTop + targetElement.offsetHeight)) {
-          document.getElementById('postToc').classList.add('toc-content-pad');
-        } else {
-          document.getElementById('postToc').classList.remove('toc-content-pad');
+      if (this.hasTocContent) {
+        if (checkScroll) {
+          checkScroll = false;
+          const targetElement = document.getElementById('postToc');
+          if ((window.scrollY - 300) > (targetElement.offsetTop + targetElement.offsetHeight)) {
+            document.getElementById('postToc').classList.add('toc-content-pad');
+          } else {
+            document.getElementById('postToc').classList.remove('toc-content-pad');
+          }
+          setTimeout(() => {
+            checkScroll = true;
+          }, 500);
         }
-        setTimeout(() => {
-          checkScroll = true;
-        }, 500);
       }
-
     });
   }
 
   ngOnInit(): void {
     this.vm.post = new PostDetails();
-    this.route.params
-      .subscribe(params => {
+    this.route.paramMap
+      .subscribe(paramMap => {
         this.postParams = {
-          year: params.year ? params.year : null,
-          month: params.month ? params.month : null,
-          day: params.day ? params.day : null,
-          slug: params.slug ? params.slug : null
+          year: paramMap.get('year'),
+          month: paramMap.get('month'),
+          day: paramMap.get('day'),
+          slug: paramMap.get('slug')
         };
+
+        this.isPreview = paramMap.get('isPreview') ? true : false;
 
         this.blogService.getPost(this.postParams)
           .then((data: any) => {
@@ -182,11 +187,11 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
     const tocList = tocContainer.appendChild(document.createElement('ul'));
     tocList.classList.add('toc-parent');
 
-    let tocHasContent = false;
+    this.hasTocContent = false;
 
     // loop through the array of headlines
     forEach(document.querySelectorAll('h2'), (header) => {
-      tocHasContent = true;
+      this.hasTocContent = true;
       let pointer = tocList;
 
       const parentHeaderIdentifier = parentHeaderIndex + ' - ' + header.innerText;
@@ -246,7 +251,7 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
       parentHeaderIndex++;
     });
 
-    if (tocHasContent) {
+    if (this.hasTocContent) {
       document.getElementById('postToc').appendChild(tocContainer);
     }
   }

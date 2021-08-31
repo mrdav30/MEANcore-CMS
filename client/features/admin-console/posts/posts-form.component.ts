@@ -232,7 +232,7 @@ export class PostsFormComponent implements OnInit, AfterViewInit {
         if (!isPreview) {
           this.router.navigate(['/admin']);
         } else {
-          this.router.navigate(['/admin' + this.post.url + '?isPreview=true']);
+          this.router.navigate(['/admin' + this.post.url + '/isPreview']);
         }
       });
   }

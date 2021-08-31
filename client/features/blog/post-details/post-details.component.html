@@ -1,6 +1,9 @@
 <div class="container p-3">
   <div class="card mt-2">
     <div class="card-body">
+      <div class="alert-danger p-1 text-center" *ngIf="isPreview">
+        <span>Draft - Unpublished</span>
+      </div>
       <h1 class="post-title card-title">{{vm.post.title}}</h1>
       <div class="row">
         <div class="col-sm-2 text-center">
@@ -148,7 +151,7 @@
         <a *ngFor="let tag of vm.post.slugTags" [routerLink]="'/blog/posts/tag/' + tag.slug"
           class="comma me-2">#{{tag.text}}</a>
       </div>
-      <div class="social-share-buttons mt-2 text-center">
+      <div class="social-share-buttons mt-2 text-center" *ngIf="!isPreview">
         <div class="social-icons spinned">
           <a class="item facebook" (click)="onSharePost('facebook');$event.preventDefault()" placement="bottom"
             ngbTooltip="Share on Facebook">
@@ -172,8 +175,11 @@
         </div>
       </div>
     </div>
-    <div *ngIf="domLoaded">
+    <div *ngIf="!isPreview && domLoaded">
       <app-disqus-thread></app-disqus-thread>
     </div>
+  </div>
+  <div class="mt-2" *ngIf="isPreview">
+    <a class="btn btn-info" [routerLink]="['/admin/posts/edit/' + vm.post._id]">Close Preview</a>
   </div>
 </div>
