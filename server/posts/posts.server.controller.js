@@ -56,7 +56,6 @@ export const create = (req, res) => {
     });
 }
 
-
 export const update = (req, res) => {
   const config = req.app.locals.config;
   let postParam = req.body;
@@ -164,18 +163,52 @@ export const update = (req, res) => {
           }
         }
       } else {
-        const set = _.omit(postParam, '_id');
+        if (postParam.parentId && !postParam.publish) {
+          // draft was unpublished, delete draft
+          Posts.deleteOne({
+            _id: mongoose.Types.ObjectId(postParam._id)
+          }, (err) => {
+            if (err) {
+              return done(err, null);
+            } else {
+              // Then update parent with draft changes
+              // fields to update
+              const set = _.omit(postParam, ['_id', 'parentId']);
+              set.unpublishedChanges = false;
+              set.publishChanges = false;
 
-        let update = {
-          filter: {
-            _id: mongoose.Types.ObjectId(req.params._id)
-          },
-          query: {
-            $set: set
-          }
-        };
+              let update = {
+                filter: {
+                  _id: mongoose.Types.ObjectId(postParam.parentId)
+                },
+                query: [{
+                    $set: set,
+                  },
+                  {
+                    $unset: [
+                      'childId'
+                    ]
+                  }
+                ]
+              };
 
-        done(null, update);
+              done(null, update);
+            }
+          });
+        } else {
+          const set = _.omit(postParam, '_id');
+
+          let update = {
+            filter: {
+              _id: mongoose.Types.ObjectId(req.params._id)
+            },
+            query: {
+              $set: set
+            }
+          };
+
+          done(null, update);
+        }
       }
     },
     function (update, done) {
@@ -203,15 +236,60 @@ export const update = (req, res) => {
 }
 
 export const _delete = (req, res) => {
-  Posts.deleteOne({
-    _id: mongoose.Types.ObjectId(req.params._id)
-  }, (err) => {
+  Posts.findById(req.params._id).exec((err, post) => {
     if (err) {
       return res.status(400).send({
         message: err
       });
     }
 
-    res.status(200).send();
+    if (post.parentId) {
+      // delete draft
+      Posts.deleteOne({
+        _id: mongoose.Types.ObjectId(req.params._id)
+      }, (err) => {
+        if (err) {
+          return res.status(400).send({
+            message: err
+          });
+        }
+
+        // Then remove from parent
+        Posts.updateOne({
+          _id: mongoose.Types.ObjectId(post.parentId)
+        }, [{
+            $set: {
+              unpublishedChanges: false,
+              publishChanges: false
+            },
+          },
+          {
+            $unset: [
+              'childId'
+            ]
+          }
+        ], (err) => {
+          if (err) {
+            return res.status(400).send({
+              message: err
+            });
+          }
+
+          res.status(200).send();
+        });
+      });
+    } else {
+      Posts.deleteOne({
+        _id: mongoose.Types.ObjectId(req.params._id)
+      }, (err) => {
+        if (err) {
+          return res.status(400).send({
+            message: err
+          });
+        }
+
+        res.status(200).send();
+      });
+    }
   });
 }

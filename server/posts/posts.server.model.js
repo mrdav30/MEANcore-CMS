@@ -49,6 +49,18 @@ const postsSchema = new Schema({
   },
   readTime: {
     type: Number
+  },
+  unpublishedChanges: {
+    type: Boolean
+  },
+  publishChanges: {
+    type: Boolean
+  },
+  parentId: {
+    type: String
+  },
+  childId: {
+    type: String
   }
 }, {
   strict: false
@@ -103,6 +115,7 @@ postsSchema.statics = {
     const options = {},
       query = {
         publish: true,
+        parentId: null,
         $text: {
           $search: searchText
         }

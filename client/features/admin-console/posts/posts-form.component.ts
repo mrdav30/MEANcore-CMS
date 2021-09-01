@@ -153,9 +153,9 @@ export class PostsFormComponent implements OnInit, AfterViewInit {
             .subscribe((data: any) => {
               if (data && data.post) {
                 this.post = merge(this.post, data.post) as Post;
+                this.post.slug = this.post.slug.replace('-unpublished', '');
+                this.post.url = this.post.url.replace('-unpublished', '');
                 this.untouchedPost = clone(this.post) as Post;
-                delete this.untouchedPost.publishChanges;
-                delete this.untouchedPost.unpublishedChanges;
                 this.setDate();
               }
             }, (error) => {
@@ -174,19 +174,16 @@ export class PostsFormComponent implements OnInit, AfterViewInit {
       .pipe(pairwise())
       .subscribe(
         ([prev, next]) => {
-          if (this.post.parentId) {
-            this.post.unpublishedChanges = true;
-          } else {
-            if (this.post._id && this.untouchedPost.publish && next.publish) {
-              if (!this.postForm.form.pristine) {
+          if (this.post._id && this.untouchedPost.publish) {
+            if (!this.postForm.form.pristine) {
+              if (this.untouchedPost.unpublishedChanges && next.publish) {
+                this.post.unpublishedChanges = true;
+              } else {
                 const formCheck = {
                   ...this.post,
                   ...next
                 };
-                delete formCheck.publish;
-                delete formCheck.publishChanges;
-                delete formCheck.unpublishedChanges;
-                const edited = reduce(omit(formCheck, 'publish'), (result, value, key) =>
+                const edited = reduce(omit(formCheck, ['publish', 'publishChanges', 'unpublishedChanges']), (result, value, key) =>
                   isEqual(value, this.untouchedPost[key]) ? result : result.concat({
                     [key]: value
                   }), []);
@@ -197,9 +194,9 @@ export class PostsFormComponent implements OnInit, AfterViewInit {
                   this.post.publishChanges = false;
                 }
               }
-            } else {
-              this.post.unpublishedChanges = false;
             }
+          } else {
+            this.post.unpublishedChanges = false;
           }
         });
   }
@@ -227,6 +224,10 @@ export class PostsFormComponent implements OnInit, AfterViewInit {
 
   onSubmit(isPreview: boolean): void {
     this.post.url = '/blog/post/' + moment(this.post.publishDate).format('YYYY/MM/DD') + '/' + this.post.slug;
+    if (this.post.unpublishedChanges && !this.post.publishChanges) {
+      this.post.slug += '-unpublished';
+      this.post.url += '-unpublished';
+    }
     this.postsService.Save(this.post)
       .subscribe(() => {
         if (!isPreview) {

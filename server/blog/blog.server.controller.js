@@ -36,10 +36,11 @@ export const retrieveSharedData = (req, res) => {
   const config = req.app.locals.config;
   let vm = {};
   async.series([
-    (callback) =>{
+    (callback) => {
       // return only the publishDate and tags from published posts
       Posts.find({
-          publish: true
+          publish: true,
+          parentId: null
         }, {
           publishDate: 1,
           tags: 1
@@ -80,14 +81,13 @@ export const retrieveSharedData = (req, res) => {
   })
 }
 
-const refreshPostViews = (config, callback) =>  {
+const refreshPostViews = (config, callback) => {
   let runTimeConfig;
   try {
     runTimeConfig = JSON.parse(fs.readFileSync(resolve('./_content/blog_runtime_config.json')));
   } catch (e) {
     runTimeConfig = {};
   }
-
 
   const lastRefreshDate = !runTimeConfig.VIEWS_LAST_REFRESHED ? new Date() : new Date(runTimeConfig.VIEWS_LAST_REFRESHED);
   const ONE_HOUR = 60 * 60 * 1000; /* ms */
@@ -145,7 +145,7 @@ const refreshPostViews = (config, callback) =>  {
     })
   } else {
 
-    if(runTimeConfig && Object.keys(runTimeConfig).length === 0 && runTimeConfig.constructor === Object){
+    if (runTimeConfig && Object.keys(runTimeConfig).length === 0 && runTimeConfig.constructor === Object) {
       runTimeConfig.VIEWS_LAST_REFRESHED = new Date();
       fs.writeFileSync(resolve('./_content/blog_runtime_config.json'), JSON.stringify(runTimeConfig));
     }
@@ -223,7 +223,8 @@ export const retrieveAllPosts = (req, res) => {
   // pass in view name to get appropriate meta title
   const forView = req.params.view ? req.params.view : '',
     query = {
-      publish: true
+      publish: true,
+      parentId: null
     },
     vm = {
       metaTitle: forView,
@@ -289,6 +290,7 @@ export const retrievePostsByTag = (req, res) => {
   const queryTag = "^" + _.replace(req.params.tag, '-', '.*')
   const query = {
       publish: true,
+      parentId: null,
       tags: new RegExp(queryTag, "i")
     },
     // meta info
@@ -325,6 +327,7 @@ export const retrievePostsByDate = (req, res) => {
   const queryDate = "^" + req.params.year + ".*" + req.params.month + ".*",
     query = {
       publish: true,
+      parentId: null,
       publishDate: new RegExp(queryDate)
     },
     // meta info
@@ -391,6 +394,7 @@ export const retrievePostsByAuthor = (req, res) => {
       //query by date
       const query = {
           publish: true,
+          parentId: null,
           authorId: req.params.authorId
         },
         vm = {
