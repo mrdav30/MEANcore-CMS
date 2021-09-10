@@ -59,6 +59,7 @@ export class BlogPostsComponent implements OnInit {
     public changePage(pageNumber: number): void {
         this.pageNumber = pageNumber;
         this.retrievePosts();
+        window.scrollTo(0, 0);
     }
 
     onFollowAuthor(target: string) {
