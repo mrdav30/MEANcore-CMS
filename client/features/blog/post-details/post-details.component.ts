@@ -75,10 +75,12 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
         if (checkScroll) {
           checkScroll = false;
           const targetElement = document.getElementById('postToc');
-          if ((window.scrollY - 300) > (targetElement.offsetTop + targetElement.offsetHeight)) {
-            document.getElementById('postToc').classList.add('toc-content-pad');
-          } else {
-            document.getElementById('postToc').classList.remove('toc-content-pad');
+          if (targetElement) {
+            if ((window.scrollY) > (targetElement.offsetTop + targetElement.offsetHeight)) {
+              document.getElementById('postToc').classList.add('toc-content-pad');
+            } else {
+              document.getElementById('postToc').classList.remove('toc-content-pad');
+            }
           }
           setTimeout(() => {
             checkScroll = true;
@@ -179,8 +181,6 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
   };
 
   getToc() {
-    let parentHeaderIndex = 1;
-
     const tocContainer = document.createElement('div');
     const tocHeader = tocContainer.appendChild(document.createElement('span'));
     tocHeader.innerHTML = 'Contents';
@@ -194,15 +194,13 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
       this.hasTocContent = true;
       let pointer = tocList;
 
-      const parentHeaderIdentifier = parentHeaderIndex + ' - ' + header.innerText;
+      const parentHeaderIdentifier = header.innerText;
       header.setAttribute('id', parentHeaderIdentifier.replace(/\s+/g, '_'));
 
       const headerListElement = pointer.appendChild(document.createElement('li'));
       const headerAnchor = this.router.url.split('#')[0] + '#' + parentHeaderIdentifier.replace(/\s+/g, '_');
       headerListElement.innerHTML = '<a href="' + headerAnchor + '">' + parentHeaderIdentifier + '</a>';
 
-      let childHeaderIndex = 0;
-      let grandchildHeaderIndex = 0;
       let nextElement = header.nextElementSibling;
 
       let childPointer = pointer;
@@ -214,9 +212,6 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
         if (nextElement.nodeName === 'H3' || nextElement.nodeName === 'H4') {
 
           if (nextElement.nodeName === 'H3') {
-            childHeaderIndex++;
-            childHeaderIdentifier = parentHeaderIndex + '.' + childHeaderIndex + ' - ' + nextElement.innerHTML;
-
             // if we are at top level and we have detected a headline level 2
             if (pointer === tocList) {
               pointer = pointer.appendChild(document.createElement('ul'));
@@ -225,10 +220,6 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
 
             target = pointer;
           } else if (nextElement.nodeName === 'H4') {
-            grandchildHeaderIndex++;
-            childHeaderIdentifier = parentHeaderIndex + '.' + childHeaderIndex + '.' +
-              grandchildHeaderIndex + ' - ' + nextElement.innerHTML;
-
             // if we are at headline level 2 and we have detected a headline level 3
             if (childPointer !== pointer) {
               childPointer = pointer.appendChild(document.createElement('ul'));
@@ -237,6 +228,7 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
             target = childPointer;
           }
 
+          childHeaderIdentifier = (nextElement as HTMLHeadingElement).innerText;
           nextElement.setAttribute('id', childHeaderIdentifier.replace(/\s+/g, '_'));
 
           // for each child headline, create a list item
@@ -247,8 +239,6 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
 
         nextElement = nextElement.nextElementSibling;
       }
-
-      parentHeaderIndex++;
     });
 
     if (this.hasTocContent) {
