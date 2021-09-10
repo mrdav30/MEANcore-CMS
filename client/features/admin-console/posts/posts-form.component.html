@@ -103,10 +103,12 @@
       </div>
       <div class="btn-group">
         <button type="submit" class="btn btn-primary">Save</button>
-        <button type="button" (click)="onSubmit(true)" class="btn btn-info">Preview</button>
-        <a class="btn btn-secondary" [routerLink]="['/admin']">Cancel</a>
-        <button type="button" class="btn btn-danger" (click)="deletePost()" *ngIf="post._id && !post.parentId">Delete</button>
-        <button type="button" class="btn btn-warning" (click)="deletePost()" *ngIf="untouchedPost && untouchedPost.unpublishedChanges">Discard Draft</button>
+        <button type="button" (click)="onSubmit(true)" class="btn btn-info" *ngIf="showPreview()">Preview</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="deletePost()"
+          *ngIf="post._id && !post.parentId">Delete</button>
+        <button type="button" class="btn btn-warning" (click)="deletePost()"
+          *ngIf="untouchedPost && untouchedPost.unpublishedChanges">Discard Draft</button>
       </div>
     </div>
   </form>

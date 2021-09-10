@@ -2,6 +2,7 @@
 import {
   AfterViewInit,
   Component,
+  OnDestroy,
   OnInit,
   ViewChild,
   ViewEncapsulation
@@ -41,6 +42,9 @@ import {
 import {
   pairwise
 } from 'rxjs/operators';
+import {
+  Subscription
+} from 'rxjs';
 
 @Component({
   moduleId: module.id,
@@ -49,7 +53,7 @@ import {
   encapsulation: ViewEncapsulation.None // required to style innerHtml
 })
 
-export class PostsFormComponent implements OnInit, AfterViewInit {
+export class PostsFormComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('postForm') postForm: any;
   // eslint-disable-next-line @typescript-eslint/dot-notation
   public editor = window['ClassicEditor'];
@@ -60,6 +64,8 @@ export class PostsFormComponent implements OnInit, AfterViewInit {
   public currentDateObj: any = {};
   public postWordCount: number;
   public wpm = 225;
+
+  paramSub$: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -138,35 +144,39 @@ export class PostsFormComponent implements OnInit, AfterViewInit {
       },
       allowedContent: true
     };
+
+    this.paramSub$ = this.route.paramMap
+      .subscribe(paramMap => {
+        this.postID = paramMap.get('id');
+        this.refresh();
+      });
   }
 
   ngOnInit(): void {
     this.titleService.setTitle('Posts' + environment.metaTitleSuffix);
+  }
 
+  refresh(): void {
     this.post = new Post();
-    this.route.paramMap
-      .subscribe(paramMap => {
-        this.postID = paramMap.get('id');
 
-        if (this.postID) {
-          this.postsService.GetById(this.postID)
-            .subscribe((data: any) => {
-              if (data && data.post) {
-                this.post = merge(this.post, data.post) as Post;
-                this.post.slug = this.post.slug.replace('-unpublished', '');
-                this.post.url = this.post.url.replace('-unpublished', '');
-                this.untouchedPost = clone(this.post) as Post;
-                this.setDate();
-              }
-            }, (error) => {
-              alert('Error loading post');
-              console.log('Error loading post', error);
-              this.router.navigate(['/admin']);
-            });
-        } else {
-          this.setDate();
-        }
-      });
+    if (this.postID) {
+      this.postsService.GetById(this.postID)
+        .subscribe((data: any) => {
+          if (data && data.post) {
+            this.post = merge(this.post, data.post) as Post;
+            this.post.slug = this.post.slug.replace('-unpublished', '');
+            this.post.url = this.post.url.replace('-unpublished', '');
+            this.untouchedPost = clone(this.post) as Post;
+            this.setDate();
+          }
+        }, (error) => {
+          alert('Error loading post');
+          console.log('Error loading post', error);
+          this.backToPostList();
+        });
+    } else {
+      this.setDate();
+    }
   }
 
   ngAfterViewInit(): void {
@@ -231,17 +241,37 @@ export class PostsFormComponent implements OnInit, AfterViewInit {
     this.postsService.Save(this.post)
       .subscribe(() => {
         if (!isPreview) {
-          this.router.navigate(['/admin']);
+          this.backToPostList();
         } else {
           this.router.navigate(['/admin' + this.post.url + '/isPreview']);
         }
       });
   }
 
+  showPreview(): boolean {
+    if (this.untouchedPost && !this.untouchedPost.publish || this.post.unpublishedChanges) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  cancelEdit(): void {
+    this.backToPostList();
+  }
+
   deletePost(): void {
     this.postsService.Delete(this.postID)
       .subscribe(() => {
-        this.router.navigate(['/admin']);
+        this.backToPostList();
       });
+  }
+
+  backToPostList(): void {
+    this.router.navigate(['/admin']);
+  }
+
+  ngOnDestroy(): void {
+    this.paramSub$.unsubscribe();
   }
 }
