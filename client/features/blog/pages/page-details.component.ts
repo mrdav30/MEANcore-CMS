@@ -1,15 +1,41 @@
-import { Component, OnInit, ViewEncapsulation, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
+import {
+    Component,
+    OnInit,
+    ViewEncapsulation,
+    ChangeDetectorRef,
+    AfterViewChecked,
+    OnDestroy
+} from '@angular/core';
+import {
+    Router,
+    ActivatedRoute
+} from '@angular/router';
+import {
+    DomSanitizer
+} from '@angular/platform-browser';
 
-import { forEach } from 'lodash';
+import {
+    forEach
+} from 'lodash';
 import hljs from 'highlight.js';
 
-import { environment } from '@env';
+import {
+    environment
+} from '@env';
 
-import { PageService } from '../services/page.service';
-import { PageDetails } from './page-details';
-import { SeoService, ScriptInjectorService } from '@utils';
+import {
+    PageService
+} from '../services/page.service';
+import {
+    PageDetails
+} from './page-details';
+import {
+    SeoService,
+    ScriptInjectorService
+} from '@utils';
+import {
+    Subscription
+} from 'rxjs';
 
 @Component({
     moduleId: module.id,
@@ -21,12 +47,14 @@ import { SeoService, ScriptInjectorService } from '@utils';
     encapsulation: ViewEncapsulation.None // required to style innerHtml
 })
 
-export class PageDetailsComponent implements OnInit, AfterViewChecked {
+export class PageDetailsComponent implements OnInit, AfterViewChecked, OnDestroy {
     public disqusShortname = environment.appName;
     public pageSlug: string;
     public vm: any = {};
     public domLoaded = false;
     public domFormatted = false;
+
+    private paramSub$: Subscription;
 
     constructor(
         private route: ActivatedRoute,
@@ -36,13 +64,13 @@ export class PageDetailsComponent implements OnInit, AfterViewChecked {
         private scriptInjectorService: ScriptInjectorService,
         private ref: ChangeDetectorRef,
         private pageService: PageService
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         this.vm.page = new PageDetails();
-        this.route.params
-            .subscribe(params => {
-                this.pageSlug = params.slug ? params.slug : null;
+        this.route.paramMap
+            .subscribe(paramMap => {
+                this.pageSlug = paramMap.get('slug');
 
                 this.pageService.GetPage(this.pageSlug)
                     .then((data: any) => {
@@ -75,7 +103,8 @@ export class PageDetailsComponent implements OnInit, AfterViewChecked {
     ngAfterViewChecked(): void {
         if (this.domLoaded && !this.domFormatted) {
             forEach(document.querySelectorAll('pre'), (block) => {
-                hljs.highlightElement(block);
+                const codeBlock = block.getElementsByTagName('code');
+                hljs.highlightElement(codeBlock[0]);
             });
 
             forEach(document.querySelectorAll('oembed[url]'), (element) => {
@@ -92,5 +121,9 @@ export class PageDetailsComponent implements OnInit, AfterViewChecked {
             this.domFormatted = true;
             this.ref.detectChanges();
         }
+    }
+
+    ngOnDestroy(): void {
+        this.paramSub$.unsubscribe();
     }
 }

@@ -8,7 +8,6 @@ import {
   Observable,
   Subscription
 } from 'rxjs';
-
 import {
   filter,
   map,
@@ -90,6 +89,33 @@ export class SubscribersListComponent implements OnDestroy {
     };
   }
 
+  // Ag Grid Related functions
+  onGridReady(params: any) {
+    this.gridApi = params.api;
+
+    this.subscribersService.GetAll()
+      .subscribe((data: any) => {
+        this.subscribers = data.subscribers ? data.subscribers as Subscribers[] : [];
+
+        if (this.subscribers.length === 0) {
+          this.gridStyle.height = '5vh';
+        }
+        if (this.gridApi) {
+          this.gridApi.setRowData(this.subscribers);
+        }
+
+        this.resizeObservable$ = fromEvent(window, 'resize');
+        this.resizeSubscription$ = this.resizeObservable$.subscribe(evt => {
+          setTimeout(() => {
+            if (this.gridApi) {
+              this.gridApi.sizeColumnsToFit();
+              this.gridApi.resetRowHeights();
+            }
+          });
+        });
+      });
+  }
+
   // remove email from the database
   removeEmail(subscriber: any): void {
     this.subscribersService.Delete(subscriber._id).subscribe(() => {
@@ -117,17 +143,11 @@ export class SubscribersListComponent implements OnDestroy {
       return true;
     });
 
-    const csv = map(this.subscribers, (row) => {
-      // match header field to data field
-      return map(headerDefs, (def) => {
-        return JSON.stringify(row[def.field], replacer);
-      }).join(',');
-    });
+    // match header field to data field
+    const csv = map(this.subscribers, (row) => map(headerDefs, (def) => JSON.stringify(row[def.field], replacer)).join(','));
 
     // mutate to array of header names
-    const headerNames = map(headerDefs, (def) => {
-      return def.headerName;
-    });
+    const headerNames = map(headerDefs, (def) => def.headerName);
 
     // add headers to start of csv data
     csv.unshift(headerNames.join(','));
@@ -138,33 +158,6 @@ export class SubscribersListComponent implements OnDestroy {
       type: 'text/csv'
     });
     saveAs(blob, 'myFile.csv');
-  }
-
-  // Ag Grid Related functions
-  onGridReady(params: any) {
-    this.gridApi = params.api;
-
-    this.subscribersService.GetAll()
-      .subscribe((data: any) => {
-        this.subscribers = data.subscribers ? data.subscribers as Subscribers[] : [];
-
-        if (this.subscribers.length === 0) {
-          this.gridStyle.height = '5vh';
-        }
-        if (this.gridApi) {
-          this.gridApi.setRowData(this.subscribers);
-        }
-
-        this.resizeObservable$ = fromEvent(window, 'resize');
-        this.resizeSubscription$ = this.resizeObservable$.subscribe(evt => {
-          setTimeout(() => {
-            if (this.gridApi) {
-              this.gridApi.sizeColumnsToFit();
-              this.gridApi.resetRowHeights();
-            }
-          });
-        });
-      });
   }
 
   onFirstDataRendered() {

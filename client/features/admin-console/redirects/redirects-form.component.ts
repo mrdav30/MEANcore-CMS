@@ -1,13 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Title } from '@angular/platform-browser';
+import {
+    Component,
+    OnDestroy,
+    OnInit
+} from '@angular/core';
+import {
+    Router,
+    ActivatedRoute
+} from '@angular/router';
+import {
+    Title
+} from '@angular/platform-browser';
+import {
+    merge
+} from 'lodash';
+import {
+    Subscription
+} from 'rxjs';
 
-import { environment } from '@env';
+import {
+    environment
+} from '@env';
 
-import { merge } from 'lodash';
-
-import { RedirectsService } from '../services/redirects.service';
-import { Redirect } from './redirect';
+import {
+    RedirectsService
+} from '../services/redirects.service';
+import {
+    Redirect
+} from './redirect';
 
 @Component({
     moduleId: module.id,
@@ -15,23 +34,25 @@ import { Redirect } from './redirect';
     templateUrl: `./redirects-form.component.html`
 })
 
-export class RedirectsFormComponent implements OnInit {
+export class RedirectsFormComponent implements OnInit, OnDestroy {
     public redirectID: string;
     public redirect: Redirect;
+
+    private paramSub$: Subscription;
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private titleService: Title,
         private redirectsService: RedirectsService
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         this.titleService.setTitle('Redirects' + environment.metaTitleSuffix);
         this.redirect = new Redirect();
-        this.route.params
-            .subscribe(params => {
-                this.redirectID = params.id;
+        this.paramSub$ = this.route.paramMap
+            .subscribe(paramMap => {
+                this.redirectID = paramMap.get('id');
 
                 if (this.redirectID) {
                     this.redirectsService.GetById(this.redirectID)
@@ -57,5 +78,9 @@ export class RedirectsFormComponent implements OnInit {
             .subscribe((data: any) => {
                 this.router.navigate(['/admin']);
             });
+    }
+
+    ngOnDestroy(): void {
+        this.paramSub$.unsubscribe();
     }
 }

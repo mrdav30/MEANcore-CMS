@@ -1,5 +1,6 @@
 import {
     Component,
+    OnDestroy,
     OnInit
 } from '@angular/core';
 import {
@@ -17,6 +18,9 @@ import {
 import {
     SeoService
 } from '@utils';
+import {
+    Subscription
+} from 'rxjs';
 
 @Component({
     moduleId: module.id,
@@ -25,10 +29,12 @@ import {
     styleUrls: [`./blog-posts.component.css`]
 })
 
-export class BlogPostsComponent implements OnInit {
+export class BlogPostsComponent implements OnInit, OnDestroy {
     public postParams: any;
     public pageNumber = 1;
     public vm: any = {};
+
+    private paramSub$: Subscription;
 
     constructor(
         private seoService: SeoService,
@@ -38,18 +44,18 @@ export class BlogPostsComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.route.params
-            .subscribe(params => {
-                if (isEmpty(params)) {
+        this.paramSub$ = this.route.paramMap
+            .subscribe(paramMap => {
+                if (isEmpty(paramMap)) {
                     this.postParams = null;
                 } else {
                     // query based on param
                     this.postParams = {
-                        tag: params.tag ? params.tag : null,
-                        year: params.year ? params.year : null,
-                        month: params.month ? params.month : null,
-                        authorId: params.authorId ? params.authorId : null,
-                        searchQuery: params.searchQuery ? params.searchQuery : null
+                        tag: paramMap.get('tag'),
+                        year: paramMap.get('year'),
+                        month: paramMap.get('month'),
+                        authorId: paramMap.get('authorId'),
+                        searchQuery: paramMap.get('searchQuery')
                     };
                 }
                 this.retrievePosts();
@@ -62,7 +68,7 @@ export class BlogPostsComponent implements OnInit {
         window.scrollTo(0, 0);
     }
 
-    onFollowAuthor(target: string) {
+    public onFollowAuthor(target: string) {
         let followLink: string;
         switch (target) {
             case 'facebook':
@@ -86,6 +92,10 @@ export class BlogPostsComponent implements OnInit {
         }
 
         window.open(followLink, '_blank');
+    }
+
+    ngOnDestroy(): void {
+        this.paramSub$.unsubscribe();
     }
 
     private retrievePosts(): void {

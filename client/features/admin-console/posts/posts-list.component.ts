@@ -126,17 +126,17 @@ export class PostsListComponent implements OnDestroy {
         if (this.gridApi) {
           this.gridApi.setRowData(this.posts);
         }
-      });
 
-    this.resizeObservable$ = fromEvent(window, 'resize');
-    this.resizeSubscription$ = this.resizeObservable$.subscribe(() => {
-      setTimeout(() => {
-        if (this.gridApi) {
-          this.gridApi.sizeColumnsToFit();
-          this.gridApi.resetRowHeights();
-        }
+        this.resizeObservable$ = fromEvent(window, 'resize');
+        this.resizeSubscription$ = this.resizeObservable$.subscribe(() => {
+          setTimeout(() => {
+            if (this.gridApi) {
+              this.gridApi.sizeColumnsToFit();
+              this.gridApi.resetRowHeights();
+            }
+          });
+        });
       });
-    });
   }
 
   onFirstDataRendered() {

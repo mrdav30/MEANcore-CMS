@@ -33,5 +33,4 @@ redirectsSchema.statics = {
   }
 }
 
-
 mongoose.model('Redirects', redirectsSchema);

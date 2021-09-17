@@ -1,5 +1,6 @@
 import {
   Component,
+  OnDestroy,
   OnInit,
   ViewEncapsulation
 } from '@angular/core';
@@ -14,10 +15,16 @@ import '../../../assets/ckeditor-custom/ckeditor';
 import {
   merge
 } from 'lodash';
+import {
+  Subscription
+} from 'rxjs';
 
 import {
   environment
 } from '@env';
+import {
+  SlugifyPipe
+} from '@utils';
 
 import {
   PagesService
@@ -26,10 +33,6 @@ import {
   Page
 } from './page';
 
-import {
-  SlugifyPipe
-} from '@utils';
-
 @Component({
   moduleId: module.id,
   selector: 'app-pages-form-selector',
@@ -37,12 +40,14 @@ import {
   encapsulation: ViewEncapsulation.None // required to style innerHtml
 })
 
-export class PagesFormComponent implements OnInit {
+export class PagesFormComponent implements OnInit, OnDestroy {
   // eslint-disable-next-line @typescript-eslint/dot-notation
   public editor = window['ClassicEditor'];
   public editorOptions: any;
   public pageID: string;
   public page: Page;
+
+  private paramSub$: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -119,9 +124,9 @@ export class PagesFormComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle('Pages' + environment.metaTitleSuffix);
     this.page = new Page();
-    this.route.params
-      .subscribe(params => {
-        this.pageID = params.id ? params.id : null;
+    this.paramSub$ = this.route.paramMap
+      .subscribe(paramMap => {
+        this.pageID = paramMap.get('id');
 
         if (this.pageID) {
           this.pagesService.GetById(this.pageID)
@@ -154,5 +159,9 @@ export class PagesFormComponent implements OnInit {
       .subscribe((data: any) => {
         this.router.navigate(['/admin']);
       });
+  }
+
+  ngOnDestroy(): void {
+    this.paramSub$.unsubscribe();
   }
 }
