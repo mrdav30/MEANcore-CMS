@@ -5,7 +5,8 @@ import {
   ChangeDetectorRef,
   AfterViewChecked,
   ViewChildren,
-  QueryList
+  QueryList,
+  OnDestroy
 } from '@angular/core';
 import {
   Router,
@@ -35,7 +36,8 @@ import {
   ScriptInjectorService
 } from '@utils';
 import {
-  Observable
+  Observable,
+  Subscription
 } from 'rxjs';
 
 @Component({
@@ -46,7 +48,7 @@ import {
   encapsulation: ViewEncapsulation.None // required to style innerHtml
 })
 
-export class PostDetailsComponent implements OnInit, AfterViewChecked {
+export class PostDetailsComponent implements OnInit, AfterViewChecked, OnDestroy {
   @ViewChildren(DisqusThreadComponent) disqusThread: QueryList < DisqusThreadComponent > ;
 
   public postParams: any;
@@ -57,6 +59,8 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
   public isPreview: boolean;
 
   private childrenDetector: Observable < any > ;
+  private paramSub$: Subscription;
+  private childSub$: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -92,7 +96,7 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
 
   ngOnInit(): void {
     this.vm.post = new PostDetails();
-    this.route.paramMap
+    this.paramSub$ = this.route.paramMap
       .subscribe(paramMap => {
         this.postParams = {
           year: paramMap.get('year'),
@@ -170,7 +174,7 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
 
     this.childrenDetector = this.disqusThread.changes;
 
-    this.childrenDetector.subscribe(() => {
+    this.childSub$ = this.childrenDetector.subscribe(() => {
       this.disqusThread.first.identifier = this.vm.metaTitle;
       this.disqusThread.first.init();
     });
@@ -291,5 +295,10 @@ export class PostDetailsComponent implements OnInit, AfterViewChecked {
     }
 
     window.open(shareLink, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
+  }
+
+  ngOnDestroy(): void {
+    this.paramSub$.unsubscribe();
+    this.childSub$.unsubscribe();
   }
 }

@@ -26,6 +26,13 @@ import {
 import moment from 'moment';
 
 import {
+  pairwise
+} from 'rxjs/operators';
+import {
+  Subscription
+} from 'rxjs';
+
+import {
   environment
 } from '@env';
 
@@ -40,11 +47,14 @@ import {
   SlugifyPipe
 } from '@utils';
 import {
-  pairwise
-} from 'rxjs/operators';
+  CMSConfig
+} from '../cms-config/cms-config';
 import {
-  Subscription
-} from 'rxjs';
+  CMSConfigService
+} from '../services/cms-config.service';
+import {
+  NgbModal
+} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   moduleId: module.id,
@@ -60,18 +70,23 @@ export class PostsFormComponent implements OnInit, AfterViewInit, OnDestroy {
   public editorOptions: any;
   public postID: string;
   public post: Post;
+  public cmsConfig: CMSConfig;
   public untouchedPost: Post;
   public currentDateObj: any = {};
   public postWordCount: number;
   public wpm = 225;
+  public hostUrl: string;
 
-  paramSub$: Subscription;
+  private paramSub$: Subscription;
+  private formChangesSub$: Subscription;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private titleService: Title,
-    private postsService: PostsService
+    private postsService: PostsService,
+    private cmsConfigService: CMSConfigService,
+    private modalService: NgbModal
   ) {
     // set options for ckeditor
     this.editorOptions = {
@@ -145,6 +160,8 @@ export class PostsFormComponent implements OnInit, AfterViewInit, OnDestroy {
       allowedContent: true
     };
 
+    this.hostUrl = window.location.protocol + '//' + window.location.hostname;
+
     this.paramSub$ = this.route.paramMap
       .subscribe(paramMap => {
         this.postID = paramMap.get('id');
@@ -175,12 +192,18 @@ export class PostsFormComponent implements OnInit, AfterViewInit, OnDestroy {
           this.backToPostList();
         });
     } else {
-      this.setDate();
+      this.cmsConfigService.GetAll()
+        .subscribe((data: any) => {
+          if (data && data.cmsConfig) {
+            this.post.urlStructure = data.cmsConfig.defaultUrlStructure;
+          }
+          this.setDate();
+        });
     }
   }
 
   ngAfterViewInit(): void {
-    this.postForm.valueChanges
+    this.formChangesSub$ = this.postForm.valueChanges
       .pipe(pairwise())
       .subscribe(
         ([prev, next]) => {
@@ -232,8 +255,19 @@ export class PostsFormComponent implements OnInit, AfterViewInit, OnDestroy {
     this.post.slug = slugifyPipe.transform(this.post.title);
   }
 
+  openUrlStructureEdit(content: any): void {
+    this.modalService.open(content, {
+      size: 'lg'
+    });
+  }
+
   onSubmit(isPreview: boolean): void {
-    this.post.url = '/blog/post/' + moment(this.post.publishDate).format('YYYY/MM/DD') + '/' + this.post.slug;
+    if (this.post.urlStructure === 'date') {
+      this.post.url = '/blog/post/' + moment(this.post.publishDate).format('YYYY/MM/DD') + '/' + this.post.slug;
+    } else if (this.post.urlStructure === 'slug') {
+      this.post.url = '/blog/post/' + this.post.slug;
+    }
+
     if (this.post.unpublishedChanges && !this.post.publishChanges) {
       this.post.slug += '-unpublished';
       this.post.url += '-unpublished';
@@ -273,5 +307,6 @@ export class PostsFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.paramSub$.unsubscribe();
+    this.formChangesSub$.unsubscribe();
   }
 }

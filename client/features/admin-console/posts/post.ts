@@ -10,6 +10,7 @@ export class Post {
     public publishDate: any;
     public updated: any;
     public thumbnailUrl: string;
+    public urlStructure: string;
     public url: string;
     public publish: boolean;
     public authorId: string;
@@ -25,5 +26,6 @@ export class Post {
         this.publishDate = moment().format('YYYY-MM-DD');
         this.updated = moment().format('YYYY-MM-DD');
         this.publish = true;
+        this.urlStructure = 'date';
     }
 }

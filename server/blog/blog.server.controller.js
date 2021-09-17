@@ -597,28 +597,40 @@ export const retrievePostByDetails = (req, res) => {
 
   async.waterfall([
     (callback) => {
-      Posts.getByUrl(req.params.year, req.params.month, req.params.day, req.params.slug, (err, post) => {
-        if (err) {
-          return callback(err)
-        } else if (!post) {
-          return callback('Post not found');
-        }
 
-        //  permalink used by disqus comment and social links
-        post.permaLink = hostDomain + '/api/blog/post?id=' + post._id;
+      let query = {};
+      if (req.params.year && req.params.month && req.params.day) {
+        query.publishDate = req.params.year + '-' + req.params.month + '-' + req.params.day;
+      }
 
-        post.url = hostDomain + post.url;
+      if (req.params.slug) {
+        query.slug = req.params.slug;
+      }
 
-        // slugify post tags
-        post.slugTags = _.map(post.tags, (tag) => {
-          return {
-            text: tag,
-            slug: config.helpers.slugify(tag)
-          };
-        });
+      Posts.findOne(query)
+        .lean()
+        .exec((err, post) => {
+          if (err) {
+            return callback(err)
+          } else if (!post) {
+            return callback('Post not found');
+          }
 
-        callback(null, post)
-      })
+          //  permalink used by disqus comment and social links
+          post.permaLink = hostDomain + '/api/blog/post?id=' + post._id;
+
+          post.url = hostDomain + post.url;
+
+          // slugify post tags
+          post.slugTags = _.map(post.tags, (tag) => {
+            return {
+              text: tag,
+              slug: config.helpers.slugify(tag)
+            };
+          });
+
+          callback(null, post)
+        })
     },
     (post, callback) => {
       //retireve author's information

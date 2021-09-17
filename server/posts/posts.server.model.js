@@ -34,6 +34,10 @@ const postsSchema = new Schema({
     type: String,
     trim: true
   },
+  permaLinkType: {
+    type: String,
+    trim: true
+  },
   url: {
     type: String,
     trim: true
@@ -93,22 +97,6 @@ postsSchema.index({
 });
 
 postsSchema.statics = {
-  getByUrl(year, month, day, slug, callback) {
-    const _this = this;
-
-    _this.findOne({
-        publishDate: year + '-' + month + '-' + day,
-        slug: slug
-      })
-      .lean()
-      .exec((err, post) => {
-        if (err) {
-          return callback(err.name + ': ' + err.message);
-        }
-
-        callback(null, post)
-      });
-  },
   findText(searchText, pagination, callback) {
     const _this = this;
 

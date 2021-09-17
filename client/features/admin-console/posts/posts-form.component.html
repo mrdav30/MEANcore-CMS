@@ -18,9 +18,28 @@
     <div class="mt-2 row">
       <label for="slug" class="col-sm-2"><strong>Slug</strong></label>
       <div class="col-sm-10">
-        <input type="text" id="slug" name="slug" class="form-control" [(ngModel)]="post.slug" />
-        <button type="button" class="btn btn-link" (click)="slugifyTitle()"><strong>Generate from
-            title</strong></button>
+        <input type="text" id="slug" name="slug" class="form-control" [(ngModel)]="post.slug" #slug="ngModel"
+          required />
+        <button type="button" class="btn btn-link" (click)="slugifyTitle()">
+          <strong>Generate from title</strong>
+        </button>
+        <div *ngIf="postForm.submitted && slug.invalid" class="alert alert-danger">
+          <div *ngIf="title.errors.required"><i class="icon-exclamation me-2"></i>Title is required</div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-2 row">
+      <label class="col-sm-2"><strong>URL</strong></label>
+      <div class="col-sm-10">
+        <div *ngIf="post.urlStructure==='date'">
+          <span *ngIf="post.slug">{{hostUrl}}/blog/post/{{post.publishDate | date: 'MM/dd/yyyy'}}/{{post.slug}}</span>
+        </div>
+        <div *ngIf="post.urlStructure==='slug'">
+          <span *ngIf="post.slug">{{hostUrl}}/blog/post/{{post.slug}}</span>
+        </div>
+        <button type="button" class="btn btn-link" (click)="openUrlStructureEdit(content)">
+          <strong>Edit</strong>
+        </button>
       </div>
     </div>
     <div class="mt-2 row">
@@ -113,3 +132,35 @@
     </div>
   </form>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4>URL Structure</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <div class="mt-2 row">
+      <div class="row">
+        <div class="col-sm-4">
+          <input type="radio" name="permaLinkType" [(ngModel)]="post.permaLinkType" [value]="'date'" />
+          <span class="ms-2">Date and Slug</span>
+        </div>
+        <div class="col-sm-8 permaLinkExample mb-2">
+          <span class="ms-2">{{hostUrl}}/blog/post/{{post.publishDate | date: 'MM/dd/yyyy'}}/{{post.slug}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <input type="radio" name="permaLinkType" [(ngModel)]="post.permaLinkType" [value]="'slug'" />
+          <span class="ms-2">Slug</span>
+        </div>
+        <div class="col-sm-8 permaLinkExample mb-2">
+          <span class="ms-2">{{hostUrl}}/blog/post/{{post.slug}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Close</button>
+  </div>
+</ng-template>

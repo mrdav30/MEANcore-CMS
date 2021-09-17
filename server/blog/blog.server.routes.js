@@ -22,8 +22,9 @@ export default (app) => {
 
   // post by id route (permalink used by disqus comments plugin)
   app.route('/api/blog/post').get(blog.retrievePostByID);
-  // post details route
+  // post detail routes
   app.route('/api/blog/post/details/:year/:month/:day/:slug').get(blog.retrievePostByDetails);
+  app.route('/api/blog/post/details/:slug').get(blog.retrievePostByDetails);
 
   // page details route
   app.route('/api/page/:slug').get(blog.retrievePageDetails);

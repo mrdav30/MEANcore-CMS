@@ -25,6 +25,12 @@
         <app-subscribers-list-selector></app-subscribers-list-selector>
       </ng-template>
     </li>
+    <li ngbNavItem="config">
+      <a ngbNavLink>Config</a>
+      <ng-template ngbNavContent>
+        <app-cms-config-selector></app-cms-config-selector>
+      </ng-template>
+    </li>
   </ul>
   <div [ngbNavOutlet]="nav" class="mt-2"></div>
 

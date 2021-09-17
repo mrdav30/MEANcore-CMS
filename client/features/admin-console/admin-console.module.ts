@@ -12,6 +12,7 @@ import { AdminPagesModule } from './pages/pages.module';
 import { AdminPostsModule } from './posts/posts.module';
 import { AdminRedirectsModule } from './redirects/redirects.module';
 import { AdminSubscribersModule } from './subscribers/subscribers.module';
+import { CMSConfigModule } from './cms-config/cms-config.module';
 
 @NgModule({
     imports: [
@@ -23,7 +24,8 @@ import { AdminSubscribersModule } from './subscribers/subscribers.module';
         AdminPagesModule,
         AdminPostsModule,
         AdminRedirectsModule,
-        AdminSubscribersModule
+        AdminSubscribersModule,
+        CMSConfigModule
     ],
     declarations: [
         AdminConsoleComponent

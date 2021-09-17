@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import moment from 'moment';
 import async from 'async';
 const Posts = mongoose.model('Posts');
+const CMSConfig = mongoose.model('CMSConfig');
 
 export const getAll = (req, res) => {
   Posts.find({
@@ -30,15 +31,30 @@ export const getById = (req, res) => {
       });
     }
 
-    res.send({
-      post: post
-    });
+    if (!post.permaLinkType) {
+      CMSConfig.findOne().exec((err, cmsConfig) => {
+        if (err) {
+          console.log('Could not retrieve CMS config!');
+        } else if (cmsConfig) {
+          post.permaLinkType = cmsConfig.defaultPermaLinkType;
+        }
+
+        res.send({
+          post: post
+        });
+      });
+    } else {
+      res.send({
+        post: post
+      });
+    }
   });
 }
 
 export const create = (req, res) => {
   const config = req.app.locals.config;
   const postParam = req.body;
+
   // set author as current user
   postParam.authorId = req.user._id;
   // generate slug from title if empty
